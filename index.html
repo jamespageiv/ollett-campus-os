@@ -198,22 +198,66 @@ body.pm .talk{display:block}
 .s3grid{display:grid;grid-template-columns:420px 1fr;gap:18px;align-items:start}
 .phonef{width:420px;height:830px;border:0;background:transparent;display:block;max-width:100%}
 .cfof{width:100%;height:780px;border:0;display:block;background:#fff}
-.dc3{grid-template-columns:215px 1fr 240px;min-height:760px}
-.c3feed{max-height:690px;overflow:auto}
-.c3n{border:2px solid var(--ink);border-radius:10px;padding:12px 14px;margin-bottom:12px}
-.c3n .lb{font-size:10px;letter-spacing:.14em;font-weight:800;color:#6b7288}
-.c3n h4{font-size:16px;margin:3px 0 4px}.c3n p{font-size:12.5px;color:#2b323b}
-.c3g{margin:12px 0 4px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;display:flex;justify-content:space-between}
-.c3p{display:flex;flex-wrap:wrap;gap:5px}
-.c3p span{font-size:11px;padding:3px 8px;border-radius:99px;border:1px dashed #cdd3dc;color:#8a90a3;cursor:pointer;background:#fafbfd}
-.c3p span.lit{border-style:solid;color:#fff;font-weight:700}
-.c3p span.cur{box-shadow:0 0 0 2px #fff,0 0 0 4px #16384f}
-.c3d{margin-top:10px;border:1px solid #e3e6ee;border-radius:8px;padding:10px 12px;font-size:12px;background:#f7f9fd}
-.c3d b{color:#111}.c3d div{margin-top:3px}
-.c3w{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
-.c3w span{font-size:11px;padding:3px 8px;border-radius:5px;background:#eef1f8;color:#42507a;font-weight:600}
-@media(max-width:1180px){.s3grid{grid-template-columns:1fr}.phonef{margin:0 auto}.dc3{grid-template-columns:215px 1fr 240px}}
-@media(max-width:980px){.dc3{grid-template-columns:1fr}.dc3 .dl{order:1}}
+.orb{position:relative;height:830px;border-radius:18px;overflow:hidden;color:#fff;background:radial-gradient(ellipse at 50% 54%,#245a78 0,#16384f 46%,#0d2433 100%);box-shadow:0 14px 40px rgba(14,36,51,.28)}
+.orb:before{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(255,255,255,.07) 1px,transparent 1.6px) 0 0/22px 22px;pointer-events:none}
+.orbl{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.orbl ellipse{fill:none;stroke:rgba(255,255,255,.09);stroke-dasharray:2 7}
+.orbl line{stroke:rgba(255,255,255,.1);stroke-width:1;stroke-dasharray:3 6;transition:stroke .4s}
+.orbl line.on{stroke-dasharray:none;stroke-width:1.5;opacity:.5}
+.orbl line.now{stroke-dasharray:5 11;stroke-width:2.6;opacity:1;animation:orbflow .9s linear infinite;filter:drop-shadow(0 0 4px currentColor)}
+@keyframes orbflow{to{stroke-dashoffset:-16}}
+.orbsim{position:absolute;top:14px;right:16px;font-size:10px;font-weight:800;letter-spacing:.14em;color:#aeeafc;border:1px solid rgba(174,234,252,.4);border-radius:99px;padding:3px 9px;z-index:3}
+.orbcap{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:min(620px,calc(100% - 220px));text-align:center;z-index:3;animation:capin .4s ease both}
+@keyframes capin{from{opacity:0;transform:translate(-50%,6px)}}
+.orbcap .lb{font-size:10.5px;letter-spacing:.16em;font-weight:800;color:#aeeafc;display:flex;align-items:center;justify-content:center;gap:8px}
+.orbcap .lb i{width:8px;height:8px;border-radius:50%;background:#ff6b5e;animation:pl 1.2s infinite}
+.orbcap h4{font:400 24px var(--serif);margin:4px 0 4px}
+.orbcap p{font-size:13px;line-height:1.45;color:rgba(255,255,255,.78)}
+.orbc{position:absolute;width:240px;text-align:center;transform:translateX(-50%);z-index:2}
+.orbc .d3{font-size:9.5px;letter-spacing:.2em;font-weight:800;color:rgba(174,234,252,.75);height:16px;margin-bottom:4px}
+.orbc .av{position:relative;width:112px;height:112px;margin:0 auto 8px}
+.orbc .av:before{content:"";position:absolute;inset:-7px;border-radius:50%;border:2px solid rgba(174,234,252,.3);animation:orbpulse 2.8s ease-out infinite}
+@keyframes orbpulse{to{transform:scale(1.28);opacity:0}}
+.orbc .av svg{position:absolute;inset:0}
+.orbc .av svg circle+circle{transition:stroke-dashoffset .8s ease}
+.orbc .av b{position:absolute;inset:14px;border-radius:50%;background:linear-gradient(145deg,#d9f4fd,#5fc3ea);color:var(--ink);display:grid;place-items:center;font:400 38px var(--serif)}
+.orbc .txt{display:inline-block;padding:6px 14px 8px;border-radius:14px;background:rgba(15,40,57,.82)}
+.orbc h4{font-size:17px}
+.orbc small{display:block;font-size:11.5px;color:rgba(255,255,255,.65)}
+.orbc .sg2{display:inline-block;margin:6px 0 4px;font-size:11px;font-weight:700;padding:3px 11px;border-radius:99px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2)}
+.orbc .tr{font-size:11.5px;color:rgba(255,255,255,.7)}.orbc .tr b{font-size:15px;color:#fff}
+.og{display:contents}
+.ogl{font-size:10px;letter-spacing:.14em;font-weight:800;text-transform:uppercase;line-height:1.5;z-index:2}
+.ogl span{display:block;font-size:12px;letter-spacing:0;opacity:.85}
+.orb:not(.flat) .ogl{position:absolute}
+.orb:not(.flat) .og[data-g=U] .ogl{left:20px;top:134px}
+.orb:not(.flat) .og[data-g=F] .ogl{right:20px;top:134px;text-align:right}
+.orb:not(.flat) .og[data-g=N] .ogl{left:50%;transform:translateX(-50%);text-align:center;white-space:nowrap}
+.orbn{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:7px;padding:6px 13px 6px 10px;border-radius:99px;border:1.5px dashed rgba(255,255,255,.28);background:rgba(13,36,51,.6);color:rgba(255,255,255,.55);font:600 11.5px var(--sans);white-space:nowrap;cursor:pointer;z-index:2;transition:background .35s,color .35s,border-color .35s,box-shadow .35s,transform .35s}
+.orbn i{width:8px;height:8px;border-radius:50%;background:var(--oc);opacity:.75;flex:none}
+.orbn:hover{border-color:rgba(255,255,255,.6);color:#fff}
+.orbn.on{border-style:solid;border-color:var(--oc);background:var(--oc);color:#0d2433;font-weight:800}
+.orbn.on i{background:#0d2433;opacity:.5}
+.orbn.now{transform:translate(-50%,-50%) scale(1.1);box-shadow:0 0 0 4px color-mix(in srgb,var(--oc) 30%,transparent),0 0 24px var(--oc);z-index:3}
+.orbn.sel{outline:2px solid #fff;outline-offset:2px}
+.orbn.fresh{animation:orbpop .7s ease}
+@keyframes orbpop{35%{transform:translate(-50%,-50%) scale(1.3)}}
+.orbd{position:absolute;left:50%;width:340px;transform:translateX(-50%);background:rgba(13,36,51,.92);border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:9px 30px 9px 12px;font-size:11px;line-height:1.4;color:rgba(255,255,255,.85);z-index:4;display:none}
+.orbd.show{display:block;animation:pop .3s ease both}
+.orbd b{color:#fff}.orbd div{margin-top:3px}
+.orbx{position:absolute;top:6px;right:8px;border:0;background:none;color:rgba(255,255,255,.6);font-size:18px;line-height:1;cursor:pointer}
+.orbhint{position:absolute;left:0;right:0;bottom:7px;text-align:center;font-size:10.5px;color:rgba(255,255,255,.45)}
+.orb.flat{height:auto;padding:16px 14px 30px}
+.orb.flat .orbsim,.orb.flat .orbcap,.orb.flat .orbc,.orb.flat .orbd,.orb.flat .orbhint{position:static;transform:none;width:auto}
+.orb.flat .orbsim{display:inline-block;margin-bottom:10px}
+.orb.flat .orbcap{margin-bottom:14px}
+.orb.flat .orbc{margin:0 auto 14px}
+.orb.flat .orbl{display:none}
+.orb.flat .ogl{margin:12px 0 6px}
+.orb.flat .orbn,.orb.flat .orbn.now{position:static;transform:none;display:inline-flex;margin:3px}
+.orb.flat .orbd{position:relative;margin-top:12px}
+.orb.flat .orbhint{margin-top:14px}
+@media(max-width:1180px){.s3grid{grid-template-columns:1fr}.phonef{margin:0 auto}}
 /* how */
 .tabrow{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 18px}
 .tabrow button{padding:11px 20px;border-radius:99px;border:1px solid var(--line);background:#fff;font:700 14px var(--sans);cursor:pointer;color:var(--ink)}
@@ -883,9 +927,7 @@ build();
 &lt;/body&gt;
 &lt;/html&gt;
 "></iframe>
-<div class="win"><div class="bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="url">Data 360 · Student 360 · Northfield State (sample)</span><span class="sim">SIMULATED</span></div>
-<div class="dc-top"><div class="dc-tabs"><span>Home</span><span>Data Streams</span><span>Data Model</span><span>Identity Resolution</span><span>Segments</span><span>Activations</span><span class="on">James M.</span></div></div>
-<div class="dc dc3"><div class="dl" id="c3l"></div><div class="dm"><div class="tb"><span class="on">Student Activity</span><span>Insights</span><span>Details</span></div><div class="bd" id="c3m"></div></div><div class="da"><h5>Activity Feed <span class="rt">REAL TIME</span></h5><div id="c3f" class="c3feed"></div></div></div></div>
+<div class="orb" id="orb"></div>
 </div>
 <div class="talk"><b>Talk track · student vignette (I'll walk through the demo scroll)</b><p>"Hey James, midterms are behind you. Let me know if you want me to sign you up for some tutoring in Econ. They have some open spots on Wednesday mornings."</p><p>Someone is going to do this. I have a version of it on my phone right now. I only gave my agent my email address and it just monitors it. About three weeks in, it had figured out what was important to me. One Saturday afternoon I got a text: "James, just a reminder, the kids won't have school on 11/2 and 11/3. Tomorrow's the last day to register for the day camp at Long Elementary. Want me to reserve a spot?"</p><p>That was one data source, and it is full of terrible data. What if it knew all my courses, my learning materials, my faculty, all my past semesters, grades and progress? What if my agent knew every opportunity to engage with my fellow students and help me connect?</p><p>To pull that off takes trust, which is your first company value. What builds trust? Data, and time. The more you learn about someone over a longer period, the more you know how much you can trust them.</p></div>
 </div>
@@ -1720,45 +1762,75 @@ const MOM={
 
 const BEATS=['The nudge','Trust over time','Community','First game','Arena store','Next morning'];
 const SEGS=['Needs academic support','Trusted and connected','Community member','First-time fan','Pack Points member','Repeat-fan candidate'];
-const RISK=['Elevated','Moderate','Moderate','Lower','Lower','Low'];
-const CAMP=['Midterm support','Trust building','Community','First-time fan','First-game offer','Spring savings'];
-const GCOL={U:'#1f5fbf',F:'#7a1f2b',N:'#6b4bd6'};
-const GIC={U:'🏫',F:'🛍',N:'✨'};
-const WR=[['sis','Unified Student Profile'],['consent','Consent registry'],['memory','Assistant memory'],['loyalty','Loyalty ledger'],['slack','Community profile'],['pos','Purchase history'],['athletics','Fan profile'],['courseware','Learning engagement profile']];
-let ps={key:null,day:0,active:[],beat:0,all:false},visited=[],sel=null;
+const OC={U:'#6fb1ff',F:'#ff8d9c',N:'#b7a3ff'};
+const SHORT={sis:'Registrar SIS',lms:'LMS calendar',tutor:'Tutoring center',athletics:'Athletics tickets',tender:'Aid and campus card',clubs:'Club registry',catalog:'Course catalog',grades:'Grades (opt-in)',pos:'POS and e-commerce',sam:'SAM and Access',courseware:'Digital courseware',behavior:'Email and web',loyalty:'Pack Points',inventory:'Store inventory',seg:'Segments and offers',ledger:'Commission ledger',slack:'Campus Slack',consent:'Consent center',memory:'Assistant memory',venue:'Venue and wallet',alumni:'Alumni identity'};
+let ps={key:null,day:0,active:[],beat:0,all:false},sel=null,orbKey=null,orbReady=false;
 function cmd(c,i){try{$('#phoneFrame').contentWindow.postMessage({cmd:c,i:i},'*')}catch(e){}}
 window.addEventListener('message',e=>{const d=e.data;if(!d||d.src!=='phone')return;
- ps=d;if(!d.key)visited=[];else if(!visited.some(v=>v.k===d.key))visited.push({k:d.key,day:d.day});
- sdraw()});
-function gauge(p){const r=26,c=Math.PI*r,o=c*(1-p/100);return `<svg width="76" height="44" viewBox="0 0 70 42"><path d="M9 38A26 26 0 0 1 61 38" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="7" stroke-linecap="round"/><path d="M9 38A26 26 0 0 1 61 38" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${o}"/></svg>`}
+ ps=d;sdraw()});
+const RING=2*Math.PI*46;
+function orbBuild(){
+ const keys=Object.keys(SRC);
+ $('#orb').innerHTML=`<svg class="orbl" id="orbl"><ellipse id="orbe1"/><ellipse id="orbe2"/>${keys.map(k=>`<line id="ol-${k}"/>`).join('')}</svg><span class="orbsim">SIMULATED</span><div class="orbcap" id="orbcap"></div>
+ <div class="orbc" id="orbc"><div class="d3">STUDENT 360 · DATA 360</div><div class="av"><svg width="112" height="112" viewBox="0 0 112 112"><circle cx="56" cy="56" r="46" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="6"/><circle id="orbring" cx="56" cy="56" r="46" fill="none" stroke="#aeeafc" stroke-width="6" stroke-linecap="round" stroke-dasharray="${RING}" stroke-dashoffset="${RING}" transform="rotate(-90 56 56)"/></svg><b>J</b></div>
+ <div class="txt"><h4>James M.</h4><small>Junior · Economics · Northfield State</small><div class="sg2" id="orbseg"></div><div class="tr"><b id="orbtr">0</b> trust depth · <span id="orbday">Day 0</span></div></div></div>`
+ +['U','F','N'].map(g=>`<div class="og" data-g="${g}"><div class="ogl" style="color:${OC[g]}">${GROUPS[g].n}<span id="oc-${g}"></span></div>${keys.filter(k=>SRC[k].g===g).map(k=>`<button class="orbn" id="on-${k}" data-id="${k}" style="--oc:${OC[g]}" title="${SRC[k].n}"><i></i>${SHORT[k]}</button>`).join('')}</div>`).join('')
+ +`<div class="orbd" id="orbd"></div><div class="orbhint">Lit sources have been used by the story. Click any source for its fields, basis and effort.</div>`;
+ $('#orb').addEventListener('click',e=>{
+  const n=e.target.closest('.orbn');
+  if(n){sel=sel===n.dataset.id?null:n.dataset.id;sdraw()}
+  else if(e.target.closest('.orbx')){sel=null;sdraw()}});
+ new ResizeObserver(orbLayout).observe($('#orb'));
+ orbLayout();
+}
+function orbLayout(){
+ const o=$('#orb'),W=o.clientWidth;if(!W)return;
+ const flat=W<720;o.classList.toggle('flat',flat);
+ if(flat){o.querySelectorAll('.orbn,.ogl,#orbc,#orbd').forEach(el=>{el.style.left=el.style.top=''});return}
+ const keys=Object.keys(SRC),H=o.clientHeight,capH=118,cx=W/2,cy=capH+(H-capH)/2,rx=W/2-104,ry=(H-capH)/2-46,ax=cx,ay=cy-42;
+ const P={};
+ ['U','F'].forEach(g=>{const ks=keys.filter(k=>SRC[k].g===g);
+  ks.forEach((k,i)=>{const t=(-58+i*116/(ks.length-1))*Math.PI/180;P[k]=[cx+(g==='F'?rx:-rx)*Math.cos(t),cy+ry*Math.sin(t)]})});
+ const nk=keys.filter(k=>SRC[k].g==='N');nk.forEach((k,i)=>{P[k]=[cx+(i-(nk.length-1)/2)*152,cy+ry]});
+ keys.forEach(k=>{const [x,y]=P[k],d=Math.hypot(x-ax,y-ay),r=62,ln=$('#ol-'+k);
+  $('#on-'+k).style.left=x+'px';$('#on-'+k).style.top=y+'px';
+  ln.setAttribute('x1',x);ln.setAttribute('y1',y);ln.setAttribute('x2',ax+(x-ax)*r/d);ln.setAttribute('y2',ay+(y-ay)*r/d)});
+ [['orbe1',1],['orbe2',.5]].forEach(([id,s])=>{const e=$('#'+id);e.setAttribute('cx',cx);e.setAttribute('cy',cy);e.setAttribute('rx',rx*s);e.setAttribute('ry',ry*s)});
+ $('#orbc').style.left=cx+'px';$('#orbc').style.top=(cy-118)+'px';
+ $('#orbd').style.top=(cy+128)+'px';
+ $('.og[data-g=N] .ogl').style.top=(cy+ry-58)+'px';
+}
+function orbDraw(act,now,trust,b,started){
+ const keys=Object.keys(SRC),m=MOM[ps.key];
+ keys.forEach(k=>{const el=$('#on-'+k),ln=$('#ol-'+k),on=act.has(k),g=SRC[k].g;
+  if(on&&orbReady&&!el.classList.contains('on')){el.classList.remove('fresh');void el.offsetWidth;el.classList.add('fresh')}
+  el.classList.toggle('on',on);el.classList.toggle('now',now.has(k));el.classList.toggle('sel',sel===k);
+  ln.setAttribute('class',now.has(k)?'now':on?'on':'');ln.style.stroke=on?OC[g]:'';ln.style.color=OC[g]});
+ ['U','F','N'].forEach(g=>{const ks=keys.filter(k=>SRC[k].g===g);$('#oc-'+g).textContent=ks.filter(k=>act.has(k)).length+' of '+ks.length});
+ const ck=ps.key+'|'+ps.all;
+ if(ck!==orbKey){orbKey=ck;
+  $('#orbcap').innerHTML=`<div class="lb"><i></i>${started?'NOW POWERING THE TEXT':'READY'}</div><h4>${m?m.t:'Scroll the phone to start'}</h4><p>${m?m.c:'Each message lights up the data it needs. Sources stay lit, so by the end you can see what it takes and who has to say yes.'}</p>`}
+ $('#orbring').style.strokeDashoffset=RING*(1-trust/100);
+ $('#orbtr').textContent=trust;$('#orbday').textContent='Day '+ps.day;
+ $('#orbseg').textContent=started?SEGS[b]:'Not yet segmented';
+ const sd=sel?SRC[sel]:null,od=$('#orbd');
+ od.classList.toggle('show',!!sd);
+ od.innerHTML=sd?`<button class="orbx" aria-label="Close">&times;</button><b>${sd.n}</b> · ${sd.sys}<div><b>Fields:</b> ${sd.f}</div><div><b>Basis:</b> ${sd.b}</div><div><b>Status:</b> ${sd.s} · <b>Effort:</b> ${sd.e}</div><div>${sd.w}</div>`:'';
+}
 function sdraw(){
  const keys=Object.keys(SRC),act=new Set(ps.all?keys:ps.active),T=keys.length;
  const pctD=Math.round(act.size/T*100),pctT=Math.round(ps.day/26*100),trust=Math.round(pctD*.55+pctT*.45);
  const b=ps.key?ps.beat:0,started=!!ps.key;
  $('#s-steps').innerHTML=BEATS.map((x,i)=>`<button data-i="${i}" class="${i==b&&started?'on':i<b&&started?'done':''}">${i+1} · ${x}</button>`+(i<5?'<i>→</i>':'')).join('');
  document.querySelectorAll('#s-steps button').forEach(el=>el.onclick=()=>cmd('beat',+el.dataset.i));
- const cnt=g=>keys.filter(k=>SRC[k].g===g&&act.has(k)).length,tot=g=>keys.filter(k=>SRC[k].g===g).length;
- $('#c3l').innerHTML=`<div class="hd"><div class="av">J</div><div><b>James M.</b><small>Junior · Economics</small></div></div>
- <div class="kv"><span>Student ID</span><span>SAMPLE-0042</span></div><div class="kv"><span>Campus</span><span>Northfield State</span></div><div class="kv"><span>Phone</span><span>(555) 0142</span></div><div class="kv"><span>Email</span><span>j***@northfield.edu</span></div><hr>
- <div class="kv"><span>Campaign</span><span>${started?CAMP[b]:'None yet'}</span></div><div class="kv"><span>Segment</span><span>${started?SEGS[b]:'Not yet segmented'}</span></div><hr>
- <div class="lab2">Persistence risk</div><div class="big2">${started?RISK[b]:'Unknown'}</div>
- <div class="lab2">Trust depth (data × time)</div><div class="gauge">${gauge(trust)}<div class="big2">${trust}</div></div>
- <div class="lab2">Day ${ps.day} with the student</div>
- <div class="pw">Powered by<div><span>University ${cnt('U')}/${tot('U')}</span><span>Follett ${cnt('F')}/${tot('F')}</span><span>New ${cnt('N')}/${tot('N')}</span></div></div>`;
  const m=MOM[ps.key];
- const pills=g=>keys.filter(k=>SRC[k].g===g).map(k=>`<span class="${act.has(k)?'lit':''} ${m&&m.s.includes(k)&&!ps.all?'cur':''}" data-id="${k}" style="${act.has(k)?'background:'+GCOL[g]+';color:#fff;border-color:'+GCOL[g]:''}">${SRC[k].n}</span>`).join('');
- const wr=WR.filter(w=>act.has(w[0])).map(w=>w[1]);
- const sd=sel?SRC[sel]:null;
- $('#c3m').innerHTML=`<div class="c3n"><div class="lb">${started?'NOW POWERING THE TEXT':'READY'}</div><h4>${m?m.t:'Scroll the phone to start'}</h4><p>${m?m.c:'Each message lights up the data it needs. Sources stay lit, so by the end you can see what it takes and who has to say yes.'}</p></div>
- ${['U','F','N'].map(g=>`<div class="c3g" style="color:${GCOL[g]}"><span>${GROUPS[g].n}</span><span>${cnt(g)} of ${tot(g)}</span></div><div class="c3p">${pills(g)}</div>`).join('')}
- ${sd?`<div class="c3d"><b>${sd.n}</b> · ${sd.sys}<div><b>Fields:</b> ${sd.f}</div><div><b>Basis:</b> ${sd.b}</div><div><b>Status:</b> ${sd.s} · <b>Effort:</b> ${sd.e}</div><div>${sd.w}</div></div>`:'<div style="font-size:11.5px;color:#8a90a3;margin-top:10px">Click a source for fields, basis and effort.</div>'}
- <div class="c3g" style="color:#42507a"><span>Writes back to</span></div><div class="c3w">${wr.length?wr.map(x=>`<span>${x}</span>`).join(''):'<span style="opacity:.5">Nothing yet</span>'}</div>`;
- $('#c3f').innerHTML=visited.length?visited.slice().reverse().map((v,i)=>{const mm=MOM[v.k],g=SRC[mm.s[0]].g;return `<div class="ev"><div class="ic" style="background:${GCOL[g]}22;color:${GCOL[g]}">${GIC[g]}</div><div><b>${mm.t}</b><small>${mm.s.slice(0,3).map(k=>SRC[k].n).join(', ')}</small></div><span class="tm">${i==0?'Just now':'Day '+v.day}</span></div>`}).join(''):'<div style="color:#999;padding:20px 0">Waiting for the first text.</div>';
- document.querySelectorAll('#c3m .c3p span').forEach(el=>el.onclick=()=>{sel=el.dataset.id;sdraw()});
+ orbDraw(act,new Set(m&&!ps.all?m.s:[]),trust,b,started);
+ orbReady=true;
 }
 $('#s-prev').onclick=()=>cmd('prev');$('#s-next').onclick=()=>cmd('next');$('#s-play').onclick=()=>cmd('play');
-$('#s-reset').onclick=()=>{visited=[];ps={key:null,day:0,active:[],beat:0,all:false};cmd('restart');sdraw()};
+$('#s-reset').onclick=()=>{ps={key:null,day:0,active:[],beat:0,all:false};cmd('restart');sdraw()};
 $('#s-all').onclick=()=>cmd('all');
+orbBuild();
 sdraw();
 
 /* ===== HOW IT WORKS ===== */
