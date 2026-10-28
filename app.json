@@ -1,0 +1,6 @@
+{
+  "name": "follett-campus-os",
+  "description": "Campus OS partnership concept microsite",
+  "env": { "SITE_PASSWORD": { "description": "Optional password to gate the site (username: follett)", "required": false } },
+  "buildpacks": [{ "url": "heroku/nodejs" }]
+}

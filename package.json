@@ -1,0 +1,9 @@
+{
+  "name": "follett-campus-os",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Campus OS partnership concept microsite (Follett, Salesforce, Claude)",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": "20.x" }
+}
