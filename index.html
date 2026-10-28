@@ -86,18 +86,19 @@ body.pm .talk{display:block}
 .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 .chips span{border:1px solid var(--line);background:#fff;border-radius:99px;padding:8px 16px;font-size:13.5px;font-weight:700}
 /* demo */
-.dem{background:#0b101c;color:#fff;padding-top:70px}
+.dem{background:#0b101c;color:#fff;padding-top:56px}
 .dem h2{color:#fff}.dem .lede{color:#b9c0d0}
-.seg{display:inline-flex;border:1px solid #333b52;border-radius:99px;padding:4px;background:#161b29;margin-top:22px}
+.seg{display:inline-flex;border:1px solid #333b52;border-radius:99px;padding:4px;background:#161b29;margin-top:14px}
 .seg button{border:0;background:transparent;color:#fff;padding:11px 26px;border-radius:99px;font:700 15px var(--sans);cursor:pointer}
 .seg button.on{background:var(--gold)}
 .ctl{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:16px 0}
-.steps{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:18px 0 8px}
+.steps{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0 4px}
 .steps button{padding:9px 16px;border-radius:99px;border:1px solid #6b5120;background:transparent;color:#f1d7a4;font-size:14px;cursor:pointer;font-family:inherit}
 .steps button.on{background:var(--gold);color:#fff;font-weight:800;border-color:var(--gold)}
 .steps button.done{background:#2a2414;color:#fff}
 .steps i{color:#6b5120;font-style:normal}
 .vig{display:none}.vig.show{display:block}
+.dem .ctl{margin:10px 0 14px;gap:10px}.dem .ctl .btn{padding:9px 20px;font-size:12px}
 .vgrid{display:grid;grid-template-columns:330px 1fr;gap:24px;align-items:start}
 .phonewrap{display:flex;justify-content:center}
 .phone{width:316px;background:#101010;border-radius:42px;padding:12px;box-shadow:0 30px 60px rgba(0,0,0,.5)}
@@ -1832,6 +1833,12 @@ $('#s-reset').onclick=()=>{ps={key:null,day:0,active:[],beat:0,all:false};cmd('r
 $('#s-all').onclick=()=>cmd('all');
 orbBuild();
 sdraw();
+/* scale the demo as one unit so it fits the window height without browser zoom */
+function fitDemo(){
+ const s=innerWidth>1180?Math.max(.55,Math.min(1,(innerHeight-220)/830)):1;
+ document.querySelectorAll('.s3grid,#v-cfo .win').forEach(el=>{el.style.zoom=s<1?s:'';el.style.maxWidth=s<1?(el.classList.contains('s3grid')?'1590px':'1378px'):'';el.style.margin=s<1?'0 auto':''});
+}
+addEventListener('resize',fitDemo);fitDemo();
 
 /* ===== HOW IT WORKS ===== */
 const HW={
