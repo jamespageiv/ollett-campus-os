@@ -483,7 +483,7 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 <div class="dd-gov"><div class="dd-gl">One governed layer</div><div><b>Governance, security and privacy sit under all three. Insight travels, records do not.</b><span>Shared definitions &middot; Consent registry &middot; Audit trail &middot; No model training on student data &middot; <a href="#data">Full source list &rarr;</a></span></div></div>
 <div class="dd-go">See it work for one student &darr;</div>
 </div>
-<div class="seg" id="seg"><button class="on" data-p="stud">The student</button><button data-p="cfo">The CFO</button></div>
+<div class="seg" id="seg"><button class="on" data-p="stud">The student</button><button data-p="cfo">The CFO</button><button data-p="teams">CFO in Teams</button><button data-p="group">Group Command</button><button data-p="shelf">Idea Shelf</button></div>
 
 <div class="vig show" id="v-stud">
 <div class="ctl"><button class="btn w" id="s-play">Play</button><button class="btn o" id="s-reset">Restart</button><button class="btn o" id="s-all">Show full data map</button></div>
@@ -780,6 +780,11 @@ const MOM={
  receipt:{t:&#x27;One transaction, three outcomes&#x27;,c:&#x27;The same transaction updates the student\&#x27;s points, the commission ledger, and the record the university CFO will see next.&#x27;,s:[&#x27;pos&#x27;,&#x27;loyalty&#x27;,&#x27;ledger&#x27;,&#x27;tender&#x27;]},
  half:{t:&#x27;Stay in the moment&#x27;,c:&#x27;Live athletics data keeps the thread useful during the event.&#x27;,s:[&#x27;athletics&#x27;]},
  nextday:{t:&#x27;One ledger&#x27;,c:&#x27;Ticket scan and purchase land in the same loyalty ledger, which is how a first-time fan becomes a repeat fan.&#x27;,s:[&#x27;loyalty&#x27;,&#x27;athletics&#x27;,&#x27;pos&#x27;]},
+ wish:{t:&#x27;Before day one&#x27;,c:&#x27;A wish list the family can claim and pay for, delivered to the dorm. Payers are Follett customers, and the student opts in.&#x27;,s:[&#x27;pos&#x27;,&#x27;inventory&#x27;,&#x27;consent&#x27;]},
+ collab:{t:&#x27;The pop-up menu grows&#x27;,c:&#x27;A campus-exclusive drop, an alumni-made item and a Wolves NIL item sit beside the first-fan offer. NIL proceeds return to campus.&#x27;,s:[&#x27;pos&#x27;,&#x27;inventory&#x27;,&#x27;seg&#x27;,&#x27;athletics&#x27;]},
+ tradein:{t:&#x27;Spring clean&#x27;,c:&#x27;Trade-in credit lands in the same loyalty ledger. The best pieces are resold and the rest are donated.&#x27;,s:[&#x27;pos&#x27;,&#x27;loyalty&#x27;,&#x27;inventory&#x27;]},
+ shops:{t:&#x27;Wolfie shops for you&#x27;,c:&#x27;The assistant compares sellers for the student and picks Access. Student pricing is verified, and the student stays in control.&#x27;,s:[&#x27;sam&#x27;,&#x27;catalog&#x27;,&#x27;consent&#x27;]},
+ classof:{t:&#x27;Class of 2030&#x27;,c:&#x27;Four years of tiers pay off. The alumni leaderboard only Follett can run across campuses.&#x27;,s:[&#x27;loyalty&#x27;,&#x27;alumni&#x27;,&#x27;slack&#x27;]},
  spring:{t:&#x27;Registration as a savings moment&#x27;,c:&#x27;Catalog, Access pricing and declared major turn spring registration into a savings message the student actually wants.&#x27;,s:[&#x27;catalog&#x27;,&#x27;sam&#x27;,&#x27;sis&#x27;,&#x27;behavior&#x27;]}
 };
 
@@ -800,11 +805,25 @@ function qr(){let s=7,r=()=&gt;(s=(s*9301+49297)%233280)/233280,c=&#x27;&#x27;;c
 const hoodie=(w,h,st=&#x27;&#x27;)=&gt;`&lt;svg ${st?`style=&quot;${st}&quot;`:&#x27;&#x27;} width=&quot;${w}&quot; height=&quot;${h}&quot; viewBox=&quot;0 0 220 160&quot;&gt;&lt;rect width=&quot;220&quot; height=&quot;160&quot; fill=&quot;#d8d2c8&quot;/&gt;&lt;rect y=&quot;118&quot; width=&quot;220&quot; height=&quot;42&quot; fill=&quot;#c4bdb0&quot;/&gt;&lt;path d=&quot;M110 8v12&quot; stroke=&quot;#777&quot; stroke-width=&quot;3&quot;/&gt;&lt;path d=&quot;M96 22q14-14 28 0&quot; fill=&quot;none&quot; stroke=&quot;#777&quot; stroke-width=&quot;3&quot;/&gt;&lt;path d=&quot;M72 28l-34 22 8 54 20-6 4 38h72l4-38 20 6 8-54-34-22q-10 12-38 12T72 28z&quot; fill=&quot;#7a1f2b&quot;/&gt;&lt;path d=&quot;M82 28q28 28 56 0&quot; fill=&quot;#5d141f&quot;/&gt;&lt;path d=&quot;M96 40v26M124 40v26&quot; stroke=&quot;#e3a72f&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;text x=&quot;110&quot; y=&quot;96&quot; text-anchor=&quot;middle&quot; font-family=&quot;Georgia,serif&quot; font-size=&quot;17&quot; font-weight=&quot;700&quot; fill=&quot;#e3a72f&quot; letter-spacing=&quot;2&quot;&gt;WOLVES&lt;/text&gt;&lt;path d=&quot;M84 112h52v20H84z&quot; fill=&quot;#6a1a25&quot;/&gt;&lt;/svg&gt;`;
 const tee=(w,h,st=&#x27;&#x27;)=&gt;`&lt;svg ${st?`style=&quot;${st}&quot;`:&#x27;&#x27;} width=&quot;${w}&quot; height=&quot;${h}&quot; viewBox=&quot;0 0 220 160&quot;&gt;&lt;rect width=&quot;220&quot; height=&quot;160&quot; fill=&quot;#d8d2c8&quot;/&gt;&lt;rect y=&quot;118&quot; width=&quot;220&quot; height=&quot;42&quot; fill=&quot;#c4bdb0&quot;/&gt;&lt;path d=&quot;M80 18l-48 22 14 32 22-9v73h84V63l22 9 14-32-48-22q-10 16-30 16T80 18z&quot; fill=&quot;#7a1f2b&quot;/&gt;&lt;path d=&quot;M80 18q10 16 30 16t30-16&quot; fill=&quot;none&quot; stroke=&quot;#5d141f&quot; stroke-width=&quot;4&quot;/&gt;&lt;text x=&quot;110&quot; y=&quot;92&quot; text-anchor=&quot;middle&quot; font-family=&quot;Georgia,serif&quot; font-size=&quot;16&quot; font-weight=&quot;700&quot; fill=&quot;#e3a72f&quot; letter-spacing=&quot;2&quot;&gt;WOLFPACK&lt;/text&gt;&lt;/svg&gt;`;
 const cap=(w,h,st=&#x27;&#x27;)=&gt;`&lt;svg ${st?`style=&quot;${st}&quot;`:&#x27;&#x27;} width=&quot;${w}&quot; height=&quot;${h}&quot; viewBox=&quot;0 0 220 160&quot;&gt;&lt;rect width=&quot;220&quot; height=&quot;160&quot; fill=&quot;#d8d2c8&quot;/&gt;&lt;rect y=&quot;118&quot; width=&quot;220&quot; height=&quot;42&quot; fill=&quot;#c4bdb0&quot;/&gt;&lt;path d=&quot;M52 104q0-62 58-62t58 62z&quot; fill=&quot;#7a1f2b&quot;/&gt;&lt;path d=&quot;M52 104q58 12 130 0 14 6 6 14-60 14-136 0z&quot; fill=&quot;#5d141f&quot;/&gt;&lt;circle cx=&quot;110&quot; cy=&quot;42&quot; r=&quot;5&quot; fill=&quot;#e3a72f&quot;/&gt;&lt;text x=&quot;110&quot; y=&quot;86&quot; text-anchor=&quot;middle&quot; font-family=&quot;Georgia,serif&quot; font-size=&quot;13&quot; font-weight=&quot;700&quot; fill=&quot;#e3a72f&quot; letter-spacing=&quot;2&quot;&gt;WOLFPACK&lt;/text&gt;&lt;/svg&gt;`;
+const jar=(w,h)=&gt;`&lt;svg width=&quot;${w}&quot; height=&quot;${h}&quot; viewBox=&quot;0 0 220 160&quot;&gt;&lt;rect width=&quot;220&quot; height=&quot;160&quot; fill=&quot;#f6efe0&quot;/&gt;&lt;rect y=&quot;124&quot; width=&quot;220&quot; height=&quot;36&quot; fill=&quot;#e8dcc2&quot;/&gt;&lt;rect x=&quot;78&quot; y=&quot;48&quot; width=&quot;64&quot; height=&quot;76&quot; rx=&quot;10&quot; fill=&quot;#e3a72f&quot;/&gt;&lt;rect x=&quot;72&quot; y=&quot;38&quot; width=&quot;76&quot; height=&quot;16&quot; rx=&quot;5&quot; fill=&quot;#7a1f2b&quot;/&gt;&lt;path d=&quot;M110 30q-7-9 0-17 7 8 0 17z&quot; fill=&quot;#e5383b&quot;/&gt;&lt;rect x=&quot;92&quot; y=&quot;72&quot; width=&quot;36&quot; height=&quot;26&quot; rx=&quot;4&quot; fill=&quot;#fff8e8&quot;/&gt;&lt;/svg&gt;`;
+const ON=(()=&gt;{try{return JSON.parse(localStorage.getItem(&#x27;campusos.state.v1&#x27;)||&#x27;{}&#x27;).beatsOn||[]}catch(e){return []}})();
+const has=b=&gt;ON.indexOf(b)&gt;-1;
 const paw=`&lt;svg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 80 80&quot;&gt;&lt;ellipse cx=&quot;40&quot; cy=&quot;54&quot; rx=&quot;20&quot; ry=&quot;16&quot; fill=&quot;#e3a72f&quot;/&gt;&lt;ellipse cx=&quot;16&quot; cy=&quot;34&quot; rx=&quot;8&quot; ry=&quot;11&quot; fill=&quot;#e3a72f&quot;/&gt;&lt;ellipse cx=&quot;32&quot; cy=&quot;20&quot; rx=&quot;8&quot; ry=&quot;11&quot; fill=&quot;#e3a72f&quot;/&gt;&lt;ellipse cx=&quot;50&quot; cy=&quot;20&quot; rx=&quot;8&quot; ry=&quot;11&quot; fill=&quot;#e3a72f&quot;/&gt;&lt;ellipse cx=&quot;66&quot; cy=&quot;34&quot; rx=&quot;8&quot; ry=&quot;11&quot; fill=&quot;#e3a72f&quot;/&gt;&lt;/svg&gt;`;
 const mapSvg=`&lt;svg width=&quot;290&quot; height=&quot;140&quot; viewBox=&quot;0 0 290 140&quot;&gt;&lt;rect width=&quot;290&quot; height=&quot;140&quot; fill=&quot;#e9efe3&quot;/&gt;&lt;path d=&quot;M0 100h290M0 40h290M90 0v140M200 0v140&quot; stroke=&quot;#fff&quot; stroke-width=&quot;9&quot;/&gt;&lt;ellipse cx=&quot;145&quot; cy=&quot;68&quot; rx=&quot;52&quot; ry=&quot;30&quot; fill=&quot;#c9d3c0&quot; stroke=&quot;#7a1f2b&quot; stroke-width=&quot;3&quot;/&gt;&lt;text x=&quot;145&quot; y=&quot;72&quot; text-anchor=&quot;middle&quot; font-size=&quot;11&quot; font-weight=&quot;700&quot; fill=&quot;#7a1f2b&quot;&gt;NORTHFIELD ARENA&lt;/text&gt;&lt;g transform=&quot;translate(205,52)&quot;&gt;&lt;path d=&quot;M0 0c-10 0-16 7-16 15 0 11 16 25 16 25s16-14 16-25c0-8-6-15-16-15z&quot; fill=&quot;#e5383b&quot;/&gt;&lt;circle cx=&quot;0&quot; cy=&quot;14&quot; r=&quot;6&quot; fill=&quot;#fff&quot;/&gt;&lt;/g&gt;&lt;circle cx=&quot;52&quot; cy=&quot;104&quot; r=&quot;7&quot; fill=&quot;#0b84fe&quot; stroke=&quot;#fff&quot; stroke-width=&quot;3&quot;/&gt;&lt;/svg&gt;`;
 const tip=`&lt;svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.5&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M5 13l4 4L19 7&quot;/&gt;&lt;/svg&gt;`;
 
 const S=[];
+if(has(&#x27;b0&#x27;)){
+S.push(T(&#x27;Fri, Aug 14 &amp;middot; 11:20 AM&#x27;,0));
+S.push(IN(`Hey ${NM}, welcome to Northfield State. I am Wolfie, your campus assistant. Want to start a dorm wish list? Family can claim items and pay, and it gets delivered to your room.`,&#x27;wish&#x27;));
+S.push(CH(&#x27;Start my list&#x27;,&#x27;Not now&#x27;));
+S.push(OUT(&#x27;Start my list&#x27;,&#x27;Read 11:21 AM&#x27;));
+S.push(RICH(`&lt;div class=&quot;card&quot;&gt;&lt;div class=&quot;ch&quot;&gt;&lt;b&gt;Dorm wish list&lt;/b&gt;&lt;span&gt;Hall 3 &amp;middot; move-in Sat, Aug 22&lt;/span&gt;&lt;/div&gt;
+ &lt;div class=&quot;slot&quot;&gt;&lt;div&gt;&lt;b&gt;Twin XL bedding set&lt;/b&gt;&lt;span&gt;Claimed and paid by family&lt;/span&gt;&lt;/div&gt;&lt;button class=&quot;pbtn o&quot;&gt;Claimed&lt;/button&gt;&lt;/div&gt;
+ &lt;div class=&quot;slot&quot;&gt;&lt;div&gt;&lt;b&gt;Mini fridge&lt;/b&gt;&lt;span&gt;Claimed and paid by family&lt;/span&gt;&lt;/div&gt;&lt;button class=&quot;pbtn o&quot;&gt;Claimed&lt;/button&gt;&lt;/div&gt;
+ &lt;div class=&quot;slot&quot;&gt;&lt;div&gt;&lt;b&gt;Desk lamp and storage bins&lt;/b&gt;&lt;span&gt;Open&lt;/span&gt;&lt;/div&gt;&lt;button class=&quot;pbtn&quot;&gt;Share&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;`));
+S.push(IN(&#x27;Two items are claimed. Everything is delivered to Hall 3 on move-in day. Dorm setup and a device each term can come with Access if you want them.&#x27;));
+}
 S.push(A(0),T(&#x27;Mon, Oct 26 &amp;middot; 4:12 PM&#x27;,0));
 S.push(IN(`Hey ${NM}, midterms are behind you. Let me know if you want me to sign you up for some tutoring in Econ. They have some open spots on Wednesday mornings.`,&#x27;nudge&#x27;));
 S.push(CH(&#x27;Sign me up&#x27;,&#x27;See the times&#x27;,&#x27;Not now&#x27;));
@@ -861,6 +880,13 @@ S.push(RICH(`&lt;div class=&quot;car&quot;&gt;
  &lt;div class=&quot;ocard&quot;&gt;&lt;div class=&quot;im&quot; style=&quot;background:#d8d2c8&quot;&gt;${tee(204,118)}&lt;/div&gt;&lt;div class=&quot;bd&quot;&gt;&lt;b&gt;Wolfpack T-shirt&lt;/b&gt;&lt;span&gt;$14.00 &amp;middot; sizes in stock&lt;/span&gt;&lt;button class=&quot;pbtn o&quot; style=&quot;width:100%&quot;&gt;View&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
  &lt;div class=&quot;ocard&quot;&gt;&lt;div class=&quot;im&quot; style=&quot;background:#d8d2c8&quot;&gt;${cap(204,118)}&lt;/div&gt;&lt;div class=&quot;bd&quot;&gt;&lt;b&gt;Wolfpack Hat&lt;/b&gt;&lt;span&gt;Sizes in stock&lt;/span&gt;&lt;button class=&quot;pbtn o&quot; style=&quot;width:100%&quot;&gt;View&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
  &lt;div class=&quot;ocard&quot;&gt;&lt;div class=&quot;im&quot; style=&quot;background:#f6efe0&quot;&gt;${paw}&lt;/div&gt;&lt;div class=&quot;bd&quot;&gt;&lt;b&gt;Free foam paw&lt;/b&gt;&lt;span&gt;With any purchase&lt;/span&gt;&lt;button class=&quot;pbtn o&quot; style=&quot;width:100%&quot;&gt;Claim&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;`,&#x27;offers&#x27;));
+if(has(&#x27;b5b&#x27;)){
+S.push(IN(&#x27;This week the pop-up also has a campus-exclusive drop, an alumni-made item and a Wolves NIL tee. NIL proceeds return to campus.&#x27;,&#x27;collab&#x27;));
+S.push(RICH(`&lt;div class=&quot;car&quot;&gt;
+ &lt;div class=&quot;ocard&quot;&gt;&lt;div class=&quot;im&quot; style=&quot;background:#d8d2c8&quot;&gt;${hoodie(204,118)}&lt;/div&gt;&lt;div class=&quot;bd&quot;&gt;&lt;b&gt;Harbor &amp;amp; Stitch x Northfield&lt;/b&gt;&lt;span&gt;Campus exclusive &amp;middot; price after login&lt;/span&gt;&lt;button class=&quot;pbtn o&quot; style=&quot;width:100%&quot;&gt;View&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+ &lt;div class=&quot;ocard&quot;&gt;&lt;div class=&quot;im&quot; style=&quot;background:#f6efe0&quot;&gt;${jar(204,118)}&lt;/div&gt;&lt;div class=&quot;bd&quot;&gt;&lt;b&gt;Made by a Northfield alum&lt;/b&gt;&lt;span&gt;New this month, alumni-owned&lt;/span&gt;&lt;button class=&quot;pbtn o&quot; style=&quot;width:100%&quot;&gt;View&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+ &lt;div class=&quot;ocard&quot;&gt;&lt;div class=&quot;im&quot; style=&quot;background:#d8d2c8&quot;&gt;${tee(204,118)}&lt;/div&gt;&lt;div class=&quot;bd&quot;&gt;&lt;b&gt;Wolves NIL tee&lt;/b&gt;&lt;span&gt;Proceeds return to campus&lt;/span&gt;&lt;button class=&quot;pbtn o&quot; style=&quot;width:100%&quot;&gt;View&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;`));
+}
 S.push(CH(&#x27;Pay and Pick Up&#x27;));
 
 S.push(A(4),T(&#x27;Fri, Nov 20 &amp;middot; 6:38 PM&#x27;,25));
@@ -876,6 +902,30 @@ S.push(RICH(`&lt;div class=&quot;sv&quot;&gt;&lt;b&gt;Spring course materials&lt
 S.push(CH(&#x27;Show my schedule&#x27;,&#x27;Remind me Nov 30&#x27;));
 S.push(OUT(&#x27;Remind me Nov 30&#x27;,&#x27;Read 10:05 AM&#x27;));
 S.push(IN(&#x27;Done. I will text you the day before.&#x27;));
+if(has(&#x27;b6b&#x27;)){
+S.push(T(&#x27;Mon, Apr 26 &amp;middot; 5:10 PM&#x27;,26));
+S.push(IN(`Spring clean time, ${NM}. Trade in clothes and gear for store credit. The best pieces get resold and the rest are donated.`,&#x27;tradein&#x27;));
+S.push(RICH(`&lt;div class=&quot;card&quot;&gt;&lt;div class=&quot;ch&quot;&gt;&lt;b&gt;Trade-in&lt;/b&gt;&lt;span&gt;4 items graded at the Arena Store&lt;/span&gt;&lt;/div&gt;
+ &lt;div class=&quot;slot&quot;&gt;&lt;div&gt;&lt;b&gt;$38 store credit&lt;/b&gt;&lt;span&gt;or 380 Pack Points&lt;/span&gt;&lt;/div&gt;&lt;button class=&quot;pbtn&quot;&gt;Take credit&lt;/button&gt;&lt;/div&gt;
+ &lt;div class=&quot;cardfoot&quot;&gt;${tip} 2 items to resale, 2 donated to the campus pantry&lt;/div&gt;&lt;/div&gt;`));
+}
+if(has(&#x27;b6c&#x27;)){
+S.push(T(&#x27;Mon, Nov 30 &amp;middot; 8:00 AM&#x27;,26));
+S.push(IN(&#x27;Registration is open. I compared your spring materials across five sellers. Access has the lowest total at $212, against $389 at market price. Want me to add it?&#x27;,&#x27;shops&#x27;));
+S.push(RICH(`&lt;div class=&quot;sv&quot;&gt;&lt;b&gt;Your spring materials, five sellers&lt;/b&gt;&lt;div class=&quot;bar&quot; style=&quot;background:#0a8f5b;width:55%&quot;&gt;Access &amp;nbsp; $212&lt;/div&gt;&lt;div class=&quot;bar&quot; style=&quot;background:#8b94a0;width:78%&quot;&gt;Marketplace A &amp;nbsp; $301&lt;/div&gt;&lt;div class=&quot;bar&quot; style=&quot;background:#8b94a0;width:85%&quot;&gt;Marketplace B &amp;nbsp; $329&lt;/div&gt;&lt;div class=&quot;bar&quot; style=&quot;background:#8b94a0;width:100%&quot;&gt;Market price &amp;nbsp; $389&lt;/div&gt;&lt;/div&gt;`));
+S.push(CH(&#x27;Add Access&#x27;,&#x27;Show details&#x27;));
+S.push(OUT(&#x27;Add Access&#x27;,&#x27;Read 8:01 AM&#x27;));
+S.push(IN(&#x27;Added. Your student price is verified, and you can change this any time.&#x27;));
+}
+if(has(&#x27;ep&#x27;)){
+S.push(T(&#x27;Thu, May 7, 2030 &amp;middot; 4:00 PM&#x27;,26));
+S.push(IN(`Congratulations, ${NM}. Class of 2030. Four years of Pack Points tiers took you to Gold.`,&#x27;classof&#x27;));
+S.push(RICH(`&lt;div class=&quot;card&quot;&gt;&lt;div class=&quot;ch&quot;&gt;&lt;b&gt;Alumni of the Year&lt;/b&gt;&lt;span&gt;Cross-school leaderboard, 12 campuses&lt;/span&gt;&lt;/div&gt;
+ &lt;div class=&quot;slot&quot;&gt;&lt;div&gt;&lt;b&gt;1. Palmetto Coast University&lt;/b&gt;&lt;span&gt;Alumni engagement 94&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+ &lt;div class=&quot;slot&quot;&gt;&lt;div&gt;&lt;b&gt;2. Granite Valley College&lt;/b&gt;&lt;span&gt;Alumni engagement 91&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+ &lt;div class=&quot;slot&quot;&gt;&lt;div&gt;&lt;b&gt;3. Northfield State&lt;/b&gt;&lt;span&gt;Alumni engagement 88&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;`));
+S.push(IN(&#x27;Your channels stay with you after graduation. The alumni leaderboard is open.&#x27;));
+}
 S.push(`&lt;div class=&quot;endcap&quot;&gt;&lt;b&gt;End of student story&lt;/b&gt;The same assistant, on one governed data foundation, serves every student, faculty member and campus partner.&lt;/div&gt;`);
 
 const BEATS=[&#x27;The nudge&#x27;,&#x27;Trust over time&#x27;,&#x27;Community&#x27;,&#x27;First game&#x27;,&#x27;Arena store&#x27;,&#x27;Next morning&#x27;];
@@ -1709,6 +1759,21 @@ renderAll();
 "></iframe></div>
 <div class="talk"><b>Talk track · CFO vignette and close</b><p>Click through. Watch the moment the CFO approves, and the moment Follett's days-to-pay drops.</p><p>So with the critical data you have today, some you leverage and some stashed in silos, and with data we are confident you can obtain, we believe you can build the Follett Campus OS.</p></div>
 </div>
+<div class="vig" id="v-teams">
+<div class="win"><div class="bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="url">Campus OS · CFO in Microsoft Teams (simulated)</span><span class="sim">SIMULATED</span></div>
+<iframe class="cfof" title="CFO in Teams" data-src="teams.html"></iframe></div>
+<div class="talk"><b>Talk track · CFO in Teams</b><p>The CFO never opens an app. The same agents come to her where she already works. Approve something here and watch it show as done in the Command Center: same agents, same data, different surface.</p></div>
+</div>
+<div class="vig" id="v-group">
+<div class="win"><div class="bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="url">Campus OS · Group Command (sample)</span><span class="sim">SIMULATED</span></div>
+<iframe class="cfof" title="Group Command" data-src="group.html"></iframe></div>
+<div class="talk"><b>Talk track · Group Command</b><p>This is what a Group Vice President would run on instead of spreadsheets. Start from priorities, tap a campus, see it the way the campus CFO sees it, then click through to Operations Control to watch the work itself.</p></div>
+</div>
+<div class="vig" id="v-shelf">
+<div class="win"><div class="bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="url">Campus OS · Idea Shelf (sample)</span><span class="sim">SIMULATED</span></div>
+<iframe class="cfof" title="Idea Shelf" data-src="shelf.html"></iframe></div>
+<div class="talk"><b>Talk track · Idea Shelf</b><p>Every idea has to win for the student, the university and Follett. Toggle what we show, reorder the run of show, and keep everything else on the shelf. The shelf is not a promise.</p></div>
+</div>
 <p class="disc">Illustrative simulation with fictional sample data. Clean-room, consent and FERPA handling is design intent, to be validated with Follett legal and each campus. Our demo today is mostly experiences, not software.</p>
 </div></section>
 
@@ -1771,7 +1836,14 @@ renderAll();
 <script>
 const $=s=>document.querySelector(s);
 $('#pmt').onclick=()=>{document.body.classList.toggle('pm');$('#pmt').textContent='Presenter notes: '+(document.body.classList.contains('pm')?'on':'off')};
-document.querySelectorAll('#seg button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#seg button').forEach(x=>x.classList.toggle('on',x==b));$('#v-stud').classList.toggle('show',b.dataset.p=='stud');$('#v-cfo').classList.toggle('show',b.dataset.p=='cfo')});
+let _bo=null;
+function reloadPhone(){try{const f=$('#phoneFrame');ps={key:null,day:0,active:[],beat:0,all:false};f.contentWindow.location.reload()}catch(e){}}
+function checkBeats(){let b='';try{b=JSON.stringify((JSON.parse(localStorage.getItem('campusos.state.v1')||'{}').beatsOn)||[])}catch(e){}if(_bo!==null&&b!==_bo)reloadPhone();_bo=b}
+checkBeats();addEventListener('storage',e=>{if(e.key==='campusos.state.v1')checkBeats()});
+try{new BroadcastChannel('campusos').onmessage=()=>setTimeout(checkBeats,50)}catch(e){}
+function showPane(p){document.querySelectorAll('#seg button').forEach(x=>x.classList.toggle('on',x.dataset.p==p));['stud','cfo','teams','group','shelf'].forEach(k=>{const v=$('#v-'+k);if(v)v.classList.toggle('show',k==p)});const f=document.querySelector('#v-'+p+' iframe[data-src]');if(f&&!f.src){f.src=f.dataset.src}fitDemo()}
+document.querySelectorAll('#seg button').forEach(b=>b.onclick=()=>showPane(b.dataset.p));
+addEventListener('message',e=>{const d=e.data;if(d&&d.campusosNav){showPane(d.campusosNav);if(d.campusosNav=='stud'||d.campusosNav=='student'){showPane('stud');if(d.beat==='receipt')cmd('beat',4)}}});
 
 /* ===== STUDENT (phone is an iframe; this panel follows it) ===== */
 /* ================= SOURCE CATALOG ================= */
@@ -1827,6 +1899,11 @@ const MOM={
  receipt:{t:'One transaction, three outcomes',c:'The same transaction updates the student\'s points, the commission ledger, and the record the university CFO will see next.',s:['pos','loyalty','ledger','tender']},
  half:{t:'Stay in the moment',c:'Live athletics data keeps the thread useful during the event.',s:['athletics']},
  nextday:{t:'One ledger',c:'Ticket scan and purchase land in the same loyalty ledger, which is how a first-time fan becomes a repeat fan.',s:['loyalty','athletics','pos']},
+ wish:{t:'Before day one',c:'A wish list the family can claim and pay for, delivered to the dorm. Payers are Follett customers, and the student opts in.',s:['pos','inventory','consent']},
+ collab:{t:'The pop-up menu grows',c:'A campus-exclusive drop, an alumni-made item and a Wolves NIL item sit beside the first-fan offer. NIL proceeds return to campus.',s:['pos','inventory','seg','athletics']},
+ tradein:{t:'Spring clean',c:'Trade-in credit lands in the same loyalty ledger. The best pieces are resold and the rest are donated.',s:['pos','loyalty','inventory']},
+ shops:{t:'Wolfie shops for you',c:'The assistant compares sellers for the student and picks Access. Student pricing is verified, and the student stays in control.',s:['sam','catalog','consent']},
+ classof:{t:'Class of 2030',c:'Four years of tiers pay off. The alumni leaderboard only Follett can run across campuses.',s:['loyalty','alumni','slack']},
  spring:{t:'Registration as a savings moment',c:'Catalog, Access pricing and declared major turn spring registration into a savings message the student actually wants.',s:['catalog','sam','sis','behavior']}
 };
 
@@ -1904,7 +1981,7 @@ sdraw();
 /* scale the demo as one unit so it fits the window height without browser zoom */
 function fitDemo(){
  const s=innerWidth>1180?Math.max(.55,Math.min(1,(innerHeight-220)/830)):1;
- document.querySelectorAll('.s3grid,#v-cfo .win').forEach(el=>{el.style.zoom=s<1?s:'';el.style.maxWidth=s<1?(el.classList.contains('s3grid')?'1590px':'1378px'):'';el.style.margin=s<1?'0 auto':''});
+ document.querySelectorAll('.s3grid,.vig:not(#v-stud) .win').forEach(el=>{el.style.zoom=s<1?s:'';el.style.maxWidth=s<1?(el.classList.contains('s3grid')?'1590px':'1378px'):'';el.style.margin=s<1?'0 auto':''});
 }
 addEventListener('resize',fitDemo);fitDemo();
 
