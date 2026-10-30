@@ -1,4 +1,4 @@
-/* Shared synthetic data for every Campus OS surface (CFO Command Center, Teams, Group Command, Idea Shelf).
+/* Shared synthetic data for every Campus OS surface (CFO Command Center, Teams, Sales Command Center, Idea Shelf).
    All data is fictional. Fictional institution: Northfield State University (Wolves, Wolfie).
    Any number shown on two surfaces must come from here so it reconciles. No student-level fields. No em or en dashes in copy. */
 (function(){
@@ -27,11 +27,11 @@ var NF={
   gatewayStudents:2940,sections:1180,registerLines:4212,
   campaigns:{parents:{n:'Parents Weekend',spendK:10,multiple:3.1,liftK:140,commissionK:30.8,date:'Nov 7 to 8'},
              homecoming:{n:'Homecoming pop-up',salesK:186,vsLY:22}},
-  arena:{firstTimeFans:214,firstFanOffer:20,receipt:43.20,points:120},
+  arena:{firstTimeFans:214,firstFanOffer:20,receipt:11.20,points:120},
   accessInvoice:{amountM:2.44,due:'Nov 20',label:'Fall Access invoice'},
   savings:{termM:1.61,studentTo:64,spring:{access:212,market:389,save:177}},
   renewal:{score:74,digital:58,nps:64,boardDate:'Nov 12'},
-  daysToPay:{before:47,after:31} /* Follett side, shown on Group Command after the CFO approves */
+  daysToPay:{before:47,after:31} /* Follett side, shown on Sales Command Center after the CFO approves */
 };
 
 /* ---------- Agent roster. Defined once, rendered by every surface. ---------- */
@@ -57,7 +57,7 @@ var USECASES=[
   {id:5,k:'campaign',n:'Approve campaign',agent:'evt',trigger:'Parents Weekend 3.1x on $10K',action:'Approve $10K, creative released',proof:'Modeled $140K lift, $30.8K commission'},
   {id:6,k:'renewal',n:'Renewal readiness',agent:'ren',trigger:'Score 74/100, digital 58, NPS 64, commission 15.4% vs peers 14.6%',action:'Draft board finance summary for Nov 12',proof:'Memo drafted, editable'},
   {id:7,k:'event',n:'Event proof (student tie)',agent:'evt',isNew:true,trigger:'Arena Store pop-up: 214 first-time fans, first-fan offer redemptions',action:'Compare to Homecoming pop-up ($186K, +22%), one click to repeat at the spring home opener',proof:'Pop-up card ties to the student receipt'},
-  {id:8,k:'pay',n:'Pay the invoice (closing beat)',agent:'inv',isNew:true,trigger:'Net fall Access invoice $2.44M due Nov 20 after disputes cleared',action:'Approve and schedule payment',proof:'Follett days-to-pay drops (shown on Group Command)'},
+  {id:8,k:'pay',n:'Pay the invoice (closing beat)',agent:'inv',isNew:true,trigger:'Net fall Access invoice $2.44M due Nov 20 after disputes cleared',action:'Approve and schedule payment',proof:'Follett days-to-pay drops (shown on Sales Command Center)'},
   {id:9,k:'ask',n:'Ask anything',agent:'prv',trigger:'Free text',action:'Answers with source chips and a zone label (Follett, University, CFO-only)',proof:'Source on every answer'},
   {id:10,k:'accessplan',n:'Access expansion proposal',agent:'agr',isNew:true,idea:'D2',trigger:'4 departments cluster on Access, peers already moved',action:'Save-students-$X proposal card, send to Provost, schedule review',proof:'Modeled student savings and Follett revenue side by side'},
   {id:11,k:'outcome',n:'Outcome proof',agent:'ret',isNew:true,idea:'D5',trigger:'Access vs non-Access cohorts, aggregate, from Institutional Research',action:'Share with Provost and board packet',proof:'Retention delta with its source and an aggregate-only label'},
@@ -182,7 +182,7 @@ var IDEAS=[
   {id:'J5',n:'Alumni and maker shelf',beat:'Beat 5b',status:'neu',lens:{s:1,c:1,g:1},student:'"New this month: alumni-owned."',cfo:'Shelf partner approvals, link to the advancement office',gvp:'Shelf slots by store, vendor onboarding',guard:'Dropship take rate is assumed.'},
   {id:'J6',n:'Student influencer and marketing program',beat:'Existing ambassador flow',status:'opt',lens:{s:1,c:1,g:1},student:'Ambassador flow with a quarterly plan scorecard: engagement, traffic, transactions.',cfo:'Program card, certifications earned',gvp:'Program results by campus',guard:'Student opt-in. Brand and compliance review. Figures are synthetic.'},
   {id:'J7',n:'Four-year gamified loyalty',beat:'Existing Pack Points',status:'upg',lens:{s:1,c:1,g:1},student:'Year tiers across 2 or 4 years, tied to Earn Your Colors.',cfo:'Loyalty cost vs lift panel',gvp:'Enrollment and tier mix by campus',guard:'Loyalty platform rebuild in progress.'},
-  {id:'J8',n:'Alumni of the Year, cross-school',beat:'Epilogue',status:'uni',lens:{s:1,c:0,g:1},student:'Cross-school leaderboard only Follett can run.',cfo:'Alumni engagement counts',gvp:'Network view across campuses in Group Command',guard:'Needs university agreement for alumni lists.'},
+  {id:'J8',n:'Alumni of the Year, cross-school',beat:'Epilogue',status:'uni',lens:{s:1,c:0,g:1},student:'Cross-school leaderboard only Follett can run.',cfo:'Alumni engagement counts',gvp:'Network view across campuses in Sales Command Center',guard:'Needs university agreement for alumni lists.'},
   {id:'J9',n:'Last-mile delivery',beat:'Beats 0 and 5',status:'neu',lens:{s:1,c:1,g:1},student:'Delivered to the dorm or seat. A generic delivery partner.',cfo:'Delivery fee and services lines',gvp:'Partner feed and SLA in Operations Control',guard:'New. Generic partner, no brand.'},
   {id:'J10',n:'Store-in-store',beat:'Beat 1',status:'neu',lens:{s:1,c:1,g:1},student:'Tutoring booking becomes a Learning Commons corner in the store, plus an adulting corner.',cfo:'Partner revenue share',gvp:'Slot map by store and partner results',guard:'Partner contracts per campus.'},
   {id:'D1',n:'Supercharge first-party data',beat:'Consent passport',status:'opt',lens:{s:1,c:1,g:1},student:'The consent passport gains an enrichment step: degree, graduation year, interests. Loyalty is the way it is collected.',cfo:'"Enriched with consent" zone, aggregate coverage',gvp:'Enrichment coverage by campus, anonymized segment export only',guard:'Never from FERPA records. Anonymized segments only. Flag for legal.'},

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Campus Partner Agent in a team chat (simulated)</title>
+<style>
+:root{--maroon:#7a1f2b;--gold:#e3a72f;--teal:#1f7a6d;--ink:#14171c;--acc:#5b5fc7;--acc2:#4f52b2;--rail:#2d2c4a;--bg:#f5f5f7;--line:#e1e1e8;--mut:#616670;--card:#fff;--ok:#1f7a6d;--warn:#b26b00;--red:#c4314b}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","SF Pro Text",Roboto,Helvetica,Arial,sans-serif;font-size:13.5px;line-height:1.4;color:var(--ink);background:#e9e9ef;overflow:hidden;display:flex;flex-direction:column}
+button{font:inherit;cursor:pointer}
+.top{height:44px;flex:none;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:0 14px}
+.shell-lab{font-weight:700;font-size:12.5px;color:var(--acc2);display:flex;align-items:center;gap:8px;white-space:nowrap}
+.shell-lab i{width:20px;height:20px;border-radius:6px;background:var(--acc);display:grid;place-items:center;color:#fff;font-style:normal;font-size:11px}
+.tog{display:inline-flex;border:1px solid var(--line);border-radius:99px;padding:2px;background:#f2f2f6}
+.tog span{font-size:11px;color:var(--mut);padding:5px 4px 5px 10px;font-weight:700}
+.tog button{border:0;background:transparent;padding:5px 12px;border-radius:99px;font-size:12px;font-weight:700;color:var(--ink)}
+.tog button.on{background:var(--acc);color:#fff}
+.state{display:flex;gap:5px;flex:1;min-width:0;overflow:hidden}
+.sp{font-size:10.5px;border:1px solid var(--line);background:#fafafc;border-radius:99px;padding:3px 7px;white-space:nowrap;color:var(--mut)}
+.sp b{color:var(--ink)}.sp.ok{border-color:#9ccfc6;background:#eaf6f3}.sp.ok b{color:var(--ok)}
+.tb{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:600;color:var(--ink)}
+.tb:hover{border-color:var(--acc)}
+.main{flex:1;min-height:0;display:grid;grid-template-columns:56px 244px minmax(0,1fr) 316px}
+.rail{background:var(--rail);display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 0}
+.rail div{width:40px;height:44px;border-radius:8px;display:grid;place-items:center;color:#b9b8d6}
+.rail div.on{background:rgba(255,255,255,.14);color:#fff}
+.rail svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.chats{background:#f0f0f5;border-right:1px solid var(--line);overflow:auto}
+.chats h3{font-size:15px;padding:14px 14px 8px}
+.chats .sec{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:800;padding:10px 14px 4px}
+.ci{display:flex;gap:10px;padding:9px 14px;cursor:pointer;border-left:3px solid transparent}
+.ci:hover{background:#e8e8f0}.ci.on{background:#fff;border-left-color:var(--acc)}
+.av{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px}
+.av.ag{background:var(--maroon)}.av.pv{background:var(--teal)}.av.sh{background:var(--acc)}.av.ph{background:var(--ink)}.av.me{background:#7b6a3a}
+.ci b{display:block;font-size:13px}.ci small{display:block;color:var(--mut);font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:158px}
+.convo{display:flex;flex-direction:column;min-width:0;min-height:0;background:var(--bg)}
+.ch-h{background:#fff;border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:10px}
+.ch-h b{font-size:15px}.ch-h small{color:var(--mut)}
+.scenes{display:flex;gap:6px;padding:8px 14px;background:#fff;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.scenes button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:5px 11px;font-size:12px;font-weight:600;color:var(--mut)}
+.scenes button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.scenes button i{font-style:normal;opacity:.7;margin-right:5px}
+.thread{flex:1;min-height:0;overflow:auto;padding:14px 18px 10px}
+.sep{text-align:center;font-size:11px;color:var(--mut);margin:6px 0 12px;font-weight:700;letter-spacing:.04em}
+.m{display:flex;gap:10px;margin-bottom:12px}.m.me{flex-direction:row-reverse}
+.m .bd{max-width:640px;min-width:0}
+.m .nm{font-size:11.5px;color:var(--mut);margin-bottom:2px}.m.me .nm{text-align:right}
+.bub{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+.m.me .bub{background:#e8e9fb;border-color:#d3d5f4}
+.bub b{font-weight:700}
+.card{background:#fff;border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:10px;margin-top:8px;overflow:hidden;cursor:pointer;width:560px;max-width:100%}
+.card.sel{box-shadow:0 0 0 2px var(--acc)}
+.card.done{border-left-color:var(--ok)}
+.card.wide{width:620px}
+.cht{display:flex;align-items:center;gap:8px;padding:9px 12px 0}
+.cht b{font-size:13.5px}
+.cht .sp2{flex:1}
+.mk{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:99px;padding:2px 8px;display:inline-flex;align-items:center;gap:4px}
+.mk.private{background:#f1ecd9;color:#7a5b00}.mk.shared{background:#e3e5fa;color:var(--acc2)}
+.mk svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2}
+.cb{padding:6px 12px 11px}
+.cb p{color:#333;margin:3px 0}
+.kv{display:grid;grid-template-columns:1fr auto;gap:2px 12px;margin:6px 0;font-size:13px}.kv span:nth-child(odd){color:var(--mut)}.kv span:nth-child(even){text-align:right;font-weight:700}
+.big{font:700 22px Georgia,serif;color:var(--maroon)}
+.btns{display:flex;gap:8px;margin-top:9px;flex-wrap:wrap;align-items:center}
+.b{border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:7px;padding:7px 13px;font-weight:700;font-size:12.5px}
+.b:hover{background:var(--acc2)}.b.o{background:#fff;color:var(--acc2)}.b.g{background:var(--teal);border-color:var(--teal)}.b.d{background:#fff;border-color:var(--line);color:var(--mut)}
+.b[disabled]{opacity:.45;cursor:default}
+.cfm{background:#fff8e8;border:1px dashed var(--gold);border-radius:8px;padding:8px 10px;margin-top:9px;font-size:12.5px}
+.cfm .btns{margin-top:6px}
+.ok-row{display:flex;align-items:center;gap:8px;color:var(--ok);font-weight:700;margin-top:4px}
+.ok-row svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4}
+.undo{display:flex;align-items:center;gap:10px;margin-top:7px;font-size:12px;color:var(--mut)}
+.undo b{font-variant-numeric:tabular-nums;color:var(--ink)}
+table.t{width:100%;border-collapse:collapse;margin:6px 0;font-size:12.5px}
+table.t th{text-align:left;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);padding:4px 6px;border-bottom:1px solid var(--line)}
+table.t td{padding:5px 6px;border-bottom:1px solid #f0f0f4}table.t td.n,table.t th.n{text-align:right;font-variant-numeric:tabular-nums}
+table.t tr.hl td{background:#fff8e8;font-weight:700}
+.doc{border:1px solid #cfd2e6;border-radius:6px;background:#fff;padding:14px 18px;margin-top:6px;font-family:Georgia,serif;font-size:13px;line-height:1.5}
+.doc h4{font:700 15px Georgia,serif;margin-bottom:4px}.doc h5{font:700 12px -apple-system,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--maroon);margin:9px 0 2px}
+.doc ul{margin:2px 0 2px 18px}.doc:focus{outline:2px solid var(--acc)}
+.docbar{display:flex;align-items:center;gap:8px;padding:7px 12px;background:#eef0fb;border-bottom:1px solid #d3d5f4;font-size:12px;color:var(--acc2);font-weight:700}
+.docbar svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}
+.chip{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:2px 9px;font-size:11px;background:#fafafc;margin:2px 4px 2px 0}
+.chip.z{font-weight:700}.chip.z.Follett{background:#fbe9ec;border-color:#e9b7bf;color:var(--maroon)}.chip.z.University{background:#e5eefb;border-color:#b6cbee;color:#1f4f9c}.chip.z.CFO-only{background:#f1ecd9;border-color:#e2d49d;color:#7a5b00}
+.st{display:inline-block;border-radius:99px;padding:1px 8px;font-size:10.5px;font-weight:700;white-space:nowrap}
+.st.have{background:#e3f3ef;color:#13574d}.st.upg{background:#fdf0d4;color:#8a5a00}.st.uni{background:#e5eefb;color:#1f4f9c}.st.neu{background:#eee8fb;color:#5a3eb0}.st.opt{background:#fbe6ef;color:#a22a5e}
+.cal-row{display:grid;grid-template-columns:1fr 70px 70px auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f4}
+.cal-row small{display:block;color:var(--mut);font-size:11.5px}.cal-row .n{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.cal-h{display:grid;grid-template-columns:1fr 70px 70px auto;gap:10px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);padding-bottom:3px;border-bottom:1px solid var(--line)}
+.cal-h span:nth-child(2),.cal-h span:nth-child(3){text-align:right}
+.chips2{display:flex;gap:7px;flex-wrap:wrap;margin:6px 0 4px}
+.qc{border:1px solid var(--acc);color:var(--acc2);background:#fff;border-radius:99px;padding:5px 11px;font-size:12px;font-weight:600}.qc:hover{background:#eef0fb}
+.comp{background:#fff;border-top:1px solid var(--line);padding:9px 14px;display:flex;gap:8px}
+.comp input{flex:1;border:1px solid var(--line);border-radius:8px;padding:9px 12px;font:inherit;outline:none}.comp input:focus{border-color:var(--acc)}
+.panel{background:#fff;border-left:1px solid var(--line);overflow:auto;padding:14px 16px}
+.panel h3{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc2);font-weight:800;margin-bottom:6px}
+.panel h2{font:700 17px Georgia,serif;margin-bottom:8px}
+.pb{margin-bottom:14px}.pb>small{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);font-weight:800;margin-bottom:5px}
+.src{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid var(--line);border-radius:8px;padding:6px 9px;margin-bottom:5px;font-size:12.5px;animation:lit .5s ease both}
+.src:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 3px rgba(91,95,199,.25);flex:none;margin-right:2px}
+.src span:first-of-type{flex:1}
+@keyframes lit{from{background:#e5e6fb;transform:translateX(6px);opacity:.3}to{background:#fff;transform:none;opacity:1}}
+.wb{display:flex;gap:7px;align-items:flex-start;font-size:12.5px;margin-bottom:4px}.wb svg{flex:none;width:15px;height:15px;margin-top:2px;fill:none;stroke:var(--ok);stroke-width:2.4}
+.wb.pend svg{stroke:#b9bcc6}
+.lg{display:flex;flex-wrap:wrap;gap:4px}
+.log{font-size:11.5px;color:var(--mut);border-top:1px solid var(--line);padding-top:6px;margin-top:4px}.log div{margin-bottom:3px}
+.foot{height:26px;flex:none;background:#fff;border-top:1px solid var(--line);padding:0 14px;display:flex;align-items:center;gap:14px;font-size:10.5px;color:var(--mut);white-space:nowrap;overflow:hidden}
+.toast{position:fixed;left:50%;bottom:40px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;border-radius:8px;padding:9px 16px;font-size:12.5px;opacity:0;transition:.25s;pointer-events:none;z-index:50}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.modal{position:fixed;inset:0;background:rgba(20,23,28,.5);z-index:40;display:none;align-items:center;justify-content:center}.modal.on{display:flex}
+.mbox{background:#fff;border-radius:14px;width:900px;max-width:94vw;max-height:88vh;overflow:auto;padding:18px 22px}
+.mbox h2{font:700 20px Georgia,serif;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.mtabs{display:flex;gap:6px;margin:8px 0 10px}
+.mtabs button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:5px 13px;font-weight:600;font-size:12px}.mtabs button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.uc{display:grid;grid-template-columns:28px 1fr 130px 60px 70px;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid #f0f0f4;font-size:12.5px}
+.uc small{display:block;color:var(--mut);font-size:11.5px}
+.tick{color:var(--ok);font-weight:800}
+/* phone scene */
+.phwrap{display:flex;gap:34px;align-items:center;justify-content:center;padding:6px 0}
+.phs .cht .sp2{display:none}.phs .cht{flex-wrap:wrap;gap:4px}.phs .mk{font-size:9px}
+.phone{width:290px;height:520px;border-radius:40px;background:#111;padding:11px;box-shadow:0 18px 40px rgba(0,0,0,.28);flex:none}
+.phs{background:#f5f5f7;border-radius:30px;height:100%;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.phs .ntch{width:92px;height:22px;background:#111;border-radius:14px;position:absolute;top:7px;left:50%;transform:translateX(-50%)}
+.phs .hd{padding:34px 14px 8px;background:#fff;border-bottom:1px solid var(--line);font-weight:700;display:flex;gap:8px;align-items:center}
+.phs .hd .av{width:26px;height:26px;font-size:11px}
+.phs .bdy{flex:1;overflow:auto;padding:10px}
+.phs .card{width:100%;cursor:default}
+.phs .big{font-size:18px}
+.phcap{max-width:300px;font-size:14px;color:#333}.phcap h3{font:700 20px Georgia,serif;margin-bottom:8px}.phcap p{margin:6px 0}
+.lock{background:#f1ecd9;border:1px dashed #d9c77a;border-radius:8px;padding:8px 11px;font-size:12px;color:#6a5100;margin:8px 0}
+.blocked{background:#fdeaee;border:1px solid #efb6c2;color:#8a1f37;border-radius:8px;padding:7px 10px;font-size:12px;margin-top:8px}
+@media(max-width:1380px){.main{grid-template-columns:52px 214px minmax(0,1fr) 290px}.ci small{max-width:128px}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="shell-lab"><i>T</i>Microsoft Teams (simulated)</div>
+  <div class="tog" title="Same agents, same state, different surface"><span>Same agents:</span><button id="goCfo">Command Center</button><button class="on" id="goTeams">Teams</button></div>
+  <div class="state" id="state"></div>
+  <button class="tb" id="bMap">13 use cases</button>
+  <button class="tb" id="bReset" title="Resets state on every surface">Reset demo state</button>
+</div>
+<div class="main">
+  <div class="rail" aria-hidden="true">
+    <div><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0-6 6c0 5-2 6-2 6h16s-2-1-2-6a6 6 0 0 0-6-6zM10 19a2 2 0 0 0 4 0"/></svg></div>
+    <div class="on"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.5A8 8 0 1 1 21 12z"/></svg></div>
+    <div><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3 19c0-3 3-5 6-5s6 2 6 5M15 14c3 0 6 1.6 6 4.4"/></svg></div>
+    <div><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+    <div><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v4h4"/></svg></div>
+  </div>
+  <div class="chats" id="chats"></div>
+  <div class="convo">
+    <div class="ch-h" id="chh"></div>
+    <div class="scenes" id="scenes"></div>
+    <div class="thread" id="thread"></div>
+    <div class="comp" id="comp"></div>
+  </div>
+  <div class="panel" id="panel"></div>
+</div>
+<div class="foot"><span>Illustrative simulation. Synthetic data.</span><span>Clean-room, consent and FERPA handling is design intent, to be validated with Follett legal and each campus.</span><span>Experience, not software.</span></div>
+<div class="toast" id="toast"></div>
+<div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
+<script src="campus-data.js"></script>
+<script>
+(function(){
+var D=CAMPUS_DATA,B=CampusBus,NF=D.NF,K=D.K;
+var KD=function(n){return '$'+Number(n).toFixed(1)+'K'};
+var $=function(s,r){return (r||document).querySelector(s)};
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+var st=function(){return B.state()};
+var agent=function(id){return D.AGENTS.filter(function(a){return a.id===id})[0]};
+var SVG={
+  lock:'<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
+  people:'<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3 19c0-3 3-5 6-5s6 2 6 5"/></svg>',
+  check:'<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>',
+  doc:'<svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6"/></svg>'
+};
+var mk=function(kind){return kind==='shared'?'<span class="mk shared">'+SVG.people+'Shared with Follett</span>':'<span class="mk private">'+SVG.lock+'Private to the university</span>'};
+
+/* ---------- local view state ---------- */
+var V={chat:'agent',scene:1,sel:'digest',pending:{},undoAt:{},asks:[],meetSent:false,memoSent:false,memoAsk:false,memoOpened:false,memoShareBlocked:false,fwd:false,cmt:{},openCmt:null,askOpen:false,tab:'map'};
+var SCENES=[
+  {n:1,t:'7:00 digest',chat:'agent',when:'Monday 7:00 AM',key:'digest'},
+  {n:2,t:'Confirm census date',chat:'agent',when:'Monday 7:02 AM',key:'release'},
+  {n:3,t:'Meeting @mention',chat:'meet',when:'Tuesday 10:15 AM',key:'gateway'},
+  {n:4,t:'Board memo',chat:'agent',when:'Tuesday 8:40 PM',key:'memo'},
+  {n:5,t:'$2.44M approval',chat:'agent',when:'Friday 3:10 PM',key:'pay'},
+  {n:6,t:'Spring calendar',chat:'agent',when:'Friday 3:25 PM',key:'calendar'},
+  {n:7,t:'Phone',chat:'phone',when:'Monday 12:40 PM',key:'campaign'},
+  {n:8,t:'Ask anything',chat:'agent',when:'Any time',key:'ask'}
+];
+
+/* ---------- explain panel content ---------- */
+var S=function(n,s){return {n:n,s:s}};
+var EX={
+  digest:{t:'7:00 digest',ag:['inv','com','evt'],src:[S('Registrar add/drop census file','have'),S('Billing invoice register','have'),S('POS lines and contract rate card','have'),S('Parents Weekend plan and model','have')],zone:'Follett',wb:[['Three cards posted to the chat',1],['Nothing is written until the CFO taps',0]],uc:'1, 2, 5'},
+  release:{t:'Confirm census date',ag:['inv'],src:[S('Registrar add/drop census file','have'),S('Billing invoice register','have'),S('Cohort flag file','have')],zone:'University',wb:[['Follett billing: 7 invoices released','released'],['Audit log entry with the approver and time','released']],uc:'1'},
+  commission:{t:'Commission variance',ag:['com'],src:[S('POS and e-commerce lines','have'),S('Contract rate card','have'),S('Digital paid rate feed','upg')],zone:'Follett',wb:[['Follett finance: credit request with 4 variance lines','commissionCredit'],['Audit log entry','commissionCredit']],uc:'2'},
+  campaign:{t:'Parents Weekend campaign',ag:['evt'],src:[S('Parents Weekend plan and model','have'),S('Prior event POS history','have'),S('Email and web behavior','have')],zone:'Follett',wb:[['Campaign approvals: creative released','campaign'],['Audit log entry','campaign']],uc:'5'},
+  gateway:{t:'Gateway course early warning',ag:['ret'],src:[S('Publisher access logs','upg'),S('Learning platform clean room','uni'),S('Registrar section roster','have')],zone:'University',wb:[['Provost report: course level only','provostReport'],['No student names or IDs leave the clean room',1]],uc:'4'},
+  memo:{t:'Board finance summary',ag:['ren'],src:[S('Renewal scorecard','have'),S('Peer commission benchmark','have'),S('Guarantee and invoice ledger','have'),S('Student survey scores','have')],zone:'CFO-only',wb:[['Board memo draft, editable','memo'],['Nothing external. Sending needs an explicit confirm',1]],uc:'6'},
+  pay:{t:'Fall Access invoice',ag:['inv'],src:[S('Invoice register after reconciliation','have'),S('Registrar census match','have'),S('Contract payment terms','have')],zone:'Follett',wb:[['Payment scheduled for Nov 20','accessPaid'],['Follett days-to-pay updates on Sales Command Center','accessPaid'],['Audit log entry','accessPaid']],uc:'8'},
+  calendar:{t:'Spring campus commerce calendar',ag:['cmc'],src:[S('Event POS history','have'),S('Venue slots','uni'),S('Loyalty platform events','upg'),S('Alumni and maker partners','neu')],zone:'Follett',wb:[['Event calendar: approved lines','calendar'],['Merch and POS plan updated','calendar']],uc:'12'},
+  afford:{t:'Affordability',ag:['aff'],src:[S('Adoption and opt-out feed','have'),S('Catalog price feed','have'),S('Registrar census file','have')],zone:'Follett',wb:[['Adoption review opened before Nov 14','adoptionReview']],uc:'3, 9'},
+  event:{t:'Pop-up proof',ag:['evt'],src:[S('Arena Store POS lines','have'),S('Loyalty ID link (wallet or Pack Points)','opt'),S('Ticket scans','uni')],zone:'Follett',wb:[['Repeat at spring home opener added to the event calendar','eventRepeat']],uc:'7'},
+  accessplan:{t:'Access expansion proposal',ag:['agr'],src:[S('Adoption by department','have'),S('Faculty adoption signals','upg'),S('Registrar section roster','have')],zone:'Follett',wb:[['Proposal sent to the Provost and a review scheduled','accessPlan'],['CRM lead and campaign queue updated','accessPlan']],uc:'10'},
+  outcome:{t:'Outcome proof',ag:['ret'],src:[S('Institutional Research aggregates','uni'),S('Access enrollment flags','have')],zone:'University',wb:[['Shared with the Provost and board packet','outcome']],uc:'11'},
+  services:{t:'Services add-on',ag:['ful'],src:[S('First-year move-in roster (aggregate)','uni'),S('Delivery partner status','neu'),S('Access invoice preview','have')],zone:'Follett',wb:[['Add-on line on the next Access invoice preview','services'],['Fulfillment queue','services']],uc:'13'},
+  ask:{t:'Private workspace',ag:['prv'],src:[S('Governed campus data only','have'),S('CFO notes and drafts','have')],zone:'CFO-only',wb:[['Nothing external. Never visible to Follett',1]],uc:'9'}
+};
+var LEGEND=[['have','Have today'],['upg','Have needs upgrade'],['uni','Needs university agreement'],['neu','New initiative'],['opt','Student opt-in only']];
+
+function panel(){
+  var e=EX[V.sel]||EX.digest,s=st();
+  var ag=e.ag.map(function(id){var a=agent(id);return '<div class="pb" style="margin-bottom:8px"><b>'+esc(a.n)+'</b><div style="font-size:12px;color:var(--mut)">'+esc(a.charter)+'</div></div>'}).join('');
+  var src=e.src.map(function(x,i){return '<div class="src" style="animation-delay:'+(i*90)+'ms"><span>'+esc(x.n)+'</span><span class="st '+x.s+'">'+esc(D.STATUS[{have:'have',upg:'upg',uni:'uni',neu:'neu',opt:'opt'}[x.s]])+'</span></div>'}).join('');
+  var wb=e.wb.map(function(w){var done=w[1]===1||(typeof w[1]==='string'&&(w[1]==='calendar'?Object.keys(s.calendar||{}).some(function(k){return s.calendar[k]}):s[w[1]]));
+    return '<div class="wb '+(done?'':'pend')+'">'+SVG.check+'<span>'+esc(w[0])+(done?'':' (pending)')+'</span></div>'}).join('');
+  var log=(s.log||[]).slice(0,4).map(function(l){var d=new Date(l.t);return '<div>'+d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})+' &middot; '+esc(l.surface)+': '+esc(l.what)+'</div>'}).join('')||'<div>No actions yet.</div>';
+  $('#panel').innerHTML='<h3>Behind the message</h3><h2>'+esc(e.t)+'</h2>'
+   +'<div class="pb"><small>Agent that ran</small>'+ag+'</div>'
+   +'<div class="pb"><small>Sources lit</small>'+src+'</div>'
+   +'<div class="pb"><small>Zone</small><span class="chip z '+e.zone+'">'+e.zone+'</span> <span style="font-size:11.5px;color:var(--mut)">use case '+e.uc+'</span></div>'
+   +'<div class="pb"><small>Wrote back to</small>'+wb+'</div>'
+   +'<div class="pb"><small>Status legend</small><div class="lg">'+LEGEND.map(function(l){return '<span class="st '+l[0]+'">'+l[1]+'</span>'}).join('')+'</div></div>'
+   +'<div class="pb"><small>Audit log, all surfaces</small><div class="log">'+log+'</div></div>';
+}
+function setSel(k){if(EX[k]){V.sel=k;panel();document.querySelectorAll('.card').forEach(function(c){c.classList.toggle('sel',c.dataset.x===k)})}}
+
+/* ---------- building blocks ---------- */
+function msg(who,name,time,html){var av=who==='me'?'<div class="av me">DW</div>':who==='prov'?'<div class="av pv">PV</div>':'<div class="av ag">CA</div>';
+  return '<div class="m '+(who==='me'?'me':'')+'">'+av+'<div class="bd"><div class="nm">'+esc(name)+' &middot; '+esc(time)+'</div>'+html+'</div></div>'}
+function bub(t){return '<div class="bub">'+t+'</div>'}
+function card(x,title,kind,body,cls){return '<div class="card '+(cls||'')+(V.sel===x?' sel':'')+'" data-x="'+x+'"><div class="cht"><b>'+title+'</b><span class="sp2"></span>'+mk(kind)+'</div><div class="cb">'+body+'</div></div>'}
+function fmtT(ms){var s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2)}
+
+/* an action card that is open, then confirmed, then a receipt with a 15 minute undo */
+function actionCard(o){
+  var s=st(),done=!!s[o.sk];
+  if(done){
+    if(!V.undoAt[o.key])V.undoAt[o.key]=Date.now()+15*60000;
+    var left=V.undoAt[o.key]-Date.now();
+    var undo=o.noUndo?'':(left>0?'<div class="undo"><span>Undo available for <b data-undo="'+o.key+'">'+fmtT(left)+'</b></span><button class="b d" data-a="undo" data-k="'+o.key+'">Undo</button></div>':'<div class="undo">Logged. Undo window closed.</div>');
+    return card(o.x,o.title,o.kind,'<div class="ok-row">'+SVG.check+esc(o.doneTitle)+'</div><p>'+o.doneDetail+'</p>'+undo,'done '+(o.cls||''));
+  }
+  var act=V.pending[o.key]
+   ?'<div class="cfm"><b>Confirm:</b> '+o.confirm+'<div class="btns"><button class="b g" data-a="yes" data-k="'+o.key+'">Confirm</button><button class="b d" data-a="no" data-k="'+o.key+'">Cancel</button></div></div>'
+   :'<div class="btns"><button class="b" data-a="go" data-k="'+o.key+'">'+esc(o.label)+'</button>'+(o.alt||'')+'</div>';
+  return card(o.x,o.title,o.kind,o.body+act,o.cls);
+}
+var AC={ /* action card definitions, built lazily so live numbers are fresh */
+  release:function(detail){var L=B.live;return {key:'release',x:'release',sk:'released',title:'$110.2K of Follett invoices are held',kind:'private',
+    body:'<p>One date disagrees with the Registrar: census is <b>Sep 12</b>, billing used <b>Sep 8</b>. That is 7 of '+NF.disputes.count+' disputed invoices.</p>'+(detail||'<div class="kv"><span>Open disputes</span><span>'+KD(L.disputed())+' of $212.0K</span></div>'),
+    label:'Confirm census date',confirm:'Use Sep 12 as the census date and release 7 invoices ($110.2K).',doneTitle:'7 invoices released',doneDetail:'$110.2K released and logged. Open disputes are now <b>'+KD(L.disputed())+'</b> across '+L.disputedCount()+' invoices.'}},
+  commission:function(){return {key:'commission',x:'commission',sk:'commissionCredit',title:'Commission is $41.8K short',kind:'private',
+    body:'<p>Digital was paid at <b>'+NF.commission.digitalPaid+'%</b>. The contract says <b>'+NF.commission.contractRate+'%</b>. Four register lines carry the variance.</p>',
+    label:'Request same-week credit',confirm:'Send a credit request for $41.8K with 4 variance lines to Follett finance.',doneTitle:'Credit requested',doneDetail:'Request for $41.8K with 4 variance lines sent to Follett finance this week. Variance now <b>'+KD(B.live.commissionVariance())+'</b>.'}},
+  campaign:function(){var c=NF.campaigns.parents;return {key:'campaign',x:'campaign',sk:'campaign',title:'Approve $10K for Parents Weekend creative',kind:'private',
+    body:'<p>Modeled at <b>'+c.multiple+'x</b> on $'+c.spendK+'K. Modeled lift <b>$'+c.liftK+'K</b>, commission <b>$'+c.commissionK+'K</b>. Event dates '+c.date+'.</p>',
+    label:'Approve $10K',confirm:'Approve $10K and release the Parents Weekend creative.',doneTitle:'Approved, creative released',doneDetail:'$10K approved. Creative released to the campaign queue.'}},
+  pay:function(){return {key:'pay',x:'pay',sk:'accessPaid',title:'Approve $2.44M, fall Access invoice due Nov 20',kind:'private',cls:'wide',
+    body:'<div class="kv"><span>Net fall Access invoice</span><span>$2.44M</span><span>Due</span><span>Nov 20</span><span>Open disputes after reconciliation</span><span>'+KD(B.live.disputed())+'</span><span>Evidence attached</span><span>Invoice register, census match</span></div><p style="color:var(--mut);font-size:12px">The net amount is stated after the disputes above are cleared.</p>',
+    label:'Approve and schedule',confirm:'Approve the $2.44M fall Access invoice and schedule payment for Nov 20.',doneTitle:'Payment scheduled for Nov 20',doneDetail:'$2.44M approved with evidence attached. Follett days-to-pay moves from <b>'+NF.daysToPay.before+'</b> to <b>'+NF.daysToPay.after+'</b> on Sales Command Center.'}},
+  afford:function(){var o=NF.optOuts;return {key:'afford',x:'afford',sk:'adoptionReview',title:'Open spring adoption review',kind:'private',
+    body:'',label:'Open the review before '+o.reviewBy,confirm:'Open a spring adoption review for the Business College before '+o.reviewBy+'.',doneTitle:'Adoption review opened',doneDetail:'Review opened before '+o.reviewBy+'. Opt-out and $'+o.riskPerTermK+'K a term at risk are tracked.'}},
+  provost:function(){return {key:'provost',x:'gateway',sk:'provostReport',title:'Send the course-level report to the Provost',kind:'private',
+    body:'',label:'Send course-level report',confirm:'Send the 5-course report to the Provost. No student data is included.',doneTitle:'Report sent to the Provost',doneDetail:'5 courses flagged. Course-level figures only, no student data sent.'}},
+  event:function(){return {key:'event',x:'event',sk:'eventRepeat',title:'Repeat at the spring home opener',kind:'private',
+    body:'',label:'Repeat at spring home opener',confirm:'Add an Arena Store pop-up to the spring home opener on the event calendar.',doneTitle:'Pop-up added to the spring calendar',doneDetail:'Spring home opener pop-up added and sent to Campus Commerce.'}},
+  accessplan:function(){return {key:'accessplan',x:'accessplan',sk:'accessPlan',title:'Send the proposal and schedule a review',kind:'private',
+    body:'',label:'Send to Provost and schedule review',confirm:'Send the Access proposal to the Provost and schedule a review.',doneTitle:'Proposal sent, review scheduled',doneDetail:'Sent to the Provost. Review scheduled.'}},
+  outcome:function(){return {key:'outcome',x:'outcome',sk:'outcome',title:'Share outcome proof',kind:'private',
+    body:'',label:'Share with Provost and board packet',confirm:'Share the aggregate outcome proof with the Provost and add it to the board packet.',doneTitle:'Shared with the Provost and board packet',doneDetail:'Aggregate only, with its source attached.'}},
+  services:function(){var v=D.SERVICES;return {key:'services',x:'services',sk:'services',title:'Approve the services add-on',kind:'private',
+    body:'',label:'Approve add-on',confirm:'Add dorm setup, delivery and a device each term to the Access invoice preview.',doneTitle:'Add-on approved',doneDetail:'Line added to the next Access invoice preview: <b>'+v.perTermAdd+'</b> a student a term, about <b>$'+v.invoiceImpactK+'K</b> on the invoice.'}}
+};
+function ac(name,detail,extra){var o=AC[name](detail);if(extra){for(var k in extra)o[k]=extra[k]}return actionCard(o)}
+
+/* ---------- scenes ---------- */
+function sc1(){
+  return '<div class="sep">Monday</div>'
+  +msg('ag','Campus Partner Agent','7:00 AM',bub('Good morning, Dana. Before you arrived the agents tied <b>'+NF.registerLines.toLocaleString()+'</b> register lines to your contract, matched <b>'+NF.disputes.count+'</b> disputed invoices to the Registrar file, and scored week-6 course access across <b>'+NF.sections.toLocaleString()+'</b> sections. Three things need you.'))
+  +msg('ag','Campus Partner Agent','7:00 AM',ac('release')+ac('commission')+ac('campaign'))
+  +'<div class="sep">Tap any card to see what is behind it, on the right</div>';
+}
+function sc2(){
+  var s=st(),rows=NF.disputes.causes.map(function(c){var rel=c.id==='census'&&s.released;return '<tr class="'+(c.id==='census'?'hl':'')+'"><td>'+esc(c.n)+'</td><td class="n">'+c.inv+'</td><td class="n">'+(rel?'$0.0K':KD(c.amt))+'</td></tr>'}).join('');
+  var det='<table class="t"><tr><th>Dispute cause</th><th class="n">Invoices</th><th class="n">Open</th></tr>'+rows+'<tr><td><b>Total open</b></td><td class="n"><b>'+B.live.disputedCount()+'</b></td><td class="n"><b>'+KD(B.live.disputed())+'</b></td></tr></table><p style="color:var(--mut);font-size:12px">Disputes always sum to $212.0K before any release: $110.2K + $63.8K + $38.0K.</p>';
+  return '<div class="sep">Monday</div>'
+  +msg('me','Dana Whitfield','7:02 AM',bub('Show me the census dispute.'))
+  +msg('ag','Campus Partner Agent','7:02 AM',bub('The Registrar file is newer than the billing date. Here is the evidence. Confirm and I will release the held invoices.')+ac('release',det))
+  +msg('ag','Campus Partner Agent','7:03 AM',bub('I also posted a one line update to the shared <b>Northfield x Follett Partnership</b> channel. It contains no student data and none of your private notes.'));
+}
+function sc3(){
+  var rows=NF.gateway.map(function(g){return '<tr><td>'+esc(g.c)+'</td><td class="n">'+g.n+'</td><td class="n">'+g.w6+'%</td><td class="n">'+g.prior+'%</td><td class="n">-'+D.DERIVED.gatewayDrop(g)+' pts</td></tr>'}).join('');
+  var r=D.DERIVED.gatewayRange();
+  var tbl='<p><b>5 gateway courses are below 70% week-6 digital access</b>, covering <b>'+NF.gatewayStudents.toLocaleString()+'</b> students. Drops range from '+r.min+' to '+r.max+' points vs last term.</p><table class="t"><tr><th>Course</th><th class="n">Students</th><th class="n">Week 6</th><th class="n">Last term</th><th class="n">Change</th></tr>'+rows+'</table><div style="font-size:12px;color:var(--mut)">Course level only. No names, no IDs.</div>';
+  var h='<div class="sep">Tuesday</div>'
+  +msg('prov','Provost','10:12 AM',bub('Before spring, where should we focus on first-year retention?'));
+  if(V.meetSent){
+    h+=msg('me','Dana Whitfield','10:15 AM',bub('<b>@Campus Partner Agent</b> which gateway courses are slipping'))
+     +msg('ag','Campus Partner Agent','10:15 AM',bub('Answering in this chat, course level only.')+card('gateway','Gateway course early warning','private',tbl+'<div class="chips2"><span class="chip z University">University zone</span><span class="chip">Publisher access logs</span><span class="chip">Learning platform clean room</span><span class="chip">Registrar section roster</span></div>'
+       +(st().provostReport?'<div class="ok-row">'+SVG.check+'Report sent to the Provost</div><p>5 courses flagged. Course-level figures only, no student data sent.</p>':(V.pending.provost?'<div class="cfm"><b>Confirm:</b> Send the 5-course report to the Provost. No student data is included.<div class="btns"><button class="b g" data-a="yes" data-k="provost">Confirm</button><button class="b d" data-a="no" data-k="provost">Cancel</button></div></div>':'<div class="btns"><button class="b" data-a="go" data-k="provost">Send course-level report</button><button class="b o" data-a="fwd">Forward card to the Provost group chat</button></div>'))
+       +(V.fwd?'<div class="ok-row">'+SVG.check+'Forwarded to the Provost group chat, aggregate only</div>':''),st().provostReport?'done wide':'wide'));
+  }else h+='<div class="sep">Type the message in the box below and press Send</div>';
+  return h;
+}
+function sc4(){
+  var s=st(),R=NF.renewal;
+  var memo='<div class="docbar">'+SVG.doc+'Board finance summary.docx<span style="flex:1"></span><span style="font-weight:600;color:var(--mut)">Draft. Not sent.</span></div>'
+  +'<div class="cb"><div class="doc" contenteditable="true" spellcheck="false" id="memoDoc">'+(V.memoHtml||'<h4>Board Finance Committee: partnership summary</h4><div style="font-size:11.5px;color:#666">Northfield State University. Prepared for the Nov 12 meeting. Draft for Dana Whitfield to edit.</div>'
+  +'<h5>Renewal readiness</h5><ul><li>Readiness score <b>'+R.score+'/100</b>. Digital <b>'+R.digital+'</b>, service score <b>'+R.nps+'</b>.</li><li>Blended commission <b>'+NF.commission.blended+'%</b> against peers at <b>'+NF.commission.peers+'%</b>.</li><li>Agreement ends '+NF.contract.ends+'. The RFP window opens in '+NF.contract.rfpWindow+'.</li></ul>'
+  +'<h5>Cash and guarantee</h5><ul><li>Base case <b>'+K(NF.contract.scenarios.base)+'</b> against a <b>'+K(NF.contract.guarantee)+'</b> guarantee.</li><li>Open invoice disputes <b>'+KD(B.live.disputed())+'</b> of $212.0K. Fall Access invoice $2.44M due Nov 20.</li></ul>'
+  +'<h5>Affordability</h5><ul><li>Business College opt-outs moved from '+NF.optOuts.from+'% to '+NF.optOuts.to+'% after repricing. $'+NF.optOuts.riskPerTermK+'K a term at risk.</li></ul>'
+  +'<h5>Asks of the committee</h5><ul><li>Endorse the spring adoption review.</li><li>Confirm the renewal approach before the RFP window.</li></ul>')+'</div>'
+  +(V.memoOpened?'<div class="lock" style="background:#eef0fb;border-color:#c9ccf0;color:var(--acc2)">Opened in the document editor (simulated). Edits you make here stay in this draft.</div>':'')
+  +(V.memoShareBlocked?'<div class="blocked">Blocked. This is a CFO-only draft. The CFO-only zone never posts to the shared Follett channel.</div>':'')
+  +(V.memoConfirm?'<div class="cfm"><b>Confirm:</b> Send this summary to the Board Finance Committee (6 members)? Nothing has been sent yet.<div class="btns"><button class="b g" data-a="memoSend">Yes, send</button><button class="b d" data-a="memoNo">Not yet</button></div></div>'
+     :(V.memoSent?'<div class="ok-row">'+SVG.check+'Sent to the Board Finance Committee after your confirmation</div>':'<div class="btns"><button class="b o" data-a="memoOpen">Open in Word (simulated)</button><button class="b" data-a="memoAsk">Send to committee</button><button class="b d" data-a="memoShare">Share to partnership channel</button></div>'))
+  +'</div>';
+  return '<div class="sep">Tuesday, the night before the board finance committee</div>'
+  +msg('me','Dana Whitfield','8:40 PM',bub('Draft the renewal summary for tomorrow\'s finance committee.'))
+  +msg('ag','Campus Partner Agent','8:40 PM',bub('Done. It is a document you can edit, and nothing is sent anywhere until you say so. I also added a prep block to your calendar for 7:30 AM tomorrow.')
+     +'<div class="card wide'+(V.sel==='memo'?' sel':'')+'" data-x="memo" style="padding:0"><div class="cht" style="padding-bottom:6px">'+'<b>Board finance summary</b><span class="sp2"></span><span class="chip z CFO-only">CFO-only</span>'+mk('private')+'</div>'+memo+'</div>');
+}
+function sc5(){
+  return '<div class="sep">Friday</div>'
+  +msg('ag','Campus Partner Agent','3:10 PM',bub('The fall Access invoice is ready for you. Evidence is attached. This is the last item in the stack.')+ac('pay'))
+  +(st().accessPaid?msg('ag','Campus Partner Agent','3:11 PM',bub('Posted to the shared channel: "Fall Access invoice payment scheduled." Follett sees days-to-pay move from '+NF.daysToPay.before+' to '+NF.daysToPay.after+'.')):'');
+}
+function sc6(){
+  var s=st(),cal=s.calendar||{},tot={r:0,c:0},n=0;
+  var rows=D.CALENDAR.map(function(l){var on=cal[l.id];if(on){tot.r+=l.revK;tot.c+=l.commK;n++}
+    var cm=V.cmt[l.id];
+    return '<div class="cal-row"><div><b>'+esc(l.n)+'</b><small>Student benefit: '+esc(l.benefit)+'</small>'+(cm?'<small style="color:var(--acc2)">Comment sent: '+esc(cm)+'</small>':'')+(V.openCmt===l.id?'<div style="display:flex;gap:6px;margin-top:5px"><input id="cmtIn" style="flex:1;border:1px solid var(--line);border-radius:6px;padding:5px 8px;font:inherit" placeholder="Add a comment for Campus Commerce"><button class="b" data-a="cmtSend" data-k="'+l.id+'">Send</button></div>':'')+'</div><div class="n">$'+l.revK+'K</div><div class="n">$'+l.commK+'K</div><div class="btns" style="margin:0">'+(on?'<span class="ok-row" style="margin:0">'+SVG.check+'Approved</span><button class="b d" data-a="calOff" data-k="'+l.id+'">Undo</button>':'<button class="b" data-a="calOn" data-k="'+l.id+'">Approve</button><button class="b o" data-a="cmtOpen" data-k="'+l.id+'">Comment</button>')+'</div></div>'}).join('');
+  var all=n===D.CALENDAR.length;
+  var body='<div class="cal-h"><span>Proposed line</span><span>Revenue</span><span>Commission to the university</span><span></span></div>'+rows
+   +'<div class="kv" style="margin-top:8px"><span>Approved so far</span><span>'+n+' of '+D.CALENDAR.length+' lines, $'+tot.r+'K revenue, $'+tot.c.toFixed(1)+'K commission</span></div>'
+   +'<div class="btns"><button class="b" data-a="calAll"'+(all?' disabled':'')+'>Approve all</button><span style="color:var(--mut);font-size:12px">Approved lines write to the event calendar.</span></div>';
+  return '<div class="sep">Friday</div>'
+  +msg('ag','Campus Partner Agent','3:25 PM',bub('One more card, for spring. Campus Commerce proposes these lines. Approve all, approve each, or comment. All collabs use fictional brands in this simulation.')
+    +'<div class="card wide'+(V.sel==='calendar'?' sel':'')+(all?' done':'')+'" data-x="calendar"><div class="cht"><b>Spring campus commerce calendar</b><span class="sp2"></span>'+mk('private')+'</div><div class="cb">'+body+'</div></div>');
+}
+function phoneHTML(){
+  var inner=ac('campaign');
+  return '<div class="phwrap"><div class="phone"><div class="phs"><div class="ntch"></div><div class="hd"><div class="av ag">CA</div>Campus Partner Agent</div><div class="bdy"><div class="sep" style="margin:0 0 8px">Monday 12:40 PM</div><div class="bub" style="margin-bottom:8px">Quick one between meetings, Dana.</div>'+inner+'</div></div></div>'
+  +'<div class="phcap"><h3>Between meetings, one tap</h3><p>The same card, the same agent, the same audit log. Approve it here and the desktop chat and the Command Center show it as done.</p><p style="color:var(--mut)">Tap Approve $10K on the phone, then confirm. Undo works for 15 minutes.</p></div></div>';
+}
+function askScene(){
+  var chips=[['afford','Why did Business opt-outs double?'],['event','How did the Arena Store pop-up do?'],['accessplan','Propose an Access expansion'],['outcome','Do Access students stay enrolled more?'],['services','Add services to Access for first-years?'],['renew','Where do we stand on renewal?'],['private','Draft talking points for the Provost (private)']];
+  var h='<div class="sep">Any time</div>'+msg('ag','Campus Partner Agent','Any time',bub('Ask me anything about the partnership. I answer only from governed data, and every answer names its source and zone.')+'<div class="chips2">'+chips.map(function(c){return '<button class="qc" data-a="q" data-k="'+c[0]+'">'+esc(c[1])+'</button>'}).join('')+'</div>');
+  V.asks.forEach(function(a){h+=msg('me','Dana Whitfield',a.time,bub(esc(a.q)))+msg('ag','Campus Partner Agent',a.time,ANS(a.id,a.q))});
+  return h;
+}
+function srcRow(zone,list){return '<div class="chips2"><span class="chip z '+zone+'">'+zone+' zone</span>'+list.map(function(x){return '<span class="chip">'+esc(x)+'</span>'}).join('')+'</div>'}
+function ANS(id,q){
+  var o=NF.optOuts,v=D.SERVICES,p=D.ACCESSPLAN,oc=D.OUTCOME,c=NF.campaigns;
+  if(id==='afford')return bub('Business College opt-outs rose from <b>'+o.from+'%</b> to <b>'+o.to+'%</b> after repricing moved from <b>$'+o.priceFrom+'</b> to <b>$'+o.priceTo+'</b>. About <b>$'+o.riskPerTermK+'K a term</b> is at risk.')+srcRow('Follett',['Adoption and opt-out feed','Catalog price feed'])+ac('afford');
+  if(id==='event')return bub('<b>'+NF.arena.firstTimeFans+' first-time fans</b> used the first-fan offer at the Arena Store pop-up. Against the Homecoming pop-up ($'+c.homecoming.salesK+'K, +'+c.homecoming.vsLY+'%), it is on pace. The card ties to the student receipt, and the commission line is at the contract rate.')+srcRow('Follett',['Arena Store POS lines','Loyalty ID link','Ticket scans'])+ac('event');
+  if(id==='accessplan')return bub('<b>'+p.clusters.length+' departments</b> ('+p.clusters.join(', ')+') cluster on Access and peers already moved.')+card('accessplan','Save-students proposal','private','<div class="kv"><span>Modeled student savings</span><span>$'+p.saveStudentsM+'M</span><span>Follett revenue</span><span>$'+p.follettRevM+'M</span></div><p style="color:var(--mut);font-size:12px">Both numbers shown side by side.</p>'+srcRow('Follett',['Adoption by department','Faculty adoption signals']),'')+ac('accessplan');
+  if(id==='outcome')return bub('Access cohort retention is <b>'+oc.access.retention+'%</b> against <b>'+oc.non.retention+'%</b> for the non-Access cohort, a difference of <b>'+(oc.access.retention-oc.non.retention).toFixed(1)+' points</b>. Aggregate only. Source: '+oc.source+'.')+srcRow('University',['Institutional Research aggregates','Access enrollment flags'])+ac('outcome');
+  if(id==='services')return bub('First-year move-in add-on: <b>'+v.lines.join(', ')+'</b>. Modeled attach rate <b>'+v.attachPct+'%</b>. Invoice impact before you approve: about <b>$'+v.invoiceImpactK+'K</b> on the next preview. '+esc(v.benefit)+'.')+srcRow('Follett',['First-year move-in roster (aggregate)','Delivery partner status','Access invoice preview'])+ac('services');
+  if(id==='renew')return bub('Readiness is <b>'+NF.renewal.score+'/100</b>. Agreement ends '+NF.contract.ends+'. The board summary is drafted.')+'<div class="btns"><button class="b" data-a="scene" data-k="4">Open the board memo</button></div>'+srcRow('CFO-only',['Renewal scorecard','Peer commission benchmark']);
+  if(id==='private')return card('ask','Talking points for the Provost (draft)','private','<ul style="margin-left:18px"><li>Five gateway courses are below 70% week-6 access. Ask for a joint outreach plan.</li><li>The Access cohort retains '+(oc.access.retention-oc.non.retention).toFixed(1)+' points better in aggregate.</li><li>Business College affordability review opens before Nov 14.</li></ul><div class="chips2"><span class="chip z CFO-only">CFO-only zone</span></div><div class="btns"><button class="b d" data-a="memoShare">Share to partnership channel</button></div>'+(V.memoShareBlocked?'<div class="blocked">Blocked. The CFO-only zone never posts to the shared Follett channel.</div>':''),'');
+  return bub('I can answer from governed campus data only. For "'+esc(q)+'", the closest governed views are the disputes ($212.0K), commission variance ($41.8K), affordability, gateway courses and renewal. Pick one of the suggestions above, or rephrase.')+srcRow('CFO-only',['Governed campus data only']);
+}
+function route(q){var t=q.toLowerCase();
+  if(/opt.?out|afford|price|reprice/.test(t))return'afford';if(/pop.?up|arena|first.?time|event|homecoming/.test(t))return'event';
+  if(/expan|access|save student|proposal/.test(t)&&!/stay|retain|outcome/.test(t))return'accessplan';if(/stay|retain|outcome|enrol/.test(t))return'outcome';
+  if(/service|dorm|device|move.?in|deliver/.test(t))return'services';if(/renew|board|rfp/.test(t))return'renew';if(/private|talking|provost|draft/.test(t))return'private';return'other'}
+
+/* shared channel */
+function sharedHTML(){
+  var s=st(),cal=s.calendar||{},posts=[];
+  if(s.released)posts.push(['release','Census date confirmed','7 invoices released ($110.2K). Open disputes now '+KD(B.live.disputed())+'.']);
+  if(s.commissionCredit)posts.push(['commission','Commission credit requested','$41.8K with 4 variance lines, requested for this week.']);
+  if(s.campaign)posts.push(['campaign','Parents Weekend approved','$10K approved. Creative released.']);
+  if(s.eventRepeat)posts.push(['event','Pop-up added to the spring home opener','Added to the event calendar.']);
+  var nc=Object.keys(cal).filter(function(k){return cal[k]}).length;if(nc)posts.push(['calendar','Spring calendar','"'+nc+' of '+D.CALENDAR.length+' lines approved and written to the event calendar."']);
+  if(s.services)posts.push(['services','Services add-on approved','Added to the next Access invoice preview.']);
+  if(s.accessPaid)posts.push(['pay','Fall Access invoice payment scheduled','$2.44M due Nov 20. Days-to-pay moves from '+NF.daysToPay.before+' to '+NF.daysToPay.after+'.']);
+  var h='<div class="sep">Shared channel</div><div class="lock">Members: Dana Whitfield, the Northfield store director and the Group Vice President, East. <b>The CFO-only zone (private workspace answers, board memo drafts) never posts here.</b> Every card carries a marker.</div>';
+  if(!posts.length)h+='<div class="sep">No shared updates yet. Approve something in the 1:1 chat and the agent posts a one line update here.</div>';
+  posts.forEach(function(p){h+=msg('ag','Campus Partner Agent','just now',card(p[0],p[1],'shared','<p>'+p[2]+'</p><div style="font-size:11.5px;color:var(--mut)">Posted after CFO approval. No student data.</div>',''))});
+  return h;
+}
+
+/* ---------- chrome ---------- */
+function chatsHTML(){
+  var items=[['agent','ag','CA','Campus Partner Agent','Good morning, Dana. Three things need you','1:1'],['meet','pv','PV','Fall retention review (meeting chat)','@Campus Partner Agent which gateway...','Meeting'],['shared','sh','NF','Northfield x Follett Partnership','Shared channel with Follett','Channel'],['phone','ph','PH','Mobile: Campus Partner Agent','Quick one between meetings, Dana','Phone']];
+  return '<h3>Chat</h3><div class="sec">Recent</div>'+items.map(function(i){return '<div class="ci '+(V.chat===i[0]?'on':'')+'" data-a="chat" data-k="'+i[0]+'"><div class="av '+i[1]+'">'+i[2]+'</div><div><b>'+esc(i[3])+'</b><small>'+esc(i[4])+'</small></div></div>'}).join('')
+   +'<div class="sec">How it works</div><div style="padding:4px 14px 14px;font-size:12px;color:var(--mut)">No app to open. The agent comes to the chat. Approve with a card, ask in plain language, and every action is logged and can be undone for 15 minutes.</div>';
+}
+function headHTML(){
+  var t={agent:['Campus Partner Agent','1:1 with Dana Whitfield, VP Finance and CFO','private'],meet:['Fall retention review','Meeting chat with the Provost and Institutional Research','private'],shared:['Northfield x Follett Partnership','Shared channel. Follett can see everything posted here.','shared'],phone:['Mobile: Campus Partner Agent','Phone view of the same chat','private']}[V.chat];
+  return '<div class="av '+({agent:'ag',meet:'pv',shared:'sh',phone:'ph'}[V.chat])+'">'+({agent:'CA',meet:'PV',shared:'NF',phone:'PH'}[V.chat])+'</div><div><b>'+t[0]+'</b><br><small>'+t[1]+'</small></div><span style="flex:1"></span>'+mk(t[2]);
+}
+function scenesHTML(){return SCENES.map(function(x){return '<button class="'+(V.scene===x.n?'on':'')+'" data-a="scene" data-k="'+x.n+'"><i>'+x.n+'</i>'+esc(x.t)+'</button>'}).join('')}
+function stateHTML(){
+  var s=st(),L=B.live,cal=Object.keys(s.calendar||{}).filter(function(k){return s.calendar[k]}).length;
+  return '<span class="sp '+(s.released?'ok':'')+'">Disputes <b>'+KD(L.disputed())+'</b></span><span class="sp '+(s.commissionCredit?'ok':'')+'">Variance <b>'+KD(L.commissionVariance())+'</b></span><span class="sp '+(s.campaign?'ok':'')+'">Campaign <b>'+(s.campaign?'approved':'pending')+'</b></span><span class="sp '+(s.accessPaid?'ok':'')+'">$2.44M <b>'+(s.accessPaid?'scheduled':'pending')+'</b></span><span class="sp '+(s.accessPaid?'ok':'')+'">Days-to-pay <b>'+L.daysToPay()+'</b></span>';
+}
+function compHTML(){
+  if(V.chat==='meet')return V.meetSent?'<input placeholder="Type a message" disabled><button class="b" disabled>Send</button>':'<input id="cin" value="@Campus Partner Agent which gateway courses are slipping"><button class="b" data-a="meetSend">Send</button>';
+  if(V.chat==='agent')return '<input id="cin" placeholder="Ask the agent in plain language, for example: why did Business opt-outs double?"><button class="b" data-a="askSend">Send</button>';
+  return '<input placeholder="'+(V.chat==='shared'?'Posts here are visible to Follett':'Type a message')+'" disabled><button class="b" disabled>Send</button>';
+}
+function threadHTML(){
+  if(V.chat==='shared')return sharedHTML();
+  if(V.chat==='phone')return phoneHTML();
+  if(V.chat==='meet')return sc3();
+  return [null,sc1,sc2,sc3,sc4,sc5,sc6,phoneHTML,askScene][V.scene===3||V.scene===7?1:V.scene]();
+}
+function render(keepScroll){
+  var th=$('#thread'),top=th.scrollTop;
+  $('#chats').innerHTML=chatsHTML();$('#chh').innerHTML=headHTML();$('#scenes').innerHTML=scenesHTML();$('#state').innerHTML=stateHTML();
+  th.innerHTML=threadHTML();$('#comp').innerHTML=compHTML();panel();
+  if(keepScroll)th.scrollTop=top;
+}
+function flash(t){var e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(flash.h);flash.h=setTimeout(function(){e.classList.remove('on')},2400)}
+
+/* ---------- actions ---------- */
+var DO={
+  release:function(){B.set('released',true,'Teams','Confirmed census date, released 7 invoices ($110.2K)')},
+  commission:function(){B.set('commissionCredit',true,'Teams','Requested $41.8K commission credit with 4 variance lines')},
+  campaign:function(){B.set('campaign',true,'Teams','Approved $10K Parents Weekend campaign')},
+  pay:function(){B.set('accessPaid',true,'Teams','Approved $2.44M fall Access invoice')},
+  afford:function(){B.set('adoptionReview',true,'Teams','Opened spring adoption review before Nov 14')},
+  provost:function(){B.set('provostReport',true,'Teams','Sent course-level gateway report to the Provost')},
+  event:function(){B.set('eventRepeat',true,'Teams','Repeat Arena Store pop-up at the spring home opener')},
+  accessplan:function(){B.set('accessPlan',true,'Teams','Sent Access expansion proposal to the Provost')},
+  outcome:function(){B.set('outcome',true,'Teams','Shared aggregate outcome proof with the Provost and board packet')},
+  services:function(){B.set('services',true,'Teams','Approved services add-on on the Access invoice preview')}
+};
+var UNDO={release:['released','Undid the census date release'],commission:['commissionCredit','Withdrew the commission credit request'],campaign:['campaign','Undid the Parents Weekend approval'],pay:['accessPaid','Undid the Access invoice payment'],afford:['adoptionReview','Closed the adoption review'],provost:['provostReport','Recalled the Provost report'],event:['eventRepeat','Removed the spring pop-up'],accessplan:['accessPlan','Recalled the Access proposal'],outcome:['outcome','Recalled the outcome proof'],services:['services','Removed the services add-on']};
+var SCENE_FOR={afford:8,event:8,accessplan:8,outcome:8,services:8};
+var H={
+  go:function(k){V.pending[k]=true;render(1);setSel(({provost:'gateway'})[k]||k)},
+  no:function(k){V.pending[k]=false;render(1)},
+  yes:function(k){V.pending[k]=false;DO[k]();V.undoAt[k]=Date.now()+15*60000;flash('Done. Logged, and you can undo it for 15 minutes.')},
+  undo:function(k){var u=UNDO[k];B.set(u[0],false,'Teams',u[1]);V.undoAt[k]=null;flash('Undone')},
+  scene:function(k){goScene(+k)},
+  chat:function(k){V.chat=k;if(k==='agent'&&(V.scene===3||V.scene===7||V.scene===0))V.scene=1;if(k==='meet')V.scene=3;if(k==='phone')V.scene=7;if(k==='shared'){V.scene=0}render();$('#thread').scrollTop=0},
+  meetSend:function(){V.meetSent=true;render();setSel('gateway');var t=$('#thread');t.scrollTop=t.scrollHeight},
+  askSend:function(){var i=$('#cin');var q=i&&i.value.trim();if(!q)return;ask(route(q),q)},
+  q:function(k){var m={afford:'Why did Business opt-outs double?',event:'How did the Arena Store pop-up do?',accessplan:'Propose an Access expansion',outcome:'Do Access students stay enrolled more?',services:'Add services to Access for first-years?',renew:'Where do we stand on renewal?','private':'Draft talking points for the Provost (private)'};ask(k,m[k])},
+  fwd:function(){V.fwd=true;render(1)},
+  memoOpen:function(){V.memoOpened=true;render(1)},
+  memoAsk:function(){V.memoConfirm=true;render(1)},
+  memoNo:function(){V.memoConfirm=false;render(1)},
+  memoSend:function(){V.memoConfirm=false;V.memoSent=true;render(1);flash('Sent after your confirmation')},
+  memoShare:function(){V.memoShareBlocked=true;render(1);setSel('memo')},
+  calOn:function(k){var c=Object.assign({},st().calendar||{});c[k]=true;B.set('calendar',c,'Teams','Approved spring calendar line: '+lineName(k))},
+  calOff:function(k){var c=Object.assign({},st().calendar||{});delete c[k];B.set('calendar',c,'Teams','Removed spring calendar line: '+lineName(k))},
+  calAll:function(){var c={};D.CALENDAR.forEach(function(l){c[l.id]=true});B.set('calendar',c,'Teams','Approved all '+D.CALENDAR.length+' spring calendar lines')},
+  cmtOpen:function(k){V.openCmt=k;render(1);var i=$('#cmtIn');if(i)i.focus()},
+  cmtSend:function(k){var i=$('#cmtIn');if(i&&i.value.trim()){V.cmt[k]=i.value.trim();flash('Comment sent to Campus Commerce')}V.openCmt=null;render(1)}
+};
+function lineName(k){return D.CALENDAR.filter(function(l){return l.id===k})[0].n}
+function ask(id,q){V.chat='agent';V.scene=8;V.asks.push({id:id,q:q,time:new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})});render();setSel(id==='other'?'ask':id==='renew'?'memo':id==='private'?'ask':id);var t=$('#thread');t.scrollTop=t.scrollHeight}
+function goScene(n){
+  var s=SCENES.filter(function(x){return x.n===n})[0];
+  V.scene=n;V.chat=s.chat;V.sel=s.key;
+  if(n===4&&!st().memo)B.set('memo',true,'Teams','Renewal agent drafted the board finance summary for Nov 12');
+  render();$('#thread').scrollTop=0;
+}
+document.addEventListener('click',function(e){
+  var a=e.target.closest('[data-a]');
+  if(a&&H[a.dataset.a]){e.stopPropagation();H[a.dataset.a](a.dataset.k);return}
+  var c=e.target.closest('.card[data-x]');if(c)setSel(c.dataset.x);
+});
+document.addEventListener('input',function(e){if(e.target.id==='memoDoc')V.memoHtml=e.target.innerHTML});
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.id==='cin'){e.preventDefault();if(V.chat==='meet')H.meetSend();else H.askSend()}});
+
+/* capability map and use cases */
+var CAP=[['Morning brief','Home insight feed','Proactive 7:00 digest in the 1:1 chat, 3 action cards'],['Approve or confirm','Button on an insight','Card action, confirm step, receipt card, 15 minute undo'],['Ask anything','Copilot drawer','1:1 chat or @mention in any chat or meeting, answers with source chips and a zone label'],['Financial drill','Financials tab','"Show me" returns a compact chart card plus table, with export'],['Board memo','Modal draft','A Word-style file posted to the chat, edit it, sending needs an explicit confirm'],['Early-warning routing','Send to Provost','Forward the card into a group chat with the Provost, aggregate only'],['Renewal','Readiness tab','Readiness card, plus the agent adds a prep block to your calendar'],['Shared with Follett','None','Optional shared channel "Northfield x Follett Partnership". Every card is marked Private or Shared. The CFO-only zone never posts there'],['Mobile','Not applicable','Phone vignette: approve between meetings']];
+var UCREACH={1:[1,'Scene 1 and 2'],2:[1,'Scene 1'],3:['q:afford','Ask'],4:[3,'Scene 3'],5:[1,'Scene 1 and phone'],6:[4,'Scene 4'],7:['q:event','Ask'],8:[5,'Scene 5'],9:[8,'Ask anything'],10:['q:accessplan','Ask'],11:['q:outcome','Ask'],12:[6,'Scene 6'],13:['q:services','Ask']};
+var UCDONE={1:'released',2:'commissionCredit',3:'adoptionReview',4:'provostReport',5:'campaign',6:'memo',7:'eventRepeat',8:'accessPaid',10:'accessPlan',11:'outcome',13:'services'};
+function modal(){
+  var s=st();
+  var t=V.tab==='map'
+   ?'<table class="t"><tr><th>Capability</th><th>Command Center</th><th>Teams (headless)</th></tr>'+CAP.map(function(r){return '<tr><td><b>'+esc(r[0])+'</b></td><td>'+esc(r[1])+'</td><td>'+esc(r[2])+'</td></tr>'}).join('')+'</table>'
+   :D.USECASES.map(function(u){var r=UCREACH[u.id],d=u.id===12?Object.keys(s.calendar||{}).some(function(k){return s.calendar[k]}):(u.id===9?V.asks.length>0:s[UCDONE[u.id]]);
+      return '<div class="uc"><b>'+u.id+'</b><div><b>'+esc(u.n)+'</b>'+(u.isNew?' <span class="st neu">New</span>':'')+'<small>'+esc(u.action)+'</small></div><div style="color:var(--mut)">'+esc(agent(u.agent).n)+'</div><div class="'+(d?'tick':'')+'">'+(d?'Done':'')+'</div><button class="b o" data-m="'+(typeof r[0]==='string'?r[0]:'s:'+r[0])+'">'+esc(r[1])+'</button></div>'}).join('');
+  $('#mbox').innerHTML='<h2>Same agents, different surface <button class="b d" data-m="close">Close</button></h2><div class="mtabs"><button class="'+(V.tab==='map'?'on':'')+'" data-m="tab:map">Capability map</button><button class="'+(V.tab==='uc'?'on':'')+'" data-m="tab:uc">All 13 use cases</button></div>'+t+'<p style="margin-top:10px;font-size:11.5px;color:var(--mut)">Illustrative simulation. Experience, not software.</p>';
+}
+$('#bMap').onclick=function(){V.tab='map';modal();$('#modal').classList.add('on')};
+document.addEventListener('click',function(e){
+  var m=e.target.closest('[data-m]');if(m){var v=m.dataset.m;
+    if(v==='close')$('#modal').classList.remove('on');
+    else if(v.indexOf('tab:')===0){V.tab=v.slice(4);modal()}
+    else if(v.indexOf('q:')===0){$('#modal').classList.remove('on');H.q(v.slice(2))}
+    else if(v.indexOf('s:')===0){$('#modal').classList.remove('on');goScene(+v.slice(2))}
+    return}
+  if(e.target.id==='modal')$('#modal').classList.remove('on');
+});
+$('#goCfo').onclick=function(){try{window.parent.postMessage({campusosNav:'cfo'},'*')}catch(e){}flash('Switching to the Command Center. Same agents, same state.')};
+$('#goTeams').onclick=function(){flash('You are in the Teams surface')};
+$('#bReset').onclick=function(){B.reset();V.undoAt={};V.pending={};V.asks=[];V.meetSent=false;V.memoSent=false;V.memoConfirm=false;V.memoOpened=false;V.memoShareBlocked=false;V.fwd=false;V.cmt={};V.memoHtml=null;goScene(1);flash('Demo state reset on every surface')};
+
+/* shared state: reflect approvals made on the other surface */
+B.on(function(type,payload,state,remote){
+  render(1);if(remote&&type!=='sync'&&type!=='log')flash('Updated from the other surface');
+  if(!$('#modal').classList.contains('on'))return;modal();
+});
+/* undo countdown */
+setInterval(function(){
+  var changed=false;
+  document.querySelectorAll('[data-undo]').forEach(function(el){var l=V.undoAt[el.dataset.undo]-Date.now();if(l<=0)changed=true;else el.textContent=fmtT(l)});
+  if(changed)render(1);
+},1000);
+
+goScene(1);
+})();
+</script>
+</body>
+</html>

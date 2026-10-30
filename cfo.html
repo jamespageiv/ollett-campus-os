@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Partner Command Center | Northfield State</title>
+<style>
+:root{
+  --bg:#f4f4f3;--card:#fff;--line:#dcdfe4;--ink:#111418;--mut:#5d6672;--faint:#8b94a0;
+  --blue:#0b5cd5;--blue-d:#0847a8;--blue-l:#e8f0fd;
+  --green:#0a8f5b;--green-l:#e3f6ed;--red:#c62828;--red-l:#fdeaea;--amber:#b86e00;--amber-l:#fff1d9;
+  --clay:#c96442;--clay-l:#fbece6;--purple:#6b4bd6;--purple-l:#efeafc;
+  --maroon:#7a1f2b;--gold:#e3a72f;--teal:#1f7a6d;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.45;overflow:hidden}
+button{font:inherit;cursor:pointer;color:inherit}
+.app{display:grid;grid-template-rows:auto 1fr auto;height:100vh}
+/* top bar */
+.top{display:flex;align-items:center;gap:14px;padding:10px 18px;background:#fff;border-bottom:0;position:relative}
+.top:after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,var(--maroon) 0 33%,var(--gold) 33% 66%,var(--teal) 66%)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px}
+.logo{width:30px;height:30px;border-radius:8px;background:var(--maroon);display:grid;place-items:center;color:#fff;font-size:13px;font-weight:800;letter-spacing:.5px}
+.brand small{display:block;font-weight:500;font-size:11px;color:var(--mut);margin-top:-2px}
+.sep{width:1px;height:28px;background:var(--line)}
+.chips{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:99px;padding:4px 11px;font-size:12px;font-weight:600;background:#fff}
+.chip i{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block}
+.chip em{font-style:normal;color:var(--green);font-weight:500;font-size:11px}
+.bell{position:relative;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;cursor:pointer}
+.bell b{position:absolute;top:-2px;right:-2px;background:#e53935;color:#fff;border-radius:99px;font-size:10px;padding:1px 5px}
+.avatar{width:34px;height:34px;border-radius:50%;background:#e9ebee;display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--mut)}
+/* shell */
+.shell{display:grid;grid-template-columns:232px 1fr;min-height:0}
+.nav{background:#fff;border-right:1px solid var(--line);padding:14px 12px;display:flex;flex-direction:column;overflow:auto}
+.btn-new{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-weight:600;width:100%}
+.btn-new:hover{background:#f7f8fa}
+.nav h6{margin:20px 8px 6px;font-size:11px;letter-spacing:.09em;color:var(--mut);font-weight:700;text-transform:uppercase}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;cursor:pointer;font-weight:500;color:#222;border:2px solid transparent;margin-bottom:2px}
+.ni:hover{background:#f3f4f6}
+.ni.on{background:#eef0f3;font-weight:600}
+.ni .n{margin-left:auto;font-size:12px;color:var(--mut)}
+.ni .n.hot{background:#e53935;color:#fff;border-radius:99px;padding:0 7px;font-weight:700}
+.ni svg{flex:none}
+.navfoot{margin-top:auto;border-top:1px solid var(--line);padding-top:12px;display:flex;gap:10px;align-items:center}
+.navfoot small{display:block;color:var(--mut);font-size:11px}
+.main{display:grid;grid-template-columns:1fr 340px;min-width:0;min-height:0}
+.main.norail{grid-template-columns:1fr}
+.page{overflow:auto;padding:22px 28px 40px;min-width:0}
+.rail{border-left:1px solid var(--line);background:#fff;padding:20px 18px;overflow:auto}
+.rail h5,.sec{font-size:11px;letter-spacing:.1em;color:var(--mut);font-weight:700;text-transform:uppercase;margin:0 0 10px}
+.railhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+/* generic */
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.card h3{margin:0 0 4px;font-size:16px}
+.sub{color:var(--mut);font-size:13px}
+.h1{font-size:26px;font-weight:700;margin:0 0 4px;letter-spacing:-.01em}
+.row{display:flex;gap:14px;flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.mt{margin-top:18px}.mt2{margin-top:28px}
+.tile{border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff}
+.tile .l{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);font-weight:600}
+.tile .v{font-size:25px;font-weight:700;margin:4px 0 2px;letter-spacing:-.02em}
+.tile .s{font-size:12px;color:var(--mut)}
+.tile .s.up{color:var(--green);font-weight:600}.tile .s.dn{color:var(--red);font-weight:600}
+.tile.click{cursor:pointer}.tile.click:hover{border-color:var(--blue)}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:2px 11px;border-radius:99px;border:1.5px solid}
+.tag.Risk{color:var(--red);border-color:#f0b8b8;background:#fff}
+.tag.Opportunity{color:var(--green);border-color:#a8dcc3;background:var(--green-l)}
+.tag.Renewal{color:var(--blue);border-color:#b9cff3;background:var(--blue-l)}
+.tag.Cash{color:var(--amber);border-color:#f0d49a;background:var(--amber-l)}
+.new{background:#ff9800;color:#fff;font-weight:700;font-size:12px;padding:3px 11px;border-radius:99px}
+.pill{font-size:11px;font-weight:700;padding:2px 9px;border-radius:99px}
+.pill.red{background:var(--red-l);color:var(--red)}.pill.green{background:var(--green-l);color:var(--green)}
+.pill.amber{background:var(--amber-l);color:var(--amber)}.pill.blue{background:var(--blue-l);color:var(--blue)}
+.pill.gray{background:#eceef1;color:var(--mut)}.pill.clay{background:var(--clay-l);color:var(--clay)}
+.btn{border:1px solid var(--line);background:#f1f2f4;border-radius:9px;padding:7px 13px;font-weight:600;font-size:13px}
+.btn:hover{background:#e6e8ec}
+.btn.pri{background:var(--blue);border-color:var(--blue);color:#fff}.btn.pri:hover{background:var(--blue-d)}
+.btn.ghost{background:#fff}
+.btn.done{background:var(--green-l);border-color:#a8dcc3;color:var(--green);cursor:default}
+.btn.sm{padding:4px 10px;font-size:12px}
+.link{color:var(--blue);cursor:pointer;font-weight:500}.link:hover{text-decoration:underline}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);text-align:left;padding:8px 10px;border-bottom:1.5px solid var(--line);font-weight:700}
+td{padding:9px 10px;border-bottom:1px solid #eceef1;vertical-align:middle}
+td.r,th.r{text-align:right}
+tr.clk{cursor:pointer}tr.clk:hover td{background:#f8f9fb}
+.bar{height:8px;background:#eceef1;border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;border-radius:99px;background:var(--blue)}
+.bar.red>i{background:#e53935}.bar.green>i{background:var(--green)}.bar.amber>i{background:#f0a21b}
+/* insight cards */
+.igrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.ic{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.ic .hd{display:flex;align-items:center;gap:8px}
+.ic .hd .sp{flex:1}
+.ic .x{border:0;background:none;font-size:18px;color:var(--mut);padding:0 4px}
+.ic h4{margin:2px 0 0;font-size:16px}
+.ic p{margin:0;color:#2b3138;font-size:13.5px}
+.ic .rec{display:flex;gap:8px;color:#2b3138;font-size:13px}
+.ic .rec svg{flex:none;margin-top:2px}
+.ic .meta{display:flex;gap:8px;align-items:center;color:var(--mut);font-size:12.5px}
+.ic .ft{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-top:auto}
+.ic .ft .who{font-size:12.5px;color:var(--mut)}
+.ic .ft .who div{display:flex;gap:6px;align-items:center}
+.ic.cleared{opacity:.55}
+/* section header */
+.sech{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:700;margin:0 0 12px}
+.sech .badge{background:#e53935;color:#fff;border-radius:99px;font-size:11px;padding:1px 7px}
+.sech .sp{flex:1}
+/* rail items */
+.dealrow{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #eef0f2;font-size:13.5px}
+.dealrow .nm{color:var(--blue);font-weight:500;flex:1;cursor:pointer}
+.dealrow .st{font-size:11px;font-weight:700;display:flex;align-items:center;gap:5px;min-width:64px}
+.dealrow .st i{width:7px;height:7px;border-radius:50%;display:inline-block}
+.nba{border:1.5px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;display:flex;gap:10px;cursor:pointer;background:#fff}
+.nba:hover{border-color:var(--blue)}
+.nba .ico{width:32px;height:32px;border-radius:8px;background:var(--blue-l);display:grid;place-items:center;flex:none}
+.nba b{font-size:13.5px;display:block}.nba span{font-size:12px;color:var(--mut)}
+.nba .imp{margin-left:auto;font-size:11px;font-weight:700;padding:1px 7px;border-radius:5px;height:max-content;white-space:nowrap}
+.imp.hr{background:var(--red-l);color:var(--red)}.imp.hi{background:var(--amber-l);color:var(--amber)}
+/* chat */
+.chatwrap{display:flex;flex-direction:column;height:100%;min-height:0}
+.agentbar{display:flex;align-items:center;gap:10px}
+.agentsel{white-space:nowrap;display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;letter-spacing:.06em;font-size:13px}
+.agentsel .live{background:var(--green-l);color:var(--green);font-size:11px;padding:2px 9px;border-radius:99px;letter-spacing:0}
+.agentbar .sp{flex:1}
+.gbtn{white-space:nowrap;display:flex;gap:8px;align-items:center;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;letter-spacing:.06em;font-size:12.5px;color:#333}
+.gbtn:hover{background:#f7f8fa}
+.greet{font-size:30px;font-weight:700;letter-spacing:-.02em;margin:26px 0 8px}
+.greetp{font-size:18px;color:#4b5560;margin:0 0 20px;line-height:1.5}
+.greetp b{color:#000}
+.pchips{display:flex;flex-wrap:wrap;gap:10px}
+.pchip{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:11px 18px;font-size:14px;color:#333;text-align:left}
+.pchip:hover{border-color:var(--blue);color:var(--blue)}
+.thread{flex:1;overflow:auto;padding:6px 2px 10px}
+.msg{margin:14px 0;display:flex;flex-direction:column;gap:8px}
+.msg.u{align-items:flex-end}
+.bub{background:#fff;border:1.5px solid var(--line);padding:10px 14px;border-radius:14px 14px 4px 14px;max-width:80%}
+.msg.a .who{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--clay);letter-spacing:.04em}
+.spark{width:18px;height:18px;border-radius:6px;background:var(--clay);display:grid;place-items:center}
+.trace{font-size:12.5px;color:var(--mut);border-left:2px solid var(--line);padding-left:10px;display:flex;flex-direction:column;gap:3px}
+.trace .ok{color:var(--green)}
+.trace .spin{display:inline-block;width:9px;height:9px;border:2px solid var(--line);border-top-color:var(--clay);border-radius:50%;animation:sp 0.7s linear infinite;margin-right:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.blk{animation:fade .35s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.blk p{margin:0 0 8px;font-size:14.5px;line-height:1.55}
+.blk .tbl{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.blk .note{font-size:12px;color:var(--mut);margin-top:5px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.stats .tile .v{font-size:21px}
+.abox{border:1.5px solid #b9cff3;background:var(--blue-l);border-radius:12px;padding:12px 14px;display:flex;gap:12px;align-items:center}
+.abox .t{flex:1}.abox b{display:block}.abox span{font-size:12.5px;color:#34506f}
+.srcs{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:11.5px;color:var(--mut)}
+.srcs span.s{border:1px solid var(--line);background:#fff;border-radius:99px;padding:2px 9px}
+.followups{display:flex;gap:8px;flex-wrap:wrap}
+.followups button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 13px;font-size:13px}
+.followups button:hover{border-color:var(--blue);color:var(--blue)}
+.inputbar{border:1.5px solid var(--line);background:#fff;border-radius:16px;display:flex;align-items:center;gap:10px;padding:10px 12px 10px 16px;margin-top:8px}
+.inputbar input{flex:1;border:0;outline:0;font:inherit;font-size:15px;background:none;padding:6px 0}
+.send{width:36px;height:36px;border-radius:50%;border:0;background:#8aa9f0;color:#fff;display:grid;place-items:center}
+.send.on{background:var(--blue)}
+.fine{text-align:center;color:var(--mut);font-size:12px;margin:10px 0 0}
+/* drawer & fab */
+.fab{position:fixed;right:22px;bottom:22px;width:56px;height:56px;border-radius:50%;background:var(--blue);border:0;color:#fff;display:grid;place-items:center;box-shadow:0 6px 20px rgba(11,92,213,.4);z-index:30}
+.fab.hide{display:none}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--bg);border-left:1.5px solid var(--line);box-shadow:-10px 0 30px rgba(0,0,0,.12);transform:translateX(105%);transition:transform .25s;z-index:40;display:flex;flex-direction:column;padding:16px}
+.drawer.open{transform:none}
+.dhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.ctx{font-size:12px;color:var(--mut);margin-bottom:8px}
+/* toast / modal */
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#14212f;color:#fff;border-radius:12px;padding:11px 16px;font-size:13.5px;z-index:90;box-shadow:0 8px 24px rgba(0,0,0,.25);display:none;max-width:90%}
+.toast.on{display:block;animation:fade .25s}
+.modalbg{position:fixed;inset:0;background:rgba(10,18,30,.45);z-index:80;display:none;align-items:center;justify-content:center;padding:20px}
+.modalbg.on{display:flex}
+.modal{background:#fff;border-radius:16px;max-width:760px;width:100%;max-height:90vh;overflow:auto;padding:26px 30px}
+.modal h2{margin:0 0 4px}
+.memo p{margin:0 0 10px;font-size:14px}
+.memo h4{margin:16px 0 4px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.seg button{border:0;background:#fff;padding:7px 14px;font-size:13px;font-weight:600;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--blue);color:#fff}
+.tl{position:relative;height:96px;margin:6px 10px 0}
+.tl .ln{position:absolute;left:0;right:0;top:44px;height:6px;border-radius:99px;background:#e1e5ea}
+.tl .done{position:absolute;left:0;top:44px;height:6px;border-radius:99px;background:var(--teal)}
+.tl .m{position:absolute;top:36px;transform:translateX(-50%);text-align:center;width:96px;font-size:11px}
+.tl .m i{display:block;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--maroon);margin:0 auto 4px}
+.tl .m.now i{background:var(--clay);border-color:var(--clay);width:18px;height:18px;margin-top:-2px}
+.tl .m.up i{border-color:var(--gold)}
+.tl .m.top{top:-4px}.tl .m.top i{margin-top:56px}
+.tl .m.top span{position:absolute;top:0;left:0;right:0}
+.tl .m b{display:block;font-size:11.5px}
+input[type=range]{width:100%}
+.slrow{display:grid;grid-template-columns:150px 1fr 90px;gap:10px;align-items:center;margin:8px 0;font-size:13px}
+.slrow b{text-align:right}
+.ring{width:130px;height:130px;flex:none}
+.empty{color:var(--mut);font-style:italic;padding:8px 0}
+.notice{border:1.5px dashed #c9ced6;border-radius:12px;padding:10px 14px;font-size:12.5px;color:var(--mut);background:#fafbfc}
+@media(max-width:1180px){.main{grid-template-columns:1fr}.rail{display:none}.grid4{grid-template-columns:repeat(2,1fr)}.chips .chip:nth-child(n+3){display:none}}
+@media(max-width:820px){.shell{grid-template-columns:64px 1fr}.nav h6,.ni span.t,.btn-new span,.navfoot div,.ni .n{display:none}.ni{justify-content:center}.grid2,.grid3{grid-template-columns:1fr}.page{padding:16px}.chips{display:none}.greet{font-size:24px}}
+
+.foot{padding:5px 18px;border-top:1px solid var(--line);background:#fff;font-size:11px;color:var(--mut);display:flex;gap:14px;justify-content:space-between;align-items:center}
+.igrid .span2{grid-column:span 2}
+.tri{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:2px 0}
+.ic .tile{padding:9px 10px}.ic .tile .v{font-size:19px}.ic .tile .l{font-size:9.5px}.ic .tile .s{font-size:11.5px}.ic .stats{gap:8px}
+.tri>div{border:1px solid var(--line);border-radius:10px;padding:7px 10px;font-size:12.5px;background:#fafbfc}
+.tri span{display:block;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);font-weight:700;margin-bottom:2px}
+.zone{display:inline-flex;gap:6px;align-items:center;font-size:11.5px;font-weight:700;border-radius:99px;padding:3px 11px}
+.zone.Follett{background:var(--clay-l);color:var(--clay)}.zone.University{background:var(--blue-l);color:var(--blue)}.zone.CFO{background:var(--purple-l);color:var(--purple)}.zone.Enriched{background:var(--green-l);color:var(--green)}
+.tiechip{cursor:pointer;border:1.5px solid #b9cff3;background:var(--blue-l);color:var(--blue);font-weight:700;font-size:12px;border-radius:99px;padding:3px 11px}
+.tiechip:hover{background:#d8e6fb}
+.cal td{font-size:12.5px;padding:7px 8px}.cal tr.st-approved td{background:#f1faf5}.cal tr.st-comment td{background:#fff8ec}
+.cal input{border:1.5px solid var(--line);border-radius:8px;padding:6px 9px;font:inherit;width:100%}
+.zgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.zgrid .tile b{display:block;margin-bottom:2px}.zgrid .tile .sub{font-size:12px}
+.fine2{font-size:11.5px;color:var(--mut)}
+.ag td{font-size:12.5px}
+@media(max-width:1180px){.igrid .span2{grid-column:span 1}.zgrid{grid-template-columns:1fr 1fr}.tri{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand"><div class="logo">PCC</div><div>Partner Command Center<small>Northfield State University</small></div></div>
+    <div class="sep"></div>
+    <div style="font-weight:600;font-size:15px" id="topTitle">CFO Workspace</div>
+    <div class="chips">
+      <div class="chip">Follett POS <i></i><em>Live</em></div>
+      <div class="chip">CourseTracks <i></i><em>Live</em></div>
+      <div class="chip">Registrar SIS <i></i><em>Live</em></div>
+      <div class="chip">Revenue Cloud <i></i><em>Live</em></div>
+    </div>
+    <button class="btn sm" data-reset title="Clear every approval on every surface" style="margin-right:6px">Reset demo</button><div class="bell" data-go="action" title="Action Center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="1.8"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 21h4"/></svg><b id="bellN">6</b></div>
+    <div class="avatar">DW</div>
+  </header>
+  <div class="shell">
+    <nav class="nav" id="nav"></nav>
+    <div class="main" id="main"></div>
+  </div>
+  <footer class="foot"><span>Illustrative simulation. Synthetic data.</span><span>Clean-room, consent and FERPA handling is design intent, to be validated with Follett legal and each campus.</span></footer>
+</div>
+<button class="fab" id="fab" data-fab title="Ask Claude"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></button>
+<aside class="drawer" id="drawer"></aside>
+<div class="toast" id="toast"></div>
+<div class="modalbg" id="modalbg"><div class="modal" id="modal"></div></div>
+<script src="campus-data.js"></script>
+<script>
+/* ===== Campus AOS CFO prototype. All figures are synthetic, shaped like Follett objects. ===== */
+const $=(s,r=document)=>r.querySelector(s);
+const fmtK=n=>n>=1000?'$'+(n/1000).toFixed(2)+'M':'$'+(+n).toFixed(1).replace(/\.0$/,'')+'K';
+const money=n=>'$'+Math.round(n).toLocaleString();
+const CD=window.CAMPUS_DATA,BUS=window.CampusBus,NFD=CD.NF;
+const IC={
+ chat:'<path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.6A8 8 0 1 1 21 12z"/>',
+ bolt:'<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+ dollar:'<path d="M12 2v20M17 6.5C16 5 14 4.5 12 4.5c-2.5 0-4.5 1.2-4.5 3.2S9.5 10.5 12 11s4.5 1.5 4.5 3.5S14.5 19 12 19c-2.2 0-4.2-.7-5.2-2.3"/>',
+ book:'<path d="M4 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4zM20 4h-6M20 4v14h-6"/>',
+ doc:'<path d="M6 2h9l5 5v15H6zM14 2v6h6M9 13h8M9 17h8"/>',
+ shield:'<path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5z"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ bulb:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ mic:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
+ up:'<path d="M12 19V5M5 12l7-7 7 7"/>',
+ grid:'<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>',
+ chev:'<path d="M9 6l6 6-6 6"/>',
+ x:'<path d="M6 6l12 12M18 6 6 18"/>',
+ hist:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5M12 8v4l3 2"/>',
+ edit:'<path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4"/>',
+ lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+ trend:'<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>',
+ check:'<path d="M5 13l4 4L19 7"/>'
+};
+const ico=(n,sz=18,c='currentColor')=>`<svg width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${IC[n]||''}</svg>`;
+
+/* ---------- data ---------- */
+const CAT=[
+ {k:'Physical course materials',sales:2.00,rate:14,comm:280,ly:301},
+ {k:'Digital course materials',sales:1.20,rate:18,comm:216,ly:190,flag:true},
+ {k:'Inclusive Access',sales:3.60,rate:10,comm:360,ly:318},
+ {k:'General merchandise',sales:2.90,rate:22,comm:638,ly:540}];
+const MONTHS=['Jul','Aug','Sep','Oct*'],CUR=[112,478,521,383],LY=[104,441,470,334];
+const GUAR=NFD.contract.guarantee, SCEN={base:{n:'Base case',v:NFD.contract.scenarios.base,d:'Fall run-rate holds. YTD is about 52% of a typical year.'},soft:{n:'Soft retail',v:NFD.contract.scenarios.soft,d:'General merchandise grows 0% and physical materials fall another 10%. Still clears the guarantee by $20K.'},strong:{n:'Strong holiday',v:NFD.contract.scenarios.strong,d:'Parents Weekend campaign lands and holiday GM beats last year by 15%.'}};
+const DIGWK=[['Sep 1 to 14',248],['Sep 15 to 30',312],['Oct 1 to 12',276],['Oct 13 to 24',209]];
+const EVENTS=[
+ {n:'Homecoming pop-up (Oct 10 to 11)',s:186,ly:152},
+ {n:'Home opener (Sep 20)',s:74,ly:68},
+ {n:'Football, Oct 4',s:63,ly:65}];
+const COLLEGES=[
+ {n:'Arts & Sciences',st:5200,oo:4.9,ly:4.8},{n:'Business',st:2600,oo:11.8,ly:6.1,flag:true},
+ {n:'Engineering',st:1900,oo:5.2,ly:5.0},{n:'Health Sciences',st:1400,oo:3.6,ly:3.5},{n:'Education',st:800,oo:6.4,ly:6.0}];
+const GATE=NFD.gateway.map(g=>[g.c,g.n,g.w6,g.prior]);const GRANGE=CD.DERIVED.gatewayRange();
+const GTOP=NFD.gateway.slice().sort((a,b)=>(b.prior-b.w6)-(a.prior-a.w6))[0];
+const DISP0=[
+ {id:'INV-24071',unit:'Business',cause:'census',amt:31.4,note:'Follett used Sep 8 census date. Registrar file shows Sep 12.'},
+ {id:'INV-24072',unit:'Arts & Sciences',cause:'census',amt:22.9,note:'Late-start sections billed on Sep 8 census.'},
+ {id:'INV-24073',unit:'Engineering',cause:'census',amt:18.6,note:'Add/drop window ended Sep 12.'},
+ {id:'INV-24074',unit:'Education',cause:'census',amt:11.2,note:'Add/drop window ended Sep 12.'},
+ {id:'INV-24075',unit:'Health Sciences',cause:'census',amt:9.8,note:'Add/drop window ended Sep 12.'},
+ {id:'INV-24076',unit:'Business evening',cause:'census',amt:9.6,note:'Evening cohort calendar shifted one week.'},
+ {id:'INV-24077',unit:'Graduate School',cause:'census',amt:6.7,note:'Graduate census differs from undergraduate.'},
+ {id:'INV-24081',unit:'Nursing',cause:'cohort',amt:24.0,note:'Cohort flag missing on 3 sections.'},
+ {id:'INV-24082',unit:'Dual-enrollment HS',cause:'cohort',amt:17.3,note:'Cohort flagged ineligible in SIS file.'},
+ {id:'INV-24083',unit:'Athletics',cause:'cohort',amt:12.5,note:'Student-athlete rate not applied.'},
+ {id:'INV-24084',unit:'Veterans (VA)',cause:'cohort',amt:10.0,note:'VA benefit fund type unmapped.'},
+ {id:'INV-24091',unit:'ACCT 2101',cause:'price',amt:14.5,note:'New edition repriced from $98 to $146.'},
+ {id:'INV-24092',unit:'FIN 3100',cause:'price',amt:12.0,note:'Publisher repricing mid-term.'},
+ {id:'INV-24093',unit:'ECON 2010',cause:'price',amt:11.5,note:'Bundle price differs from adoption file.'}
+].map(d=>({...d,st:'open'}));
+const DISP_BASE=DISP0.map(d=>({...d}));
+/* reconcile row-level disputes with the shared data: every cause must match CAMPUS_DATA to the tenth of a $K */
+NFD.disputes.causes.forEach(c=>{const t=DISP0.filter(d=>d.cause===c.id).reduce((a,d)=>a+d.amt,0);if(Math.abs(t-c.amt)>0.05)console.warn('dispute mismatch',c.id,t,c.amt)});
+const CAUSE={census:{n:'Add/drop census date mismatch',fx:'fixCensus',btn:'Confirm census date for all'},cohort:{n:'Section or cohort flag',fx:'confirmCohorts',btn:'Send cohort fixes to Registrar'},price:{n:'Pricing difference',fx:'escalatePricing',btn:'Escalate to Follett pricing'}};
+const DRIVERS=[['Commission transparency',78,25],['Student affordability',81,20],['Service and NPS',64,20],['Digital experience',58,15],['Compliance and reporting',85,20]];
+const OBLIG=[
+ ['Commission statement by the 15th','4 of 4 on time','green'],
+ ['Capital investment commitment ($850K)','62% spent ($527K). Due Jun 2027','amber'],
+ ['Scholarship fund ($75K)','Paid in full','green'],
+ ['Annual price benchmark audit','Due Dec 1','blue'],
+ ['Access semester report','Fall report due Dec 15','blue'],
+ ['Store hours and service levels','Met','green']];
+const PEER=[['Blended commission rate','15.4%','14.6%','up'],['Access opt-out rate','6.4%','5.8%','dn'],['Invoice dispute rate','7.5%','5.0%','dn'],['Service NPS','+38','+46','dn']];
+const UPCOMING=[['Oct 30','Parents Weekend campaign approval due'],['Nov 7 to 8','Parents Weekend'],['Nov 12','Board finance committee'],['Nov 14','Spring adoption deadline'],['Nov 15','Follett commission statement'],['Jan','Expected RFP release']];
+
+/* ---------- state ---------- */
+const LOG0=[
+  {t:'06:02',a:'Commission Audit Agent',m:'Tied out '+NFD.registerLines.toLocaleString()+' POS lines to the October statement. Found 1 rate variance ($'+NFD.commission.shortK+'K).'},
+  {t:'06:11',a:'Invoice Reconciliation Agent',m:'Matched '+NFD.disputes.count+' disputed invoices to Registrar census file. '+NFD.disputes.causes[0].inv+' resolvable today.'},
+  {t:'06:20',a:'Retention Signals Agent',m:'Scored week-6 digital access for '+NFD.sections.toLocaleString()+' sections. '+NFD.gateway.length+' gateway courses below 70%.'},
+  {t:'06:33',a:'Renewal Agent',m:'Refreshed readiness score ('+NFD.renewal.score+') and peer benchmarks (62 institutions).'}];
+const S={screen:'home',drawer:false,disp:DISP0,done:{},dismissed:{},log:LOG0.map(l=>({...l})),cal:{},calNote:{},calOpen:null,
+ scen:'base',convs:[],ci:0,hist:false,col:null,ta:{p:400,e:17000,o:5}};
+const ST=()=>{const t=Date.now();return new Date(t).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})};
+const dispTotal=()=>S.disp.filter(d=>d.st!=='released').reduce((a,d)=>a+d.amt,0);
+const dispCount=()=>S.disp.filter(d=>d.st!=='released').length;
+const dispBy=c=>S.disp.filter(d=>d.cause===c);
+
+/* ---------- insights (proactive feed) ---------- */
+const POP={salesK:41.6,redeem:61}; /* synthetic Arena Store pop-up result, one home game */
+const tri=(s,u,f)=>`<div class="tri"><div><span>Student</span>${s}</div><div><span>University</span>${u}</div><div><span>Follett</span>${f}</div></div>`;
+const calTotals=()=>{const L=CD.CALENDAR;const ok=L.filter(c=>S.cal[c.id]==='approved');return {n:ok.length,all:L.length,rev:ok.reduce((a,c)=>a+c.revK,0),com:ok.reduce((a,c)=>a+c.commK,0),revAll:L.reduce((a,c)=>a+c.revK,0),comAll:L.reduce((a,c)=>a+c.commK,0)}};
+const svcAttached=()=>Math.round(CD.SERVICES.firstYear*CD.SERVICES.attachPct/100);
+const svcAvg=()=>Math.round(CD.SERVICES.invoiceImpactK*1000/svcAttached());
+/* rk is the agent ranking. The closing invoice jumps to the top once the census date is confirmed. */
+const rk=i=>i.id==='pay'?(S.done.fixCensus?0:99):i.rk;
+const byRank=(a,b)=>rk(a)-rk(b);
+const INS=[
+ {id:'inv',uc:1,rk:1,tag:'Cash',title:'Access invoices: $'+NFD.disputes.total.toFixed(0)+'K held in dispute',impact:'hr',
+  body:'52% of disputed dollars trace to one cause: Follett billed on a Sep 8 census date, the Registrar file says Sep 12. Seven invoices clear the moment the date is confirmed.',
+  rec:'Confirm the Sep 12 census date to release $'+NFD.disputes.causes[0].amt+'K today.',agent:'Invoice Reconciliation Agent',src:'From Registrar SIS file + invoice ledger',btn:'Confirm census date',fx:'fixCensus',ask:'Why are our Access invoices in dispute and what clears them fastest?',go:'access'},
+ {id:'comm',uc:2,rk:2,tag:'Risk',title:'Digital commission under-applied by $'+NFD.commission.shortK+'K',impact:'hr',
+  body:'The October statement paid '+NFD.commission.digitalPaid+'% on $1.045M of digital sales. Your contract rate is '+NFD.commission.contractRate+'%. Likely cause (inferred): 3 new digital bundle SKUs mapped to the physical rate table on Sep 1.',
+  rec:'Request a same-week credit instead of waiting for the Nov 15 statement.',agent:'Commission Audit Agent',src:'From POS tie-out + contract rate card',btn:'Request same-week credit',fx:'requestCredit',ask:'Show me the commission variance and what caused it',go:'fin'},
+ {id:'pw',uc:5,rk:3,tag:'Opportunity',title:'Parents Weekend campaign returns '+NFD.campaigns.parents.multiple+'x on your $'+NFD.campaigns.parents.spendK+'K',impact:'hi',
+  body:'Follett proposes a $25K co-funded campaign (you $10K, Follett $15K). Modeled lift: $'+NFD.campaigns.parents.liftK+'K incremental sales, $'+NFD.campaigns.parents.commissionK+'K commission to the university at 22%.',
+  rec:'Approve the $10K university share by Oct 30 so creative can ship.',agent:'Event Performance Agent',src:'From POS event history + campaign model',btn:'Approve $10K',fx:'approveCampaign',ask:'Walk me through the Parents Weekend campaign economics',go:'fin'},
+ {id:'oo',uc:3,rk:4,tag:'Risk',title:'Business College opt-outs doubled to '+NFD.optOuts.to+'%',impact:'hi',
+  body:'Three Business courses repriced from $'+NFD.optOuts.priceFrom+' to $'+NFD.optOuts.priceTo+' after a publisher edition change. Opt-outs rose from '+NFD.optOuts.from+'% to '+NFD.optOuts.to+'%, about $'+NFD.optOuts.riskPerTermK+'K per term in lost Access revenue.',
+  rec:'Open a spring adoption review with Follett and the Business dean before '+NFD.optOuts.reviewBy+'.',agent:'Affordability Agent',src:'From CourseTracks + SAM adoption file',btn:'Open adoption review',fx:'openAdoption',ask:'What is driving Business College opt-outs?',go:'access'},
+ {id:'ew',uc:4,rk:5,tag:'Opportunity',title:NFD.gateway.length+' gateway courses under 70% week-6 material access',impact:'hi',
+  body:NFD.gatewayStudents.toLocaleString()+' students across '+NFD.gateway.map(g=>g.c).join(', ').replace(/, ([^,]*)$/,' and $1')+'. Week-6 access is down '+GRANGE.min+' to '+GRANGE.max+' points vs last fall, led by '+GTOP.c+' ('+(GTOP.prior-GTOP.w6)+'). Course-level only, no student names.',
+  rec:'Send the course-level report to the Provost for faculty outreach.',agent:'Retention Signals Agent',src:'From publisher access logs (aggregated)',btn:'Send to Provost',fx:'routeProvost',ask:'Which courses show early warning signals and what is it worth?',go:'access'},
+ {id:'rn',uc:6,rk:6,tag:'Renewal',title:'Renewal readiness '+NFD.renewal.score+'/100, RFP window opens in '+NFD.contract.rfpWindow,impact:'hr',
+  body:'The operating agreement expires '+NFD.contract.ends+'. Digital experience ('+NFD.renewal.digital+') and service NPS ('+NFD.renewal.nps+') are the weak drivers. Peers see '+NFD.commission.peers+'% blended commission, you see '+NFD.commission.blended+'%.',
+  rec:'Draft the value summary for the '+NFD.renewal.boardDate+' board finance committee.',agent:'Renewal Agent',src:'From contract repository + peer benchmark set',btn:'Draft renewal summary',fx:'boardDoc',ask:'How ready are we for renewal?',go:'part'},
+ {id:'ev',uc:7,rk:7,tag:'Opportunity',title:'Arena Store pop-up: '+NFD.arena.firstTimeFans+' first-time fans in one game',impact:'hi',
+  body:'A first-fan offer and a pop-up at the gate turned a ticket scan into a purchase. One transaction from the student story is already inside these numbers, and the commission line sits at the GM rate.',
+  rec:'Repeat the pop-up at the spring home opener. Homecoming sold $'+NFD.campaigns.homecoming.salesK+'K, up '+NFD.campaigns.homecoming.vsLY+'%.',agent:'Event Performance Agent',src:'From POS event history + athletics ticketing (aggregate)',btn:'Repeat at spring home opener',fx:'repeatPopup',ask:'Show me the Arena Store pop-up results',go:'fin',span:1,custom:()=>evCustom()},
+ {id:'pay',uc:8,rk:99,tag:'Cash',title:'Approve the $'+NFD.accessInvoice.amountM.toFixed(2)+'M fall Access invoice, due '+NFD.accessInvoice.due,impact:'hr',
+  body:'Net fall Access invoice after the disputes are cleared. Approving it schedules payment and shortens Follett\'s days-to-pay, which shows on the Sales Command Center view.',
+  rec:'Approve and schedule payment before '+NFD.accessInvoice.due+'.',agent:'Invoice Reconciliation Agent',src:'From invoice ledger + contract terms',btn:'Approve and schedule payment',fx:'payInvoice',ask:'Walk me through the fall Access invoice',go:'access',custom:()=>payCustom()},
+ {id:'plan',uc:10,rk:8,tag:'Opportunity',title:'Access expansion: 4 departments cluster on Access',impact:'hi',
+  body:'Economics, Biology, Chemistry and Business already moved. '+CD.ACCESSPLAN.note+'. A save-students proposal is ready for the Provost.',
+  rec:'Send the proposal to the Provost and schedule a review.',agent:'Access Growth Agent',src:'From adoption file + SIS feeds (aggregate)',btn:'Send to Provost and schedule review',fx:'accessPlan',ask:'Show me the Access expansion proposal',go:'access',custom:()=>planCustom()},
+ {id:'outc',uc:11,rk:9,tag:'Opportunity',title:'Outcome proof: Access cohort retains '+(CD.OUTCOME.access.retention-CD.OUTCOME.non.retention).toFixed(1)+' points better',impact:'hi',
+  body:'Access vs non-Access cohorts, aggregate only, from Institutional Research. No grades and no student-level fields.',
+  rec:'Share with the Provost and add to the board packet.',agent:'Retention Signals Agent',src:'From Institutional Research (aggregate)',btn:'Share with Provost and board packet',fx:'outcomeShare',ask:'Show me the Access outcome proof',go:'access',custom:()=>outcCustom()},
+ {id:'cal',uc:12,rk:10,tag:'Opportunity',title:'Spring campus commerce calendar: '+CD.CALENDAR.length+' proposed lines',impact:'hi',
+  body:'One card for pop-ups at games and events, an exclusive collab drop, alumni shelf slots, a trade-in charity partner, a store-in-store corner, a golf pro shop pilot and NIL items with proceeds to athletics.',
+  rec:'Approve all, approve each, or comment. Approved lines write to the event calendar.',agent:'Campus Commerce Agent',src:'From event calendar + merchandising plan',btn:'Approve all',fx:'calendarAll',ask:'Which spring campus commerce lines should I approve?',go:'fin',span:1,custom:()=>calCustom()},
+ {id:'svc',uc:13,rk:11,tag:'Opportunity',title:'First-year move-in services add-on',impact:'hi',
+  body:'Dorm setup, last-mile delivery and a device each term, bundled with Access for first-year students. Review the invoice impact before approving.',
+  rec:'Approve the add-on. The line appears on the next Access invoice preview.',agent:'Fulfillment and Services Agent',src:'From Access invoice model + delivery partner SLAs',btn:'Approve add-on',fx:'servicesAdd',ask:'Show me the services add-on',go:'access',custom:()=>svcCustom()}
+];
+const open=i=>!S.dismissed[i.id]&&!S.done[i.fx];
+const nOpen=()=>INS.filter(open).length;
+
+/* ---------- effects ---------- */
+const agentName=id=>(CD.AGENTS.find(a=>a.id===id)||{n:''}).n;
+/* fx -> use case, agent, and the shared-state key every other surface listens to */
+const FXMETA={
+ fixCensus:{uc:1,ag:'inv',key:'released'},confirmCohorts:{uc:1,ag:'inv'},escalatePricing:{uc:1,ag:'inv'},
+ requestCredit:{uc:2,ag:'com',key:'commissionCredit'},openAdoption:{uc:3,ag:'aff',key:'adoptionReview'},
+ routeProvost:{uc:4,ag:'ret',key:'provostReport'},approveCampaign:{uc:5,ag:'evt',key:'campaign'},
+ boardDoc:{uc:6,ag:'ren',key:'memo'},repeatPopup:{uc:7,ag:'evt',key:'eventRepeat'},payInvoice:{uc:8,ag:'inv',key:'accessPaid'},
+ accessPlan:{uc:10,ag:'agr',key:'accessPlan'},outcomeShare:{uc:11,ag:'ret',key:'outcome'},
+ calendarAll:{uc:12,ag:'cmc',key:'calendar'},servicesAdd:{uc:13,ag:'ful',key:'services'}
+};
+const FX={
+ fixCensus(){S.disp.forEach(d=>{if(d.cause==='census')d.st='released'});return {log:'Confirmed Sep 12 census date. '+NFD.disputes.causes[0].inv+' invoices released ($'+NFD.disputes.causes[0].amt+'K).',toast:'Census date confirmed. '+NFD.disputes.causes[0].inv+' invoices ($'+NFD.disputes.causes[0].amt+'K) released to Follett billing.'}},
+ confirmCohorts(){S.disp.forEach(d=>{if(d.cause==='cohort')d.st='review'});return {log:'Sent '+NFD.disputes.causes[1].inv+' cohort corrections to the Registrar. Invoices release when the corrections post ($'+NFD.disputes.causes[1].amt+'K).',toast:NFD.disputes.causes[1].inv+' cohort corrections sent to the Registrar. $'+NFD.disputes.causes[1].amt+'K releases when they post.'}},
+ escalatePricing(){S.disp.forEach(d=>{if(d.cause==='price')d.st='review'});return {log:'Escalated '+NFD.disputes.causes[2].inv+' pricing disputes to Follett Pricing (response due in 48h).',toast:NFD.disputes.causes[2].inv+' pricing disputes escalated. Follett responds within 48 hours.'}},
+ requestCredit(){return {log:'Requested same-week credit of $'+NFD.commission.shortK+'K from Follett Finance. Variance lines attached.',toast:'Credit request sent to Follett Finance with the '+NFD.commission.lines+' variance lines attached.'}},
+ openAdoption(){return {log:'Opened spring adoption review: Business dean, Follett publisher relations, Bookstore director.',toast:'Adoption review created and invites drafted for the Business dean and Follett publisher relations.'}},
+ routeProvost(){return {log:'Sent course-level access report ('+NFD.gateway.length+' gateway courses, '+NFD.gatewayStudents.toLocaleString()+' students) to the Provost.',toast:'Course-level report sent to the Provost. No student-level data included.'}},
+ approveCampaign(){return {log:'Approved $'+NFD.campaigns.parents.spendK+'K university share for Parents Weekend campaign. Creative released.',toast:'Approved. Follett creative team notified and campaign scheduled for Nov 1.'}},
+ boardDoc(silent){if(!silent)showMemo();return {log:'Drafted board finance committee renewal summary for review.',toast:'Draft ready. Review and edit before it goes anywhere.',keep:true}},
+ repeatPopup(){return {log:'Approved a repeat Arena Store pop-up at the spring home opener. Added to the event calendar.',toast:'Approved. Campus Commerce added the spring home opener pop-up to the event calendar.'}},
+ payInvoice(){return {log:'Approved and scheduled payment of the $'+NFD.accessInvoice.amountM.toFixed(2)+'M fall Access invoice, due '+NFD.accessInvoice.due+'.',toast:'Payment of $'+NFD.accessInvoice.amountM.toFixed(2)+'M scheduled. Follett days-to-pay moves from '+NFD.daysToPay.before+' to '+NFD.daysToPay.after+'.'}},
+ accessPlan(){return {log:'Sent the Access expansion proposal to the Provost and scheduled a review. Modeled student savings $'+CD.ACCESSPLAN.saveStudentsM.toFixed(2)+'M.',toast:'Proposal sent to the Provost and a review is on the calendar.'}},
+ outcomeShare(){return {log:'Shared the aggregate outcome proof (Access vs non-Access retention) with the Provost and the board packet.',toast:'Shared with the Provost and added to the board packet. Aggregate only.'}},
+ calendarAll(){CD.CALENDAR.forEach(c=>{S.cal[c.id]='approved'});return {log:'Approved all '+CD.CALENDAR.length+' spring campus commerce lines. Written to the event calendar.',toast:'All '+CD.CALENDAR.length+' lines approved and written to the event calendar.'}},
+ servicesAdd(){return {log:'Approved the first-year services add-on. Line added to the next Access invoice preview ($'+CD.SERVICES.invoiceImpactK+'K).',toast:'Add-on approved. It now shows on the next Access invoice preview.'}}
+};
+function pushLog(o){S.log.unshift({t:ST(),...o})}
+function busPublish(fx,logText){
+  const m=FXMETA[fx];if(!m||!m.key)return;
+  BUS.set(m.key,m.key==='calendar'?{...S.cal}:true,'Command Center',logText);
+}
+function act(fx){
+  if(S.done[fx]&&fx!=='boardDoc')return;
+  if(fx==='payInvoice'&&!S.done.fixCensus){toast('Confirm the census date first so the invoice amount is net of cleared disputes.');return}
+  const r=FX[fx]();S.done[fx]=true;
+  const m=FXMETA[fx]||{};
+  pushLog({a:'You approved',m:r.log,who:NFD.cfo.name,ag:m.ag?agentName(m.ag):'',surface:'Command Center',uc:m.uc||'',fx});
+  toast(r.toast);busPublish(fx,r.log);renderAll();
+}
+/* per-line approval for use case 12 */
+function calApprove(id){
+  const c=CD.CALENDAR.find(x=>x.id===id);if(!c||S.cal[id]==='approved')return;
+  S.cal[id]='approved';S.calOpen=null;
+  const all=CD.CALENDAR.every(x=>S.cal[x.id]==='approved');if(all)S.done.calendarAll=true;
+  const msg='Approved calendar line: '+c.n+'.';
+  pushLog({a:'You approved',m:msg,who:NFD.cfo.name,ag:agentName('cmc'),surface:'Command Center',uc:12,fx:'calendarLine'});
+  BUS.set('calendar',{...S.cal},'Command Center',msg);toast('Approved and written to the event calendar.');renderAll();
+}
+function calComment(id,text){
+  const c=CD.CALENDAR.find(x=>x.id===id);if(!c)return;text=(text||'').trim()||'Needs discussion';
+  S.cal[id]='comment';S.calNote[id]=text;S.calOpen=null;
+  const msg='Commented on calendar line: '+c.n+'. Note: '+text;
+  pushLog({a:'You commented',m:msg,who:NFD.cfo.name,ag:agentName('cmc'),surface:'Command Center',uc:12,fx:'calendarComment'});
+  BUS.set('calendar',{...S.cal},'Command Center',msg);toast('Comment saved. The line stays open for approval.');renderAll();
+}
+/* apply a change that happened on another surface, silently and without re-broadcasting */
+function syncFromBus(st,initial){
+  Object.keys(FXMETA).forEach(fx=>{const m=FXMETA[fx];if(!m.key||m.key==='calendar')return;
+    if(st[m.key]&&!S.done[fx]){FX[fx](true);S.done[fx]=true;
+      if(!initial){const e=(st.log&&st.log[0])||{};pushLog({a:'Synced from '+(e.surface||'another surface'),m:e.what||('Applied '+m.key),who:NFD.cfo.name,ag:agentName(m.ag),surface:e.surface||'',uc:m.uc,fx})}}
+  });
+  const cal=st.calendar||{};Object.keys(cal).forEach(id=>{if(S.cal[id]!==cal[id])S.cal[id]=cal[id]});
+  if(CD.CALENDAR.every(x=>S.cal[x.id]==='approved'))S.done.calendarAll=true;
+}
+function resetAll(fromBus){
+  S.disp=DISP_BASE.map(d=>({...d,st:'open'}));S.done={};S.dismissed={};S.cal={};S.calNote={};S.calOpen=null;S.log=LOG0.map(l=>({...l}));
+  $('#modalbg').classList.remove('on');
+  if(!fromBus)BUS.reset();
+  renderAll();toast('Demo reset on every surface.');
+}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),3800)}
+function showMemo(){
+  $('#modal').innerHTML=`<div class="memo"><div style="display:flex;justify-content:space-between;align-items:start"><div><span class="pill clay">Draft by Claude</span><h2 style="margin-top:8px">Board Finance Committee: Bookstore Partnership Summary</h2><div class="sub">Northfield State University | Prepared for Dana Whitfield, CFO | Synthetic data</div></div><button class="btn sm" data-close>Close</button></div>
+  <h4>Headline</h4><p>The bookstore partnership delivered <b>$1.49M</b> in commission this fall to date, up 10.7% on last year, and is on pace for about <b>$2.87M</b> against a <b>$2.6M</b> guarantee (110% coverage).</p>
+  <h4>What went well</h4><p>General merchandise commission is up 18% ($638K vs $540K), led by a Homecoming pop-up that sold $186K (+22%). Inclusive Access commission is up 13%. Student savings are modeled at $1.61M this term.</p>
+  <h4>What needs attention</h4><p>1) A $41.8K digital commission rate variance is open with Follett Finance. 2) $212K of Access invoices were held in dispute, 52% from one census date mismatch. 3) Business College opt-outs doubled after a publisher repricing.</p>
+  <h4>Renewal position</h4><p>The agreement expires Aug 31, 2027. Readiness is 74/100. Your blended commission (15.4%) is above the peer median (14.6%), which strengthens your hand. Service NPS (+38 vs +46) and digital experience are the gaps to close before the RFP.</p>
+  <h4>Asks of the committee</h4><p>Endorse a renewal strategy that holds the commission rate card, adds service-level credits tied to NPS, and requires real-time commission reporting in the next agreement.</p>
+  <div class="notice" style="margin-top:12px">Evidence labels: commission, invoices and opt-outs are system figures. The retention value and peer set are modeled and should be confirmed with Institutional Research before circulation.</div>
+  <div style="margin-top:14px;display:flex;gap:8px"><button class="btn pri" data-copy>Copy to clipboard</button><button class="btn" data-close>Close</button></div></div>`;
+  $('#modalbg').classList.add('on');
+}
+</script>
+<script>
+/* ---------- nav + rail ---------- */
+const NAV=[['W','Workspaces'],['home','Conversations','chat'],['action','Action Center','bolt'],['I','Intelligence'],['fin','Financials','dollar'],['access','Access & Invoicing','book'],['part','Partnership & Renewal','doc'],['T','Tools'],['trust','Data & Trust','shield']];
+function renderNav(){
+  $('#nav').innerHTML=`<button class="btn-new" data-new>${ico('plus',16)}<span>New</span></button>`+NAV.map(n=>{
+    if(n.length===2)return `<h6>${n[1]}</h6>`;
+    const cnt=n[0]==='action'?`<span class="n hot">${nOpen()}</span>`:n[0]==='access'?`<span class="n">${dispCount()}</span>`:'';
+    return `<div class="ni ${S.screen===n[0]?'on':''}" data-go="${n[0]}">${ico(n[2],18)}<span class="t">${n[1]}</span>${cnt}</div>`}).join('')+
+  `<div class="navfoot"><div class="avatar">DW</div><div><b>Dana Whitfield</b><small>VP Finance and CFO</small></div></div>`;
+  $('#bellN').textContent=nOpen();
+}
+function rail(){
+  const dot={UP:'#0a8f5b',STEADY:'#8b94a0',SOFT:'#f0a21b',REVIEW:'#c62828'};
+  const st=[['General merchandise','$638K','UP'],['Inclusive Access','$360K','UP'],['Physical materials','$280K','SOFT'],['Digital materials','$216K',S.done.requestCredit?'UP':'REVIEW']];
+  const top=INS.filter(open).sort(byRank).slice(0,3);
+  return `<div class="railhead"><h5 style="margin:0">Live Intelligence</h5></div>
+  <div class="grid3" style="grid-template-columns:repeat(3,1fr);gap:8px">
+   <div class="tile click" data-go="fin"><div class="l">Comm YTD</div><div class="v" style="font-size:21px">$1.49M</div><div class="s up">${ico('up',11)} 10.7% YoY</div></div>
+   <div class="tile click" data-go="fin"><div class="l">Guarantee</div><div class="v" style="font-size:21px">110%</div><div class="s">$2.87M proj</div></div>
+   <div class="tile click" data-go="access"><div class="l">Disputed</div><div class="v" style="font-size:21px">${fmtK(dispTotal())}</div><div class="s">${dispCount()} invoices</div></div>
+  </div>
+  <div class="railhead mt2"><h5 style="margin:0">Commission by stream</h5><span class="link" data-go="fin">View all</span></div>
+  ${st.map(r=>`<div class="dealrow"><span class="nm" data-go="fin">${r[0]}</span><span class="st" style="color:${dot[r[2]]}"><i style="background:${dot[r[2]]}"></i>${r[2]}</span><b>${r[1]}</b></div>`).join('')}
+  <div class="railhead mt2"><h5 style="margin:0">Next best actions</h5><span class="pill blue">AGENT RANKED</span></div>
+  ${top.length?top.map(i=>`<div class="nba" data-ask="${i.ask}"><div class="ico">${ico(i.tag==='Risk'||i.tag==='Cash'?'shield':'bolt',16,'#0b5cd5')}</div><div><b>${i.title}</b><span>${i.rec}</span></div><span class="imp ${i.impact}">${i.impact==='hr'?'High Risk':'High Impact'}</span></div>`).join(''):'<div class="empty">All caught up. Nothing waiting on you.</div>'}
+  <div class="railhead mt2"><h5 style="margin:0">Agent log</h5><span class="pill gray">${S.log.length} entries</span></div>
+  ${S.log.slice(0,5).map(l=>`<div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #eef0f2;font-size:12.5px"><span class="sub" style="width:42px;flex:none">${l.t}</span><span><b>${l.a}</b><br><span class="sub">${l.m}</span></span></div>`).join('')}`;
+}
+/* ---------- insight card ---------- */
+function icard(i){
+  const done=S.done[i.fx];
+  const gated=i.fx==='payInvoice'&&!S.done.fixCensus;
+  const main=gated?`<button class="btn pri" data-fx="fixCensus">Confirm census date first</button>`:`<button class="btn ${done?'done':'pri'}" ${done?'disabled':`data-fx="${i.fx}"`}>${done?'Completed':i.btn}</button>`;
+  return `<div class="ic ${done?'cleared':''} ${i.span?'span2':''}"><div class="hd"><span class="tag ${i.tag}">${i.tag}</span><span class="pill gray">Use case ${i.uc}</span><span class="sp"></span>${done?'<span class="pill green">Done</span>':'<span class="new">New</span>'}<button class="x" data-dismiss="${i.id}" title="Dismiss">&times;</button></div>
+  <h4>${i.title}</h4><p>${i.body}</p>${i.custom?i.custom():''}
+  <div class="rec">${ico('bulb',15,'#0b5cd5')}<span>${i.rec}</span></div>
+  <div class="ft"><div class="who"><div>${ico('grid',13)} ${i.agent}</div><div>${ico('doc',13)} ${i.src}</div></div>
+  <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">${main}<button class="btn ghost sm" data-ask="${i.ask}">Ask Claude</button></div></div></div>`;
+}
+/* ---------- screens ---------- */
+function vHome(){
+  const n=nOpen();
+  const greet=`<div class="agentbar"><div class="agentsel">${ico('chat',16)} CLAUDE CFO COPILOT <span class="live">Live</span> ${ico('chev',12)}</div><span class="sp"></span><button class="gbtn" data-new>${ico('edit',14)} NEW</button><button class="gbtn" data-hist>${ico('hist',14)} PAST CONVERSATIONS</button></div>`;
+  const hist=S.hist?`<div class="card mt" style="padding:8px">${S.convs.map((c,k)=>`<div class="ni ${k===S.ci?'on':''}" data-conv="${k}">${ico('chat',15)}<span class="t">${c.title}</span><span class="n">${c.msgs.length/2|0} turns</span></div>`).join('')}</div>`:'';
+  const conv=S.convs[S.ci];
+  const intro=conv.msgs.length?'':`<div class="greet">Good morning, Dana.</div>
+   <p class="greetp">Commission is at <b>$1.49M</b> (+10.7%) and you cover the <b>$2.6M</b> guarantee at <b>110%</b>. <b>${n} decision${n===1?'':'s'}</b> need you, with <b>${fmtK(dispTotal())}</b> of Access billing still in dispute. Parents Weekend approval is due Oct 30.</p>
+   <div class="pchips">${['What changed since Friday?','Why are Access invoices stuck?','Is our commission statement right?','How ready are we for renewal?','Which courses need attention?','Which spring campus commerce lines should I approve?','Show me the Arena Store pop-up results','What if we move to Total Access?'].map(p=>`<button class="pchip" data-ask="${p}">${p}</button>`).join('')}</div>`;
+  return `<div class="chatwrap" style="max-width:920px;margin:0 auto">${greet}${hist}${intro}<div class="thread" id="thread-home"></div>${inputBar('home')}<div class="fine">The Partner Command Center can make mistakes. Validate critical figures. Data is synthetic for this prototype.</div></div>`;
+}
+function inputBar(id){return `<div class="inputbar">${''}<input id="in-${id}" placeholder="Ask a follow-up or type a command" autocomplete="off"><span style="color:var(--mut)">${ico('mic',18)}</span><button class="send" data-send="${id}">${ico('up',18,'#fff')}</button></div>`}
+
+function vAction(){
+  const items=INS.filter(i=>!S.dismissed[i.id]).sort(byRank);
+  const dis=S.disp.filter(d=>d.st!=='released').sort((a,b)=>b.amt-a.amt).slice(0,5);
+  const pr=[['Digital experience',58],['Service and NPS',64],['Commission transparency',78]];
+  return `<div class="h1">Action Center</div><div class="sub">Proactive insights ranked by dollars at stake. Approve, route or dismiss. Every action is logged.</div>
+  <div class="card mt" style="border-radius:18px"><div class="sech">${ico('bulb',18,'#6b4bd6')} Insights &amp; Next Steps <span class="sp"></span><span class="pill gray">${nOpen()} open</span></div>
+  <div class="igrid">${items.length?items.map(icard).join(''):'<div class="empty">No insights. You are clear.</div>'}</div></div>
+  <div class="grid2 mt">
+   <div class="card"><div class="sech">${ico('dollar',17)} Invoice Disputes <span class="badge">${dispCount()}</span><span class="sp"></span><span class="link" data-go="access" style="font-size:13px">Open queue</span></div>
+    ${dis.length?dis.map(d=>`<div style="border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px"><div style="display:flex;justify-content:space-between"><b>${d.unit}</b><span class="pill ${d.cause==='census'?'amber':d.cause==='cohort'?'blue':'red'}">${CAUSE[d.cause].n}</span></div><div class="sub" style="margin:3px 0 6px">${d.id} | ${d.note}</div><div style="display:flex;justify-content:space-between;align-items:center"><b>${fmtK(d.amt)}</b><button class="btn sm" data-ask="Why is ${d.id} in dispute?">Ask Claude</button></div></div>`).join(''):'<div class="empty">All disputes cleared. Nice.</div>'}</div>
+   <div class="card"><div class="sech">${ico('trend',17)} Renewal Risk <span class="badge" style="background:#f0a21b">3</span><span class="sp"></span><span class="link" data-go="part" style="font-size:13px">Open</span></div>
+    <div class="sub" style="margin-bottom:10px">Agreement expires Aug 31, 2027. Weakest readiness drivers:</div>
+    ${pr.map(p=>`<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between"><b>${p[0]}</b><span>${p[1]}/100</span></div><div class="bar ${p[1]<65?'red':p[1]<80?'amber':'green'}"><i style="width:${p[1]}%"></i></div></div>`).join('')}
+    <button class="btn" data-ask="How do we raise service NPS before the RFP?">Ask Claude how to close the gaps</button></div>
+  </div>`;
+}
+/* --- charts --- */
+function barChart(){
+  const W=560,H=230,pad=34,max=600,bw=34,g=(W-pad*2)/4;
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Monthly commission vs last year">`;
+  [0,200,400,600].forEach(v=>{const y=H-28-(v/max)*(H-60);s+=`<line x1="${pad}" x2="${W-10}" y1="${y}" y2="${y}" stroke="#e6e8ec"/><text x="${pad-6}" y="${y+4}" font-size="10" fill="#8b94a0" text-anchor="end">$${v}K</text>`});
+  MONTHS.forEach((m,i)=>{const x=pad+g*i+g/2;const h1=(LY[i]/max)*(H-60),h2=(CUR[i]/max)*(H-60);
+   s+=`<rect x="${x-bw-2}" y="${H-28-h1}" width="${bw}" height="${h1}" rx="4" fill="#cdd2d9"/><rect x="${x+2}" y="${H-28-h2}" width="${bw}" height="${h2}" rx="4" fill="#0b5cd5"/>
+   <text x="${x+2+bw/2}" y="${H-32-h2}" font-size="10.5" font-weight="700" text-anchor="middle" fill="#0847a8">$${CUR[i]}K</text><text x="${x}" y="${H-10}" font-size="11" text-anchor="middle" fill="#5d6672">${m}</text>`});
+  return s+'</svg>';
+}
+function guarGauge(){
+  const sc=SCEN[S.scen],W=560,max=3300,x=v=>30+(v/max)*(W-60);
+  return `<svg viewBox="0 0 ${W} 110" width="100%"><rect x="30" y="46" width="${W-60}" height="16" rx="8" fill="#e6e8ec"/><rect x="30" y="46" width="${x(1494)-30}" height="16" rx="8" fill="#0b5cd5"/>
+  <rect x="${x(1494)}" y="46" width="${x(sc.v)-x(1494)}" height="16" fill="#9fc0f5"/>
+  <line x1="${x(GUAR)}" x2="${x(GUAR)}" y1="30" y2="82" stroke="#c62828" stroke-width="2.5"/><text x="${x(GUAR)}" y="22" font-size="11" font-weight="700" fill="#c62828" text-anchor="middle">Guarantee $2.60M</text>
+  <circle cx="${x(sc.v)}" cy="54" r="7" fill="#fff" stroke="#0847a8" stroke-width="3"/><text x="${x(sc.v)}" y="98" font-size="12" font-weight="700" text-anchor="middle" fill="#0847a8">Projected $${(sc.v/1000).toFixed(2)}M (${Math.round(sc.v/GUAR*100)}%)</text>
+  <text x="${x(1494)}" y="76" font-size="10.5" text-anchor="middle" fill="#5d6672">YTD $1.49M</text></svg>`;
+}
+function vFin(){
+  const tot=CAT.reduce((a,c)=>a+c.comm,0),ly=CAT.reduce((a,c)=>a+c.ly,0);
+  const credit=S.done.requestCredit;
+  const camp=S.done.approveCampaign;
+  return `<div class="h1">Financials</div><div class="sub">Commission, guarantee coverage and event performance. Fall to date through Oct 24 (FY27).</div>
+  <div class="grid4 mt"><div class="tile"><div class="l">Commission YTD</div><div class="v">$${(tot/1000).toFixed(2)}M</div><div class="s up">+${((tot/ly-1)*100).toFixed(1)}% vs LY ($${(ly/1000).toFixed(2)}M)</div></div>
+   <div class="tile"><div class="l">Sales through store</div><div class="v">$9.70M</div><div class="s">Blended rate 15.4%</div></div>
+   <div class="tile"><div class="l">Guarantee coverage</div><div class="v">${Math.round(SCEN[S.scen].v/GUAR*100)}%</div><div class="s">${SCEN[S.scen].n}</div></div>
+   <div class="tile"><div class="l">Open variance</div><div class="v" style="color:${credit?'var(--green)':'var(--red)'}">${credit?'$0':'$41.8K'}</div><div class="s">${credit?'Credit requested':'Digital rate'}</div></div></div>
+  <div class="grid2 mt"><div class="card"><h3>Monthly commission vs last year</h3><div class="sub">*October through the 24th</div>${barChart()}<div class="sub" style="display:flex;gap:14px"><span><b style="color:#cdd2d9">&#9632;</b> Last year</span><span><b style="color:#0b5cd5">&#9632;</b> This year</span></div></div>
+   <div class="card"><h3>Guarantee coverage</h3><div class="sub">Pick a scenario. The model reruns on the full-year commission ledger.</div>
+    <div class="seg mt" style="margin-top:10px">${Object.keys(SCEN).map(k=>`<button class="${S.scen===k?'on':''}" data-scen="${k}">${SCEN[k].n}</button>`).join('')}</div>${guarGauge()}
+    <div class="sub">${SCEN[S.scen].d}</div></div></div>
+  <div class="card mt"><h3>Commission by category</h3><div class="sub">Click a row to see the statement tie-out.</div>
+   <table class="mt" style="margin-top:8px"><tr><th>Category</th><th class="r">Sales</th><th class="r">Contract rate</th><th class="r">Contract commission</th><th class="r">vs LY</th><th></th></tr>
+   ${CAT.map((c,i)=>`<tr class="clk" data-col="${i}"><td><b>${c.k}</b></td><td class="r">$${c.sales.toFixed(2)}M</td><td class="r">${c.rate}%</td><td class="r"><b>$${c.comm}K</b></td><td class="r" style="color:${c.comm>=c.ly?'var(--green)':'var(--red)'}">${c.comm>=c.ly?'+':''}${((c.comm/c.ly-1)*100).toFixed(1)}%</td><td>${c.flag&&!credit?'<span class="pill red">Variance</span>':c.flag?'<span class="pill green">Credit requested</span>':''}</td></tr>
+   ${S.col===i&&c.flag?`<tr><td colspan="6" style="background:#fafbfc"><div style="padding:6px 4px"><b>Statement vs contract: digital course materials</b>
+     <table style="margin-top:8px"><tr><th>Period</th><th class="r">Digital sales</th><th class="r">Rate paid</th><th class="r">Contract rate</th><th class="r">Variance</th></tr>${DIGWK.map(w=>`<tr><td>${w[0]}</td><td class="r">$${w[1]}K</td><td class="r">14%</td><td class="r">18%</td><td class="r" style="color:var(--red)">-$${(w[1]*.04).toFixed(2)}K</td></tr>`).join('')}<tr><td><b>Total</b></td><td class="r"><b>$1,045K</b></td><td></td><td></td><td class="r" style="color:var(--red)"><b>-$41.80K</b></td></tr></table>
+     <div class="sub" style="margin:8px 0">Likely cause (inferred): 3 new digital bundle SKUs added Sep 1 were mapped to the physical-materials rate table. Confirm with Follett Finance.</div>
+     <button class="btn ${credit?'done':'pri'}" ${credit?'disabled':'data-fx="requestCredit"'}>${credit?'Credit requested':'Request same-week credit'}</button> <button class="btn" data-ask="Show me the commission variance and what caused it">Ask Claude</button></div></td></tr>`:S.col===i?`<tr><td colspan="6" style="background:#fafbfc"><div class="sub" style="padding:4px">Statement ties to POS within 0.1%. No variance. ${c.k} commission is $${c.comm}K at ${c.rate}% on $${c.sales.toFixed(2)}M.</div></td></tr>`:''}`).join('')}
+   <tr><td><b>Total</b></td><td class="r"><b>$9.70M</b></td><td class="r">15.4%</td><td class="r"><b>$${tot}K</b></td><td class="r" style="color:var(--green)"><b>+${((tot/ly-1)*100).toFixed(1)}%</b></td><td></td></tr></table></div>
+  <div class="grid2 mt"><div class="card"><h3>Event performance</h3><div class="sub">GM sales by event vs same event last year</div>
+    <table style="margin-top:8px"><tr><th>Event</th><th class="r">Sales</th><th class="r">vs LY</th></tr>${EVENTS.map(e=>`<tr><td>${e.n}</td><td class="r">$${e.s}K</td><td class="r" style="color:${e.s>=e.ly?'var(--green)':'var(--red)'}">${e.s>=e.ly?'+':''}${((e.s/e.ly-1)*100).toFixed(0)}%</td></tr>`).join('')}<tr><td>Arena Store pop-up (one home game) <span class="tiechip" data-tie>Student tie</span></td><td class="r">${fmtK(POP.salesK)}</td><td class="r"><span class="pill blue">${NFD.arena.firstTimeFans} first-time fans</span></td></tr></table></div>
+   <div class="card"><h3>Parents Weekend co-funded campaign</h3><div class="sub">Nov 7 to 8 | Proposal from Follett marketing</div>
+    <div class="stats mt" style="margin-top:10px"><div class="tile"><div class="l">Total spend</div><div class="v">$25K</div><div class="s">You $10K | Follett $15K</div></div><div class="tile"><div class="l">Modeled lift</div><div class="v">$140K</div><div class="s">Incremental sales</div></div><div class="tile"><div class="l">Your return</div><div class="v">3.1x</div><div class="s">$30.8K commission</div></div></div>
+    <div class="notice" style="margin:10px 0">Modeled from 3 prior Parents Weekends. Assumes the 22% GM commission rate. Confidence: medium.</div>
+    <button class="btn ${camp?'done':'pri'}" ${camp?'disabled':'data-fx="approveCampaign"'}>${camp?'Approved $10K':'Approve $10K university share'}</button> <button class="btn" data-ask="Walk me through the Parents Weekend campaign economics">Ask Claude</button></div></div>`;
+}
+function vAccess(){
+  const groups=['census','cohort','price'];
+  const tot=2840,disp=dispTotal(),sel=COLLEGES.find(c=>c.n===S.col);
+  const ta=S.ta,sales=ta.p*2*ta.e*(1-ta.o/100)/1e6,comm=sales*0.08,cur=692/1000;
+  return `<div class="h1">Access &amp; Invoicing</div><div class="sub">Inclusive Access performance, invoice reconciliation and course-level early signals. Fall 2026.</div>
+  <div class="grid4 mt"><div class="tile"><div class="l">Students in Access</div><div class="v">11,900</div><div class="s">412 of 1,180 sections</div></div>
+   <div class="tile"><div class="l">Opt-out rate</div><div class="v">6.4%</div><div class="s dn">+1.0 pt vs last fall</div></div>
+   <div class="tile"><div class="l">Student savings (modeled)</div><div class="v">$1.61M</div><div class="s">$135 per student per term</div></div>
+   <div class="tile"><div class="l">In dispute</div><div class="v" style="color:${disp?'var(--red)':'var(--green)'}">${fmtK(disp)}</div><div class="s">${dispCount()} of $2.84M billed (${(disp/tot*100).toFixed(1)}%)</div></div></div>
+  <div class="card mt"><div class="sech">${ico('dollar',17)} Invoice reconciliation <span class="sp"></span><span class="sub">Peer dispute rate 5.0%</span></div>
+   ${groups.map(g=>{const rows=dispBy(g),live=rows.filter(r=>r.st==='open'),rev=rows.filter(r=>r.st==='review'),sum=rows.filter(r=>r.st!=='released').reduce((a,d)=>a+d.amt,0);
+    return `<div style="border:1.5px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden"><div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fafbfc"><b>${CAUSE[g].n}</b><span class="pill ${sum?'amber':'green'}">${sum?rows.filter(r=>r.st!=='released').length+' open | '+fmtK(sum):'Cleared'}</span><span class="sp" style="flex:1"></span>${live.length?`<button class="btn pri sm" data-fx="${CAUSE[g].fx}">${CAUSE[g].btn}</button>`:rev.length?`<span class="pill blue">${g==='cohort'?'Sent, awaiting Registrar':'Escalated, awaiting Follett'}</span>`:'<span class="pill green">Released</span>'}</div>
+     ${rows.map(r=>`<div style="display:flex;gap:10px;padding:7px 14px;border-top:1px solid #eceef1;font-size:13px;opacity:${r.st==='released'?.45:1}"><span style="width:84px;color:var(--mut)">${r.id}</span><span style="width:150px"><b>${r.unit}</b></span><span style="flex:1;color:var(--mut)">${r.note}</span><b style="width:60px;text-align:right">${fmtK(r.amt)}</b><span style="width:70px;text-align:right">${r.st==='released'?'<span class="pill green">Released</span>':r.st==='review'?'<span class="pill blue">In review</span>':''}</span></div>`).join('')}</div>`}).join('')}
+   <div class="sub">Following Follett's invoicing pattern: roughly half of disputes come from add/drop dates, 30% from section or cohort, 20% from pricing. Net-30 settlement resumes on released invoices.</div></div>
+  ${invPreview()}
+  <div class="grid2 mt"><div class="card"><h3>Opt-out rate by college</h3><div class="sub">Click a bar for the driver. Last fall in gray.</div>
+   ${COLLEGES.map(c=>`<div style="margin:11px 0;cursor:pointer" data-col="${c.n}"><div style="display:flex;justify-content:space-between"><span><b>${c.n}</b> <span class="sub">${c.st.toLocaleString()} students</span></span><b style="color:${c.flag?'var(--red)':'inherit'}">${c.oo}%</b></div><div class="bar" style="position:relative"><i style="width:${c.oo*6}%;background:${c.flag?'#e53935':'#0b5cd5'}"></i><u style="position:absolute;top:-2px;bottom:-2px;left:${c.ly*6}%;width:2px;background:#8b94a0"></u></div></div>`).join('')}
+   ${sel?`<div class="notice">${sel.flag?'<b>Driver:</b> ACCT 2101, FIN 3100 and ECON 2010 repriced after a publisher edition change ($98 to $146). About 148 more students opted out, roughly $21.6K per term. <button class="btn sm pri" style="margin-left:6px" data-ask="What is driving Business College opt-outs?">Ask Claude</button>':`<b>${sel.n}:</b> opt-out ${sel.oo}% vs ${sel.ly}% last fall. Within normal range. No action suggested.`}</div>`:''}</div>
+  <div class="card"><h3>Early signals: week-6 material access</h3><div class="sub">Course-level, aggregated. No student names or identifiers.</div>
+   <table style="margin-top:8px"><tr><th>Course</th><th class="r">Enrolled</th><th class="r">Access</th><th class="r">Last fall</th></tr>${GATE.map(g=>`<tr><td><b>${g[0]}</b></td><td class="r">${g[1]}</td><td class="r" style="color:var(--red)"><b>${g[2]}%</b></td><td class="r">${g[3]}%</td></tr>`).join('')}</table>
+   <div class="notice" style="margin:10px 0">Value at stake (assumed): each 1 pt of retention is about 214 students x $9,000 net tuition = <b>$1.9M</b>. Replace with Finance's figure.</div>
+   <button class="btn ${S.done.routeProvost?'done':'pri'}" ${S.done.routeProvost?'disabled':'data-fx="routeProvost"'}>${S.done.routeProvost?'Sent to Provost':'Send to Provost'}</button> <button class="btn" data-ask="Which courses show early warning signals and what is it worth?">Ask Claude</button></div></div>
+  <div class="card mt"><h3>What-if: move campus-wide to Total Access</h3><div class="sub">Illustrative model. Rates and eligibility are set in your contract.</div>
+   <div class="slrow"><span>Price per term</span><input type="range" min="300" max="500" step="10" value="${ta.p}" data-ta="p"><b>$${ta.p}</b></div>
+   <div class="slrow"><span>Eligible students</span><input type="range" min="10000" max="21400" step="500" value="${ta.e}" data-ta="e"><b>${ta.e.toLocaleString()}</b></div>
+   <div class="slrow"><span>Opt-out rate</span><input type="range" min="0" max="15" step="1" value="${ta.o}" data-ta="o"><b>${ta.o}%</b></div>
+   <div class="stats mt" style="margin-top:12px"><div class="tile"><div class="l">Annual program sales</div><div class="v" id="ta-s">$${sales.toFixed(1)}M</div></div><div class="tile"><div class="l">University commission (8%, assumed)</div><div class="v" id="ta-c">$${comm.toFixed(2)}M</div></div><div class="tile"><div class="l">vs Inclusive Access run-rate</div><div class="v" id="ta-d" style="color:var(--green)">+$${(comm-cur).toFixed(2)}M</div><div class="s">Run-rate $0.69M (est.)</div></div></div></div>`;
+}
+function vPart(){
+  const score=Math.round(DRIVERS.reduce((a,d)=>a+d[1]*d[2],0)/100);
+  const C=2*Math.PI*52,off=C*(1-score/100);
+  const markers=[['2017',0,'Agreement starts',0],['Oct 2026',87,'You are here',1],['Jan',92,'RFP expected',0],['Mar',95,'Proposals due',0],['Aug 31, 2027',100,'Expiry',0]];
+  return `<div class="h1">Partnership &amp; Renewal</div><div class="sub">Operating agreement NSU-2017 | 10-year term | $2.6M annual guarantee | Follett-operated</div>
+  <div class="card mt"><h3>Contract timeline</h3><div class="tl"><div class="ln"></div><div class="done" style="width:87%"></div>
+   ${markers.map((m,i)=>`<div class="m ${m[3]?'now':''} ${m[1]>87?'up':''} ${i%2?'top':''}" style="left:${Math.min(Math.max(m[1],4),96)}%"><i></i><span><b>${m[0]}</b>${m[2]}</span></div>`).join('')}</div>
+   <div class="sub" style="margin-top:6px">~10 months to expiry. About 100 institutions run RFPs or renewals each year. Incumbents win 60 to 70%, and decisions hinge on commission and guaranteed minimums.</div></div>
+  <div class="grid2 mt"><div class="card"><div style="display:flex;gap:16px;align-items:center"><svg class="ring" viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="#e6e8ec" stroke-width="12"/><circle cx="60" cy="60" r="52" fill="none" stroke="#0b5cd5" stroke-width="12" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${off}" transform="rotate(-90 60 60)"/><text x="60" y="64" text-anchor="middle" font-size="30" font-weight="700">${score}</text><text x="60" y="82" text-anchor="middle" font-size="10" fill="#5d6672">of 100</text></svg><div><h3>Renewal readiness</h3><div class="sub">Weighted score across 5 drivers. Weights shown in brackets (assumed, adjustable).</div></div></div>
+    ${DRIVERS.map(d=>`<div style="margin-top:12px"><div style="display:flex;justify-content:space-between"><b>${d[0]} <span class="sub">(${d[2]}%)</span></b><span>${d[1]}</span></div><div class="bar ${d[1]<65?'red':d[1]<80?'amber':'green'}"><i style="width:${d[1]}%"></i></div></div>`).join('')}
+    <button class="btn ${S.done.boardDoc?'done':'pri'} mt" style="margin-top:14px" data-fx="boardDoc">${S.done.boardDoc?'Reopen board summary':'Draft board-ready summary'}</button></div>
+   <div class="card"><h3>Peer benchmark</h3><div class="sub">62 comparable public universities, anonymized (illustrative)</div>
+    <table style="margin-top:8px"><tr><th>Metric</th><th class="r">You</th><th class="r">Peer median</th><th></th></tr>${PEER.map(p=>`<tr><td>${p[0]}</td><td class="r"><b>${p[1]}</b></td><td class="r">${p[2]}</td><td>${p[3]==='up'?'<span class="pill green">Ahead</span>':'<span class="pill red">Behind</span>'}</td></tr>`).join('')}</table>
+    <div class="notice" style="margin-top:12px">You lead on commission rate, which is leverage. Dispute rate and NPS are where a competing bidder would attack the incumbent. Clearing disputes moves the 7.5% toward the 5.0% peer median.</div></div></div>
+  <div class="card mt"><h3>Contract obligations</h3><table style="margin-top:8px"><tr><th>Obligation</th><th>Status</th></tr>${OBLIG.map(o=>`<tr><td>${o[0]}</td><td><span class="pill ${o[2]}">${o[1]}</span></td></tr>`).join('')}</table></div>`;
+}
+function vTrust(){
+  const src=[['Follett POS (nightly batch)','6 hours ago','Sales, tender totals'],['CourseTracks and SAM','2 hours ago','Adoptions, Access provisioning, opt-in/opt-out'],['Revenue Cloud and ERP','1 hour ago','Contract terms, invoices, commission ledger'],['Registrar SIS flat file (4x daily)','3 hours ago','Enrollment, census dates, cohort flags'],['Publisher access logs (aggregated)','Daily','Course-level material access rates'],['IPEDS institutional data','Annual','Peer benchmarks']];
+  const zones=[['University','University zone','Registrar census dates, cohort flags, enrollment counts. School-official use only.','Aggregates and billing keys needed for invoices','Anything outside billing and educational services'],
+    ['Follett','Follett zone','POS, commission ledger, invoices, adoption files.','Its own commerce and billing data','University-only records'],
+    ['CFO','CFO-only zone','Private Workspace questions and drafts.','Nothing','Everything. Never visible to Follett.'],
+    ['Enriched','Enriched with consent','Degree, graduation year and interests added by students who opted in.','Aggregate coverage and anonymized segments','Any individual enrichment record']];
+  const who=S.log.filter(l=>l.who);
+  return `<div class="h1">Data &amp; Trust</div><div class="sub">What the Partner Command Center reads, what it never touches, and how agents are governed.</div>
+  <div class="card mt"><h3>Four zones</h3><div class="sub">Every answer and action carries the zone it came from.</div><div class="zgrid mt" style="margin-top:10px">${zones.map(z=>`<div class="tile"><span class="zone ${z[0]}">${z[1]}</span><div class="sub" style="margin:8px 0 6px">${z[2]}</div><div class="sub"><b style="display:inline">Follett can see:</b> ${z[3]}</div><div class="sub" style="margin-top:3px"><b style="display:inline">Follett cannot see:</b> ${z[4]}</div></div>`).join('')}</div></div>
+  <div class="grid2 mt"><div class="card"><h3>Connected sources</h3><table style="margin-top:8px"><tr><th>Source</th><th>Fresh</th><th>Used for</th></tr>${src.map(s=>`<tr><td><b>${s[0]}</b></td><td><span class="pill green">${s[1]}</span></td><td class="sub">${s[2]}</td></tr>`).join('')}</table></div>
+   <div class="card"><h3>What it never uses</h3><div style="margin-top:8px;display:flex;flex-direction:column;gap:9px">${['Individual grades, GPAs or transcripts','Dining, dorm swipe or campus card activity beyond tender approvals','Student-level records on any CFO screen (course-level and college-level only, minimum group size 10)','Student information sold or shared with outside brands or publishers'].map(t=>`<div style="display:flex;gap:9px">${ico('lock',16,'#c62828')}<span>${t}</span></div>`).join('')}</div>
+    <div class="notice" style="margin-top:12px">Follett operates under the school official exception. Data is used only to deliver educational services and bookstore operations.</div></div></div>
+  <div class="card mt"><div class="sech"><span class="zone Enriched">Enriched with consent</span> Student-added profile data <span class="sp"></span><span class="pill amber">Legal review required</span></div>
+   <div class="grid3"><div class="tile"><div class="l">Aggregate coverage</div><div class="v">${ENR.coverage}%</div><div class="s">of students who opted in added degree, graduation year and interests</div></div>
+    <div class="tile"><div class="l">Collected through</div><div class="v" style="font-size:18px">Loyalty and consent passport</div><div class="s">A student step, never from FERPA records</div></div>
+    <div class="tile"><div class="l">Anonymized segments</div><div class="v">${ENR.segments.filter(x=>x[1]>=10).length} of ${ENR.segments.length}</div><div class="s">meet the minimum group size of 10</div></div></div>
+   <table class="mt" style="margin-top:12px"><tr><th>College</th><th class="r">Coverage</th><th style="width:40%"></th></tr>${ENR.byCollege.map(c=>`<tr><td>${c[0]}</td><td class="r"><b>${c[1]}%</b></td><td><div class="bar green"><i style="width:${c[1]*2}%"></i></div></td></tr>`).join('')}</table>
+   <div style="display:flex;gap:10px;align-items:center;margin-top:12px"><button class="btn pri" data-csv="segments">Export anonymized segments (CSV)</button><span class="fine2">Counts only, groups under 10 are suppressed. Not for sale. Flagged for Follett legal before any external use.</span></div></div>
+  <div class="card mt"><h3>How agents are governed</h3><div class="grid3" style="margin-top:10px">${[['Read by default','Agents read and recommend. Every write, send or approval needs a named human click.'],['Full audit trail','Each action is logged with agent, evidence and approver. See Who approved what below.'],['Role-scoped','The CFO sees finance. The Provost sees retention signals. Registrar sees SIS actions. Same data foundation, different lens.']].map(x=>`<div class="tile"><b>${x[0]}</b><div class="sub" style="margin-top:4px">${x[1]}</div></div>`).join('')}</div></div>
+  <div class="card mt"><div class="sech">Agent roster <span class="sp"></span><span class="sub">The same ten agents answer on every surface. Budgets are placeholders.</span></div>
+   <table class="ag"><tr><th>Agent</th><th>Charter</th><th>Writes back to</th><th class="r">Used / budget</th><th style="width:14%"></th></tr>${CD.AGENTS.map(a=>{const u=CD.CONSUME.nfs[a.id];return `<tr><td><b>${a.n}</b>${a.isNew?' <span class="pill clay">New</span>':''}</td><td class="sub">${a.charter}</td><td class="sub">${a.writes}</td><td class="r">${u} / ${a.budget}</td><td><div class="bar ${u/a.budget>.9?'red':u/a.budget>.7?'amber':'green'}"><i style="width:${Math.min(100,u/a.budget*100)}%"></i></div></td></tr>`}).join('')}</table></div>
+  <div class="card mt"><div class="sech">Who approved what <span class="sp"></span><button class="btn sm" data-csv="audit">Export audit log (CSV)</button></div>
+   ${who.length?`<table><tr><th>Time</th><th>Approved by</th><th>Action</th><th>Agent</th><th>Surface</th></tr>${who.map(l=>`<tr><td class="sub">${l.t}</td><td><b>${l.who}</b></td><td>${l.m}</td><td class="sub">${l.ag||''}</td><td><span class="pill ${l.surface==='Command Center'?'blue':'clay'}">${l.surface||'Command Center'}</span></td></tr>`).join('')}</table>`:'<div class="empty">Nothing approved yet. Approvals from any surface appear here.</div>'}</div>
+  <div class="card mt"><h3>Agent activity</h3>${S.log.map(l=>`<div style="display:flex;gap:12px;padding:8px 0;border-bottom:1px solid #eceef1"><span class="sub" style="width:50px">${l.t}</span><b style="width:210px">${l.a}</b><span>${l.m}</span></div>`).join('')}</div>`;
+}
+/* ---------- local synthetic data for the consent-enriched zone ---------- */
+const ENR={coverage:41,byCollege:[['Arts & Sciences',44],['Business',46],['Engineering',39],['Health Sciences',37],['Education',33]],
+  segments:[['Class of 2028, interested in athletics',212],['Class of 2028, interested in outdoors',96],['Class of 2029, interested in athletics',188],['Class of 2029, interested in study abroad',64],['Class of 2027, interested in careers',141],['Class of 2030, interested in music',7]]};
+/* ---------- custom bodies for the new use cases ---------- */
+function evCustom(){
+  const a=NFD.arena,h=NFD.campaigns.homecoming;
+  return `<div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><div class="l">First-time fans</div><div class="v">${a.firstTimeFans}</div><div class="s">One home game</div></div>
+   <div class="tile"><div class="l">First-fan offer redeemed</div><div class="v">${POP.redeem}%</div><div class="s">${a.firstFanOffer}% off one piece</div></div>
+   <div class="tile"><div class="l">Pop-up sales</div><div class="v">${fmtK(POP.salesK)}</div><div class="s">Commission ${fmtK(POP.salesK*.22)} at 22% GM</div></div></div>
+   ${tri('A first-game offer and a pop-up at the gate','New first-time-fan segment and a commission line','Repeat visits tracked in one loyalty ledger')}
+   <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="tiechip" data-tie>Student tie: open the student receipt</span><span class="sub">Compared with Homecoming: ${fmtK(h.salesK)}, +${h.vsLY}%</span></div>`;
+}
+function payCustom(){
+  const ok=S.done.fixCensus,paid=S.done.payInvoice;
+  return `<div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><div class="l">Net invoice</div><div class="v">$${NFD.accessInvoice.amountM.toFixed(2)}M</div><div class="s">${NFD.accessInvoice.label}, due ${NFD.accessInvoice.due}</div></div>
+   <div class="tile"><div class="l">Disputes cleared</div><div class="v" style="color:${ok?'var(--green)':'var(--amber)'}">${ok?'Yes':'Not yet'}</div><div class="s">${ok?'Census date confirmed':'Confirm the census date first'}</div></div>
+   <div class="tile"><div class="l">Follett days-to-pay</div><div class="v">${paid?NFD.daysToPay.after:NFD.daysToPay.before}</div><div class="s ${paid?'up':''}">${paid?'Down from '+NFD.daysToPay.before+' after approval':'Before approval'}</div></div></div>`;
+}
+function planCustom(){
+  const p=CD.ACCESSPLAN;
+  return `<div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><div class="l">Departments clustering</div><div class="v">${p.clusters.length}</div><div class="s">${p.clusters.join(', ')}</div></div>
+   <div class="tile"><div class="l">Modeled student savings</div><div class="v">$${p.saveStudentsM.toFixed(2)}M</div><div class="s">Per term, if peers move</div></div>
+   <div class="tile"><div class="l">Follett revenue</div><div class="v">$${p.follettRevM.toFixed(2)}M</div><div class="s">Shown beside the student benefit</div></div></div>
+   ${tri('Lower cost of materials, same course-day access','Fewer opt-outs, one rate and one census rule','New Access revenue with a cleaner invoice')}`;
+}
+function outcCustom(){
+  const o=CD.OUTCOME,d=(o.access.retention-o.non.retention).toFixed(1);
+  return `<div style="margin:2px 0"><div style="display:flex;justify-content:space-between;font-size:13px"><span>${o.access.n}</span><b>${o.access.retention}%</b></div><div class="bar green"><i style="width:${o.access.retention}%"></i></div>
+   <div style="display:flex;justify-content:space-between;font-size:13px;margin-top:8px"><span>${o.non.n}</span><b>${o.non.retention}%</b></div><div class="bar"><i style="width:${o.non.retention}%;background:#8b94a0"></i></div></div>
+   <div class="notice">Retention delta <b>+${d} points</b>. Aggregate only. Source: ${o.source}. This is an association, not proof of cause.</div>
+   ${tri('Course access from day one','Retention evidence for the Provost and board','Outcome-linked proof for the commercial model')}`;
+}
+function calCustom(){
+  const t=calTotals();
+  return `<table class="cal"><tr><th>Proposed line</th><th class="r">Revenue</th><th class="r">Your commission</th><th>Student benefit</th><th style="width:150px"></th></tr>
+  ${CD.CALENDAR.map(c=>{const st=S.cal[c.id]||'';return `<tr class="${st?'st-'+st:''}"><td><b>${c.n}</b></td><td class="r">${fmtK(c.revK)}</td><td class="r">${fmtK(c.commK)}</td><td class="sub">${c.benefit}</td><td>${st==='approved'?'<span class="pill green">Approved, on calendar</span>':`<button class="btn sm pri" data-cal="${c.id}">Approve</button> <button class="btn sm" data-calc="${c.id}">${st==='comment'?'Edit note':'Comment'}</button>`}</td></tr>
+   ${S.calOpen===c.id?`<tr><td colspan="5"><div style="display:flex;gap:8px"><input id="calin-${c.id}" placeholder="Add a note for Follett, for example: confirm venue slots first" value="${(S.calNote[c.id]||'').replace(/"/g,'&quot;')}"><button class="btn sm pri" data-calsave="${c.id}">Save note</button></div></td></tr>`:st==='comment'&&S.calNote[c.id]?`<tr class="st-comment"><td colspan="5" class="sub">Your note: ${S.calNote[c.id].replace(/</g,'&lt;')}</td></tr>`:''}`}).join('')}
+  <tr><td><b>Approved so far (${t.n} of ${t.all})</b></td><td class="r"><b>${fmtK(t.rev)}</b> of ${fmtK(t.revAll)}</td><td class="r"><b>${fmtK(t.com)}</b> of ${fmtK(t.comAll)}</td><td colspan="2" class="sub">Approved lines write to the event calendar.</td></tr></table>`;
+}
+function svcCustom(){
+  const sv=CD.SERVICES,done=S.done.servicesAdd;
+  return `<div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><div class="l">Attach rate</div><div class="v">${sv.attachPct}%</div><div class="s">${svcAttached().toLocaleString()} of ${sv.firstYear.toLocaleString()} first-year students</div></div>
+   <div class="tile"><div class="l">Average add per term</div><div class="v">$${svcAvg()}</div><div class="s">${sv.lines.join(', ')}</div></div>
+   <div class="tile"><div class="l">Invoice impact</div><div class="v">${fmtK(sv.invoiceImpactK)}</div><div class="s">${done?'Added to the next invoice preview':'Preview before approval'}</div></div></div>
+   ${tri(sv.benefit,'One add-on on the Access invoice, no extra billing','Services revenue and delivery partner volume')}`;
+}
+function invPreview(){
+  const sv=CD.SERVICES,done=S.done.servicesAdd;
+  return `<div class="card mt"><div class="sech">${ico('doc',17)} Next Access invoice preview</div>
+   <table><tr><th>Line</th><th>Status</th><th class="r">Amount</th></tr>
+   <tr><td><b>Course materials, Inclusive Access</b></td><td class="sub">Per adoption file and census date</td><td class="r">Per adoption</td></tr>
+   <tr style="${done?'':'opacity:.5'}"><td><b>Services add-on, first-year move-in</b><div class="sub">${sv.lines.join(', ')}</div></td><td>${done?'<span class="pill green">Added</span>':'<span class="pill gray">Not approved</span>'}</td><td class="r"><b>${done?'+'+fmtK(sv.invoiceImpactK):'$0'}</b></td></tr></table>
+   ${done?'':'<div class="sub" style="margin-top:8px">Approve the services add-on in the Action Center to add this line.</div>'}</div>`;
+}
+const VIEWS={home:vHome,action:vAction,fin:vFin,access:vAccess,part:vPart,trust:vTrust};
+const TITLES={home:'Home',action:'Action Center',fin:'Financials',access:'Access & Invoicing',part:'Partnership & Renewal',trust:'Data & Trust'};
+</script>
+<style>.page.homep{display:flex;flex-direction:column;padding-bottom:14px}.homep .chatwrap{flex:1;width:100%;min-height:0}.thread:empty{display:none}</style>
+<script>
+/* ---------- chat knowledge ---------- */
+const P=(h)=>({t:'p',h}),F=(...i)=>({t:'fu',i});
+const SRC=(...s)=>({t:'src',s});
+const ACT=(fx,title,desc,label)=>({t:'act',fx,title,desc,label});
+const RULES=[
+ {m:/(fall access invoice|2\.44|pay the invoice|approve.*invoice|due nov 20|net invoice|days.to.pay)/,f:()=>({steps:['Checking disputes cleared against the invoice ledger','Computing the net fall Access invoice'],blocks:[
+  {t:'stats',i:[['Net invoice','$'+NFD.accessInvoice.amountM.toFixed(2)+'M','Due '+NFD.accessInvoice.due],['Disputes cleared',S.done.fixCensus?'Yes':'Not yet',S.done.fixCensus?'Census date confirmed':'Confirm the census date first'],['Follett days-to-pay',String(S.done.payInvoice?NFD.daysToPay.after:NFD.daysToPay.before),S.done.payInvoice?'Down after approval':'Before approval']]},
+  P('The invoice is net of the disputes cleared above. Approving it schedules payment and Follett\'s days-to-pay drops, which the Sales Command Center view shows.'),
+  S.done.fixCensus?ACT('payInvoice','Approve and schedule payment','Schedules $'+NFD.accessInvoice.amountM.toFixed(2)+'M for '+NFD.accessInvoice.due+'.','Approve and schedule'):ACT('fixCensus','Confirm the census date first','Clears the largest dispute so the invoice is net.','Confirm census date'),F('Why are Access invoices stuck?','What changed since Friday?'),SRC('Invoice ledger','Contract terms')]})},
+ {m:/(spring.*(calendar|pop.?up|commerce)|collab|alumni|trade.?in|\bnil\b|golf|store.in.store|campus commerce|which .*lines)/,f:()=>{const t=calTotals();return {steps:['Reading the spring event calendar','Totaling revenue, commission and student benefit by line'],blocks:[
+  {t:'stats',i:[['Proposed lines',String(CD.CALENDAR.length),t.n+' approved'],['Revenue',fmtK(t.revAll),'If all are approved'],['Your commission',fmtK(t.comAll),'At each line\'s rate']]},
+  {t:'tbl',h:['Line','Revenue','Commission','Student benefit'],r:CD.CALENDAR.map(c=>[c.n,fmtK(c.revK),fmtK(c.commK),c.benefit])},
+  P('Each line shows what you earn and what students get. Approve them one at a time in the Action Center, or all at once here. Approved lines write to the event calendar.'),
+  ACT('calendarAll','Approve all spring lines','Writes every line to the event calendar.','Approve all'),F('Show me the Arena Store pop-up results','What changed since Friday?'),SRC('Event calendar','Merchandising plan')]}}},
+ {m:/(services|dorm|move.?in|device|delivery|attach)/,f:()=>({steps:['Reading first-year Access attach data','Previewing the next Access invoice'],blocks:[
+  {t:'stats',i:[['Attach rate',CD.SERVICES.attachPct+'%',svcAttached().toLocaleString()+' of '+CD.SERVICES.firstYear.toLocaleString()+' first-years'],['Average add','$'+svcAvg(),'Per term'],['Invoice impact',fmtK(CD.SERVICES.invoiceImpactK),'On the next preview']]},
+  P('The add-on bundles <b>'+CD.SERVICES.lines.join(', ')+'</b> with Access. '+CD.SERVICES.benefit+'. Nothing changes on the invoice until you approve.'),
+  ACT('servicesAdd','Approve the services add-on','The line appears on the next Access invoice preview.','Approve add-on'),F('Which spring campus commerce lines should I approve?'),SRC('Access invoice model','Delivery partner SLAs')]})},
+ {m:/(outcome|retention delta|access vs non|cohort compar|prove)/,f:()=>({steps:['Reading Institutional Research aggregates','Comparing Access and non-Access cohorts'],blocks:[
+  {t:'stats',i:[['Access cohort',CD.OUTCOME.access.retention+'%','Retention'],['Non-Access cohort',CD.OUTCOME.non.retention+'%','Retention'],['Delta','+'+(CD.OUTCOME.access.retention-CD.OUTCOME.non.retention).toFixed(1)+' pts','Aggregate only']]},
+  P('This comes from '+CD.OUTCOME.source+'. It shows an association, not proof of cause, and it carries an aggregate-only label wherever it goes.'),
+  ACT('outcomeShare','Share with Provost and board packet','Aggregate only, with its source.','Share'),F('Which courses show early warning signals?'),SRC('Institutional Research (aggregate)')]})},
+ {m:/(expansion|proposal|cluster|save students|peers already)/,f:()=>({steps:['Reading adoption clusters by department','Modeling student and Follett benefit side by side'],blocks:[
+  {t:'stats',i:[['Departments clustering',String(CD.ACCESSPLAN.clusters.length),CD.ACCESSPLAN.clusters.join(', ')],['Student savings','$'+CD.ACCESSPLAN.saveStudentsM.toFixed(2)+'M','Modeled, per term'],['Follett revenue','$'+CD.ACCESSPLAN.follettRevM.toFixed(2)+'M','Shown beside it']]},
+  P('Four departments already moved and their peers follow. The proposal puts the student savings first and the Follett revenue next to it so the Provost sees both.'),
+  ACT('accessPlan','Send to Provost and schedule review','The proposal goes out with a review on the calendar.','Send proposal'),F('Show me the Access outcome proof'),SRC('Adoption file','SIS feeds (aggregate)')]})},
+ {m:/(arena|first.?time fan|pop.?up result)/,f:()=>({steps:['Reading POS event history','Joining ticket scans to pop-up purchases (aggregate)'],blocks:[
+  {t:'stats',i:[['First-time fans',String(NFD.arena.firstTimeFans),'One home game'],['Offer redeemed',POP.redeem+'%',NFD.arena.firstFanOffer+'% off one piece'],['Pop-up sales',fmtK(POP.salesK),'Commission '+fmtK(POP.salesK*.22)]]},
+  P('Homecoming sold <b>$'+NFD.campaigns.homecoming.salesK+'K, up '+NFD.campaigns.homecoming.vsLY+'%</b>. The Arena Store pop-up is a smaller, single-game test that already shows the repeat pattern. The student receipt behind these numbers is one tap away.'),
+  ACT('repeatPopup','Repeat at the spring home opener','Adds the pop-up to the event calendar.','Repeat pop-up'),F('Which spring campus commerce lines should I approve?'),SRC('POS event history','Athletics ticketing (aggregate)')]})},
+ {m:/(student.level|which students|individual|names?\b|grades?|gpa|dining|meal plan|swipe|transcript)/,f:()=>({steps:['Checking data-use policy for this role','Matching request against FERPA school-official scope'],blocks:[
+  P('I will not pull individual student records for this view, and Follett is not permitted to use grades, GPAs or dining activity for commercial purposes. <b>You get the same answer at a level that is safe to act on.</b>'),
+  P('What I can show: <b>college-level</b> opt-outs, <b>course-level</b> week-6 material access (minimum group size 10), and billing by unit. If a case needs a named student, the Registrar or Student Accounts handles it through their own systems.'),
+  F('Show course-level access signals','What is driving Business College opt-outs?'),SRC('Data policy','Role-based access')]})},
+ {m:/(board|memo|finance committee|write.?up)/,f:()=>({steps:['Pulling commission, invoice and renewal figures','Drafting memo with evidence labels'],blocks:[
+  P('I drafted a one-page board finance committee summary. It leads with the $1.49M commission result, flags the three open issues, and ends with a renewal ask. <b>System figures are labeled separately from modeled ones</b> so nobody quotes a modeled number as fact.'),
+  ACT('boardDoc','Board finance committee summary','Draft ready to review and edit. Nothing is sent.','Open draft'),F('How ready are we for renewal?','What changed since Friday?'),SRC('Commission ledger','Invoice ledger','Contract repository')]})},
+ {m:/(parents|homecoming|event|pop.?up|game|campaign|tailgate)/,f:()=>({steps:['Loading event history (3 Parents Weekends)','Modeling campaign lift at 22% GM commission'],blocks:[
+  {t:'stats',i:[['Spend','$25K','You $10K | Follett $15K'],['Modeled lift','$140K','Incremental sales'],['Your commission','$30.8K','3.1x on $10K']]},
+  P('Homecoming proves the pattern: the pop-up sold <b>$186K, up 22%</b>. Parents Weekend is the biggest in-store day of the year, so the model assumes a lift of about 58% on last year\'s $240K forecast baseline for targeted weekend promotion. <b>Confidence is medium</b>: three comparable weekends, no controlled test.'),
+  ACT('approveCampaign','Approve $10K university share','Deadline Oct 30. Follett ships creative Nov 1.','Approve $10K'),F('What if the lift is half?','What changed since Friday?'),SRC('POS event history','Campaign model')]})},
+ {m:/inv-\d+/,f:(q)=>{const id=(q.match(/inv-\d+/i)||[''])[0].toUpperCase();const d=S.disp.find(x=>x.id===id);if(!d)return null;return {steps:['Looking up '+id,'Comparing invoice to Registrar file'],blocks:[P(`<b>${d.id}</b> is ${fmtK(d.amt)} for <b>${d.unit}</b>. Cause: ${CAUSE[d.cause].n.toLowerCase()}. ${d.note}`),ACT(CAUSE[d.cause].fx,CAUSE[d.cause].btn,'Releases every invoice with this cause, not just this one.',CAUSE[d.cause].btn),SRC('Invoice ledger','Registrar SIS file')]}}},
+ {m:/(invoice|dispute|cash|net.?30|census|add.?drop|receivable|bursar|stuck)/,f:()=>{const c=dispBy('census').filter(d=>d.st==='open').reduce((a,d)=>a+d.amt,0),h=dispBy('cohort').filter(d=>d.st==='open').reduce((a,d)=>a+d.amt,0),p=dispBy('price').filter(d=>d.st==='open').reduce((a,d)=>a+d.amt,0);
+  return {steps:['Reading invoice ledger','Matching disputes to Registrar census dates and cohort flags'],blocks:[
+  P(`<b>${fmtK(dispTotal())} across ${dispCount()} invoices</b> is held, ${(dispTotal()/28.4).toFixed(1)}% of $2.84M billed. One cause dominates: Follett billed to a <b>Sep 8 census date</b>, your Registrar file says <b>Sep 12</b>.`),
+  {t:'bars',i:[['Census date mismatch',c,110.2,'#0b5cd5'],['Section or cohort',h,63.8,'#f0a21b'],['Pricing difference',p,38,'#c62828']]},
+  P('Only <b>you or the Registrar can confirm the date</b>, so this is a 2-minute fix on your side. Cohort items need Registrar input. Pricing goes to Follett.'),
+  S.done.fixCensus?ACT('confirmCohorts','Send cohort fixes to Registrar','Four corrections, $63.8K.','Send fixes'):ACT('fixCensus','Confirm Sep 12 census date','Releases 7 invoices ($110.2K) to Net-30 settlement.','Confirm census date'),F('Which courses need attention?','How do we compare to peers?'),SRC('Invoice ledger','Registrar SIS file','Contract terms')]}}},
+ {m:/(guarantee|forecast|project|downside|run.?rate|scenario|cover)/,f:()=>({steps:['Running full-year commission model','Stress-testing guarantee coverage'],blocks:[
+  {t:'stats',i:[['Soft retail','$2.62M','101% of guarantee'],['Base case','$2.87M','110%'],['Strong holiday','$3.02M','116%']]},
+  P('You clear the <b>$2.6M guarantee in all three scenarios</b>. The thin case is soft retail, where you clear by only <b>$20K</b>. That is the scenario to watch if physical course materials keep falling (down 7% this fall).'),
+  P('<span class="sub">Label: base case is inferred from fall YTD being about 52% of a typical year. Confirm the seasonality with Follett Finance.</span>'),F('Show the digital commission variance','What changed since Friday?'),SRC('Commission ledger','Seasonality model')]})},
+ {m:/(commission|statement|variance|rate card|digital)/,f:()=>({steps:['Tying 4,212 POS lines to the October statement','Comparing paid rate to contract rate card'],blocks:[
+  {t:'stats',i:[['Contract commission','$1.494M','+10.7% vs LY'],['Statement paid','$1.452M','Variance -$41.8K']]},
+  {t:'tbl',h:['Digital sales window','Sales','Paid','Contract','Gap'],r:DIGWK.map(w=>[w[0],'$'+w[1]+'K','14%','18%','-$'+(w[1]*.04).toFixed(2)+'K'])},
+  P('Everything else ties out within 0.1%. The gap is confined to digital materials, <b>starting Sep 1</b>. Likely cause <i>(inferred)</i>: three new digital bundle SKUs were mapped to the physical-materials rate table. Follett Finance should confirm.'),
+  S.done.requestCredit?P('<b>Credit request already sent.</b> I will flag when Follett responds.'):ACT('requestCredit','Request same-week credit','Sends the four variance lines to Follett Finance. Otherwise the fix lands on the Nov 15 statement.','Request credit'),F('How does this affect the guarantee?','How ready are we for renewal?'),SRC('POS tie-out','Contract rate card')]})},
+ {m:/(opt.?out|business|afford|price|savings|repric)/,f:()=>({steps:['Reading adoption file and opt-out history','Comparing price changes by course'],blocks:[
+  {t:'bars',i:COLLEGES.map(c=>[c.n,c.oo,15,c.flag?'#c62828':'#0b5cd5'])},
+  P('Business is the outlier at <b>11.8%</b> (6.1% last fall). Three courses repriced from <b>$98 to $146</b> after a publisher edition change: ACCT 2101, FIN 3100, ECON 2010. About <b>148 more students</b> opted out, roughly <b>$21.6K</b> per term. Every other college is within a point of last year.'),
+  P('The spring adoption deadline is <b>Nov 14</b>. That is the window to swap editions, bundle, or negotiate with the publisher.'),
+  ACT('openAdoption','Open spring adoption review','Invites the Business dean, Follett publisher relations and the bookstore director.','Open review'),F('Which courses show early warning signals?','What if we move to Total Access?'),SRC('CourseTracks','SAM adoption file')]})},
+ {m:/(retention|early|gateway|access rate|engage|signal|courses? need)/,f:()=>({steps:['Scoring week-6 digital access across 1,180 sections','Aggregating to course level (min group size 10)'],blocks:[
+  {t:'tbl',h:['Course','Enrolled','Wk-6 access','Last fall'],r:GATE.map(g=>[g[0],g[1],g[2]+'%',g[3]+'%'])},
+  P('Week-6 access is <b>'+GRANGE.min+' to '+GRANGE.max+' points below last fall</b> across the five courses, covering '+NFD.gatewayStudents.toLocaleString()+' students. A 1-point retention gain is worth about <b>$1.9M</b> <i>(assumed: 214 students x $9,000 net tuition; replace with your figure)</i>. Material access is a leading indicator, weeks before grades exist.'),
+  S.done.routeProvost?P('<b>Sent to the Provost.</b>'):ACT('routeProvost','Send course-level report to Provost','Course-level only. No student names. Faculty outreach is the Provost\'s call.','Send to Provost'),F('Can you show student names?','What changed since Friday?'),SRC('Publisher access logs (aggregated)','Course schedule')]})},
+ {m:/(renew|rfp|contract|barnes|b&n|compet|peer|benchmark|nps)/,f:()=>({steps:['Scoring five readiness drivers','Comparing to 62 anonymized peers'],blocks:[
+  {t:'stats',i:[['Readiness','74/100','5 weighted drivers'],['Blended commission','15.4%','Peer median 14.6%'],['Dispute rate','7.5%','Peer median 5.0%'],['Service NPS','+38','Peer median +46']]},
+  P('You hold leverage on <b>price</b>. The incumbent\'s exposure is <b>service and digital experience</b>, which is where a competing bidder will go. Agreement expires <b>Aug 31, 2027</b>; RFP release is expected in January.'),
+  P('<b>Three moves before January:</b> clear the dispute backlog so the rate trends toward 5%, close the commission variance so reporting is clean, and require real-time commission reporting in the next agreement. Commission reporting is the reason schools leave, so make it a requirement, not a favor.'),
+  ACT('boardDoc','Draft board-ready summary','Includes renewal position and three asks.','Draft summary'),F('What if the lift is half?','Draft the board summary'),SRC('Contract repository','Peer benchmark set (illustrative)')]})},
+ {m:/(total access|what.?if|convert|campus.?wide)/,f:()=>{const ta=S.ta,sales=ta.p*2*ta.e*(1-ta.o/100)/1e6,comm=sales*.08;return {steps:['Loading Total Access economics','Applying your sliders from Access & Invoicing'],blocks:[
+  {t:'stats',i:[['Annual sales','$'+sales.toFixed(1)+'M','$'+ta.p+' x 2 terms'],['Commission (8% assumed)','$'+comm.toFixed(2)+'M','Contract sets rate'],['vs run-rate','+$'+(comm-.692).toFixed(2)+'M','IA est. $0.69M']]},
+  P('Total Access is campus-wide with an opt-out model, so participation is high and billing is simpler: one rate, one census rule. <b>The 8% commission is an assumption</b>; the real rate comes from your contract amendment. Follett\'s margin on Total Access runs about 25% to 27%, which is why they will want this conversation.'),
+  P('Trade-off to weigh: faculty and student-choice concerns slow adoption, and large campuses see 12 to 24 month sales cycles.'),F('How ready are we for renewal?','Which courses need attention?'),SRC('Access program model','Contract (rate assumed)')]}}},
+ {m:/(change|friday|brief|priorit|today|morning|attention|where should)/,f:()=>{const o=INS.filter(open);return {steps:['Scanning ledger, invoices and signals since Friday 5pm','Ranking by dollars at stake and deadline'],blocks:[
+  P(o.length?`<b>${o.length} things need you.</b> Ranked by dollars and deadline:`:'<b>You are clear.</b> Every decision is handled. I will flag anything new.'),
+  ...(o.length?[{t:'tbl',h:['#','Item','Action','Due'],r:o.map((i,k)=>[k+1,i.title,i.btn,{inv:'Today',comm:'This week',oo:'Nov 14',ew:'Nov 1',pw:'Oct 30',rn:'Nov 12'}[i.id]])}]:[]),
+  P('If you only do one thing today, <b>confirm the census date</b>. It frees $110.2K and takes two minutes.'),F('Why are Access invoices stuck?','Is our commission statement right?'),SRC('Agent activity log (6 agents)')]}}}
+];
+const ZONELBL={Follett:['Follett data','Visible to Follett and to you.'],University:['University data','School-official use only. Aggregate on this screen.'],CFO:['CFO-only','Never visible to Follett.'],Enriched:['Enriched with consent','Anonymized segments only.']};
+function zoneFor(q){const s=q.toLowerCase();
+  if(/(board|memo|draft|private|renew|rfp|compet|peer|strategy)/.test(s))return 'CFO';
+  if(/(enrich|segment|interest)/.test(s))return 'Enriched';
+  if(/(commission|statement|variance|pos\b|pop.?up|campaign|arena|event|calendar|collab|trade|alumni|golf|\bnil\b|service|dorm|delivery|invoice|dispute|expansion|proposal)/.test(s))return 'Follett';
+  return 'University'}
+function answer(q){
+  const s=q.toLowerCase();
+  for(const r of RULES){if(r.m.test(s)){const a=r.f(q);if(a)return a}}
+  return null;
+}
+/* ---------- conversations ---------- */
+const mkConv=(t)=>({title:t||'New conversation',msgs:[]});
+function seedConv(t,q){const c=mkConv(t),a=answer(q);c.msgs.push({r:'u',text:q},{r:'a',steps:a.steps,blocks:a.blocks.concat([{t:'zone',z:zoneFor(q)}]),vs:99,vb:99});return c}
+S.convs=[mkConv(),seedConv('October commission tie-out','Is our commission statement right?'),seedConv('Business opt-outs','What is driving Business College opt-outs?'),seedConv('Renewal readiness','How ready are we for renewal?')];
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+let busy=false;
+async function ask(q,where){
+  q=(q||'').trim();if(!q||busy)return;
+  const c=S.convs[S.ci];if(!c.msgs.length)c.title=q.length>38?q.slice(0,36)+'...':q;
+  c.msgs.push({r:'u',text:q});
+  let a=answer(q),live=null;
+  if(!a&&window.cowork&&window.cowork.askClaude){
+    live={steps:['Reasoning over live ledger context with Claude'],blocks:[]};
+  }
+  const m={r:'a',steps:(a||live||{steps:['Searching available views']}).steps,blocks:[],vs:0,vb:0};c.msgs.push(m);busy=true;
+  refreshThreads();
+  for(let i=0;i<m.steps.length;i++){await wait(520);m.vs=i+1;refreshThreads()}
+  await wait(350);
+  if(a){for(const b of a.blocks){m.blocks.push(b);m.vb=m.blocks.length;refreshThreads();await wait(420)}m.blocks.push({t:'zone',z:zoneFor(q)});m.vb=m.blocks.length;refreshThreads()}
+  else if(live){
+    try{const ctx=JSON.stringify({commission:CAT,disputes:S.disp.map(d=>({id:d.id,u:d.unit,c:d.cause,a:d.amt,s:d.st})),colleges:COLLEGES,gate:GATE,guarantee:GUAR});
+      const r=await window.cowork.askClaude('You are the CFO copilot for Northfield State University. Answer concisely in plain prose using only this data. No em dashes. Question: '+q,[ctx]);
+      m.blocks.push(P(String(typeof r==='string'?r:(r&&r.text)||r).replace(/\n/g,'<br>')))}catch(e){m.blocks.push(P('I could not reach the model just now.'))}
+    m.vb=m.blocks.length;
+  }else{
+    m.blocks.push(P('I can answer questions about <b>commission</b>, <b>Access invoices</b>, <b>opt-outs</b>, <b>early signals</b>, <b>events</b>, <b>guarantee coverage</b>, <b>renewal</b> and <b>Total Access scenarios</b>. In the live build this question goes to Claude with your full ledger as context.'),F('What changed since Friday?','Why are Access invoices stuck?','How ready are we for renewal?'),SRC('Available views'),{t:'zone',z:zoneFor(q)});
+    m.vb=m.blocks.length;m.steps=['Searching available views'];m.vs=1;
+  }
+  busy=false;refreshThreads();
+}
+/* ---------- render chat ---------- */
+function blockHTML(b){
+  switch(b.t){
+   case 'p':return `<div class="blk"><p>${b.h}</p></div>`;
+   case 'stats':return `<div class="blk stats">${b.i.map(x=>`<div class="tile"><div class="l">${x[0]}</div><div class="v">${x[1]}</div><div class="s">${x[2]||''}</div></div>`).join('')}</div>`;
+   case 'bars':return `<div class="blk card" style="padding:12px 14px">${b.i.map(x=>`<div style="margin:7px 0"><div style="display:flex;justify-content:space-between;font-size:13px"><span>${x[0]}</span><b>${typeof x[1]==='number'&&x[2]===15?x[1]+'%':fmtK(x[1])}</b></div><div class="bar"><i style="width:${Math.max(0,Math.min(100,x[1]/x[2]*100))}%;background:${x[3]}"></i></div></div>`).join('')}</div>`;
+   case 'tbl':return `<div class="blk tbl"><table><tr>${b.h.map(h=>`<th>${h}</th>`).join('')}</tr>${b.r.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div>`;
+   case 'act':{const d=S.done[b.fx]&&b.fx!=='boardDoc';return `<div class="blk abox"><div class="t"><b>${b.title}</b><span>${d?'Done and logged. Nothing else needed.':b.desc}</span></div><button class="btn ${d?'done':'pri'}" ${d?'disabled':`data-fx="${b.fx}"`}>${d?'Done':b.label}</button></div>`}
+   case 'fu':return `<div class="blk followups">${b.i.map(x=>`<button data-ask="${x}">${x}</button>`).join('')}</div>`;
+   case 'zone':{const z=ZONELBL[b.z]||ZONELBL.University;return `<div class="blk"><span class="zone ${b.z}" title="${z[1]}">Zone: ${z[0]}</span> <span class="fine2">${z[1]}</span></div>`}
+   case 'src':return `<div class="blk srcs">Sources: ${b.s.map(x=>`<span class="s">${x}</span>`).join('')}</div>`;
+  }return '';
+}
+function msgHTML(m,last){
+  if(m.r==='u')return `<div class="msg u"><div class="bub">${m.text.replace(/</g,'&lt;')}</div></div>`;
+  const run=last&&busy;
+  return `<div class="msg a"><div class="who"><span class="spark">${ico('bolt',11,'#fff')}</span>CLAUDE</div>
+   <div class="trace">${m.steps.slice(0,Math.max(m.vs,run?1:m.steps.length)).map((s,i)=>`<div>${i<m.vs?`<span class="ok">&#10003;</span> `:`<span class="spin"></span>`}${s}</div>`).join('')}</div>${m.blocks.slice(0,m.vb).map(blockHTML).join('')}</div>`;
+}
+function renderThread(id){
+  const el=$('#thread-'+id);if(!el)return;
+  const c=S.convs[S.ci];
+  if(id==='drawer'&&!c.msgs.length){
+    const ps={home:[],action:['What changed since Friday?','Which decision is worth the most?'],fin:['Is our commission statement right?','What if the Parents Weekend lift is half?'],access:['Why are Access invoices stuck?','What if we move to Total Access?'],part:['How ready are we for renewal?','Draft the board summary'],trust:['Can you show student names?','What data do you use?']}[S.screen]||[];
+    el.innerHTML=`<div class="greetp" style="font-size:15px;margin-top:6px">Ask me about what you are looking at. I know this screen's numbers and can take actions you approve.</div><div class="pchips" style="flex-direction:column;align-items:flex-start">${ps.map(p=>`<button class="pchip" data-ask="${p}">${p}</button>`).join('')}</div>`;return;
+  }
+  el.innerHTML=c.msgs.map((m,i)=>msgHTML(m,i===c.msgs.length-1)).join('');
+  el.scrollTop=el.scrollHeight;
+}
+function refreshThreads(){renderThread('home');renderThread('drawer')}
+function buildDrawer(){
+  $('#drawer').innerHTML=`<div class="dhead"><div class="agentsel">${ico('chat',15)} CLAUDE <span class="live">Live</span></div><div style="display:flex;gap:6px"><button class="gbtn" data-new style="padding:7px 10px">${ico('edit',14)}</button><button class="gbtn" data-dclose style="padding:7px 10px">${ico('x',14)}</button></div></div>
+  <div class="ctx">Context: ${TITLES[S.screen]}</div><div class="thread" id="thread-drawer" style="flex:1"></div>${inputBar('drawer')}`;
+  renderThread('drawer');
+}
+/* ---------- app render ---------- */
+function renderAll(){
+  const hv=$('#in-home')?$('#in-home').value:'';
+  renderNav();
+  const showRail=S.screen==='home'||S.screen==='action';
+  const m=$('#main');m.className='main'+(showRail?'':' norail');
+  m.innerHTML=`<div class="page ${S.screen==='home'?'homep':''}">${VIEWS[S.screen]()}</div>`+(showRail?`<aside class="rail">${rail()}</aside>`:'');
+  $('#topTitle').textContent=TITLES[S.screen];
+  $('#fab').classList.toggle('hide',S.screen==='home'||S.drawer);
+  if($('#in-home'))$('#in-home').value=hv;
+  refreshThreads();
+}
+function go(s){S.screen=s;S.col=null;if(s==='home')S.drawer=false;$('#drawer').classList.toggle('open',S.drawer&&s!=='home');renderAll();const p=$('.page');if(p)p.scrollTop=0;if(S.drawer&&s!=='home')buildDrawer()}
+function openDrawer(){S.drawer=true;buildDrawer();$('#drawer').classList.add('open');$('#fab').classList.add('hide')}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-go],[data-new],[data-hist],[data-conv],[data-ask],[data-fx],[data-dismiss],[data-col],[data-scen],[data-send],[data-fab],[data-dclose],[data-close],[data-copy],[data-tie],[data-reset],[data-cal],[data-calc],[data-calsave],[data-csv]');
+  if(!t)return;const d=t.dataset;
+  if(d.go!==undefined)return go(d.go);
+  if('tie' in d){toast('Opening the student receipt beat.');try{window.parent.postMessage({campusosNav:'student',beat:'receipt'},'*')}catch(err){}return}
+  if('reset' in d)return resetAll(false);
+  if(d.cal)return calApprove(d.cal);
+  if(d.calc){S.calOpen=S.calOpen===d.calc?null:d.calc;return renderAll()}
+  if(d.calsave){const i=$('#calin-'+d.calsave);return calComment(d.calsave,i?i.value:'')}
+  if(d.csv){if(d.csv==='audit')downloadCSV('northfield-audit-log.csv',auditCSV());else downloadCSV('anonymized-segments.csv',segmentsCSV());return toast('Export ready. '+(d.csv==='audit'?'Audit log':'Anonymized segments')+' downloaded.')}
+  if('new' in d){S.convs.unshift(mkConv());S.ci=0;S.hist=false;if(S.screen==='home')renderAll();else{buildDrawer();refreshThreads()}return}
+  if('hist' in d){S.hist=!S.hist;return renderAll()}
+  if(d.conv!==undefined){S.ci=+d.conv;S.hist=false;return renderAll()}
+  if(d.ask!==undefined){if(S.screen!=='home'&&!S.drawer){openDrawer()}return ask(d.ask)}
+  if(d.fx){const wasDoc=d.fx==='boardDoc';act(d.fx);return}
+  if(d.dismiss){S.dismissed[d.dismiss]=true;toast('Dismissed. I will resurface it if the numbers change.');return renderAll()}
+  if(d.col!==undefined){const v=/^\d+$/.test(d.col)?+d.col:d.col;S.col=S.col===v?null:v;return renderAll()}
+  if(d.scen){S.scen=d.scen;return renderAll()}
+  if(d.send){const i=$('#in-'+d.send);const v=i.value;i.value='';return ask(v)}
+  if('fab' in d)return openDrawer();
+  if('dclose' in d){S.drawer=false;$('#drawer').classList.remove('open');$('#fab').classList.toggle('hide',S.screen==='home');return}
+  if('close' in d)return $('#modalbg').classList.remove('on');
+  if('copy' in d){navigator.clipboard&&navigator.clipboard.writeText($('.memo').innerText);return toast('Copied to clipboard')}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id&&e.target.id.startsWith('in-')){const v=e.target.value;e.target.value='';ask(v)}});
+document.addEventListener('input',e=>{
+  const k=e.target.dataset&&e.target.dataset.ta;if(!k)return;
+  S.ta[k]=+e.target.value;const ta=S.ta,sales=ta.p*2*ta.e*(1-ta.o/100)/1e6,comm=sales*.08;
+  e.target.parentNode.querySelector('b').textContent=k==='p'?'$'+ta.p:k==='e'?ta.e.toLocaleString():ta.o+'%';
+  $('#ta-s').textContent='$'+sales.toFixed(1)+'M';$('#ta-c').textContent='$'+comm.toFixed(2)+'M';
+  const dd=comm-0.692;$('#ta-d').textContent=(dd>=0?'+':'-')+'$'+Math.abs(dd).toFixed(2)+'M';$('#ta-d').style.color=dd>=0?'var(--green)':'var(--red)';
+});
+$('#modalbg').addEventListener('click',e=>{if(e.target.id==='modalbg')e.target.classList.remove('on')});
+/* ---------- CSV exports ---------- */
+const csvCell=v=>{let t=String(v==null?'':v);if(/^[=+\-@]/.test(t))t="'"+t;return '"'+t.replace(/"/g,'""')+'"'};
+function auditCSV(){
+  const rows=[['time','approved_by','agent','action','surface','use_case']].concat(S.log.map(l=>[l.t,l.who||'',l.ag||l.a,l.m,l.surface||'Command Center',l.uc||'']));
+  return rows.map(r=>r.map(csvCell).join(',')).join('\n');
+}
+function segmentsCSV(){
+  const rows=[['segment','students']].concat(ENR.segments.map(x=>[x[0],x[1]>=10?x[1]:'<10 (suppressed)']));
+  return rows.map(r=>r.map(csvCell).join(',')).join('\n');
+}
+function downloadCSV(name,text){const b=new Blob([text],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}
+window.__cfo={auditCSV,segmentsCSV,S,act,resetAll,go};
+/* ---------- shared state and parent protocol ----------
+   Outbound to window.parent: {campusosNav:'student',beat:'receipt'} from the Student tie chip.
+   Inbound from window.parent: {campusosCfo:{go:'home|action|fin|access|part|trust'}} or {campusosCfo:{cmd:'reset'}}.
+   Shared approvals travel on CampusBus (BroadcastChannel + localStorage + postMessage relay). */
+BUS.on((type,payload,st,remote)=>{if(!remote)return;if(type==='reset'){resetAll(true);return}syncFromBus(st,false);renderAll()});
+window.addEventListener('message',e=>{const d=e.data&&e.data.campusosCfo;if(!d)return;if(d.go&&VIEWS[d.go])go(d.go);if(d.cmd==='reset')resetAll(false)});
+syncFromBus(BUS.state(),true);
+renderAll();
+</script>
+</body>
+</html>
