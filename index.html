@@ -510,6 +510,9 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 .fc .ic.pic{width:auto;height:auto;background:none;border-radius:0;flex:none;margin:-12px 0 -10px}
 .fc .ic.pic img{height:54px;width:auto;display:block;filter:drop-shadow(0 6px 10px rgba(10,30,60,.28))}
 .fc .t{gap:12px;margin-bottom:14px}
+.stats .sc{position:relative}
+.stats .sc-ic{position:absolute;right:20px;top:46px;max-height:70px;max-width:92px;width:auto;height:auto;filter:drop-shadow(0 8px 10px rgba(10,30,60,.25))}
+.stats .sc-ic.down{transform:rotate(90deg);max-height:62px}
 @media(prefers-reduced-motion:reduce){.dd-in{transition:none}}
 @media(max-width:900px){.dd-cards{grid-template-columns:1fr}.dd-gi3{grid-template-columns:1fr}.dd-gov2{padding:26px}}
 @media(max-width:900px){.md-row{gap:34px}.md-c+.md-c:before{left:50%;top:-32px;margin-left:-15px;transform:rotate(90deg)}.lab .flow{flex-wrap:wrap;gap:12px}.lab .flow span:not(:last-child):after{display:none}.lab .flow span:not(:last-child){flex:none;margin-right:14px}}
@@ -549,10 +552,10 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 <h2>The window is <em>open</em></h2>
 <p class="fb-bridge">We're at the crossroads of a once-in-a-generation opportunity: shrinking enrollment, real doubt about what college is for, and a technology shift that happens once in a lifetime.</p>
 <div class="stats">
-<div class="sc"><div class="fb">Enrollment</div><div class="n">13%</div><p>Fewer high school graduates by 2041 than at the 2025 peak.</p><small>WICHE, 11th ed.</small></div>
-<div class="sc dk"><div class="fb">Value of College</div><div class="n">27%</div><p>Say they understand their full cost of attendance.</p><small>Inside Higher Ed Student Voice Survey, 2025</small></div>
-<div class="sc"><div class="fb">Technology</div><div class="n">32%</div><p>Of institutions had an AI policy in 2025.</p><small>Tyton Partners, 2026</small></div>
-<div class="sc dk"><div class="fb">Student Outcomes</div><div class="n">70%</div><p>Of students skipped a required textbook or code because of cost.</p><small>Student PIRGs, Feb 2026</small></div>
+<div class="sc"><div class="fb">Enrollment</div><img class="sc-ic down" src="icon-down.png" alt=""><div class="n">13%</div><p>Fewer high school graduates by 2041 than at the 2025 peak.</p><small>WICHE, 11th ed.</small></div>
+<div class="sc dk"><div class="fb">Value of College</div><img class="sc-ic cost" src="icon-cost.png" alt=""><div class="n">27%</div><p>Say they understand their full cost of attendance.</p><small>Inside Higher Ed Student Voice Survey, 2025</small></div>
+<div class="sc"><div class="fb">Technology</div><img class="sc-ic tech" src="icon-tech.png" alt=""><div class="n">32%</div><p>Of institutions had an AI policy in 2025.</p><small>Tyton Partners, 2026</small></div>
+<div class="sc dk"><div class="fb">Student Outcomes</div><img class="sc-ic card" src="icon-card.png" alt=""><div class="n">70%</div><p>Of students skipped a required textbook or code because of cost.</p><small>Student PIRGs, Feb 2026</small></div>
 </div>
 </div></section>
 
