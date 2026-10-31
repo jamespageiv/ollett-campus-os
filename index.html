@@ -526,6 +526,10 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 .hero p.sub{margin-bottom:60px;line-height:1.55}
 .vals{gap:14px;margin-bottom:42px}
 .tt-pts{list-style:disc;margin:0 0 12px 20px}.tt-pts li{margin:3px 0;font-weight:600}
+.dem .seg{margin-top:26px;padding:6px}
+.dem .seg button{padding:12px 28px}
+.dem .ctl{margin:26px 0 30px;gap:14px}
+.dem .ctl .btn{padding:11px 24px;font-size:12.5px}
 @media(prefers-reduced-motion:reduce){.dd-in{transition:none}}
 @media(max-width:900px){.dd-cards{grid-template-columns:1fr}.dd-gi3{grid-template-columns:1fr}.dd-gov2{padding:26px}}
 @media(max-width:900px){.md-row{gap:34px}.md-c+.md-c:before{left:50%;top:-32px;margin-left:-15px;transform:rotate(90deg)}.lab .flow{flex-wrap:wrap;gap:12px}.lab .flow span:not(:last-child):after{display:none}.lab .flow span:not(:last-child){flex:none;margin-right:14px}}
@@ -1411,7 +1415,7 @@ orbBuild();
 sdraw();
 /* scale the demo as one unit so it fits the window height without browser zoom */
 function fitDemo(){
- const s=innerWidth>1180?Math.max(.55,Math.min(1,(innerHeight-220)/830)):1;
+ const s=innerWidth>1180?Math.max(.55,Math.min(1,(innerHeight-250)/830)):1;
  document.querySelectorAll('.s3grid,.vig:not(#v-stud) .win').forEach(el=>{el.style.zoom=s<1?s:'';el.style.maxWidth=s<1?(el.classList.contains('s3grid')?'1590px':'1378px'):'';el.style.margin=s<1?'0 auto':''});
 }
 addEventListener('resize',fitDemo);fitDemo();
