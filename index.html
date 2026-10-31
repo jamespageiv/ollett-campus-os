@@ -495,6 +495,18 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 .dd-gi b{font-size:16px}.dd-gi span{font-size:14px}
 .dd-all{font-size:14px}.dd-lead{font-size:13px;color:#d3e1f2}
 .dd-go{font-size:20px}
+/* larger card text, icon beside the title to keep the cards compact */
+.dd-fh{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.dd-fh .dd-ic{margin:0;flex:none;width:50px;height:50px}.dd-fh h3{margin:0;font-size:26px;line-height:1.18}
+.dd-meta{font-size:14.5px;margin-bottom:12px}
+.dd-f p{font-size:20px;line-height:1.48}
+.dd-n{font-size:15.5px}.dd-n b{font-size:36px}.dd-hint{font-size:14px}
+.dd-flip{height:clamp(352px,41vh,396px)}
+.dd-bh b{font-size:21px}.dd-bh span{font-size:13px}
+.dd-list li{font-size:15.5px;padding:2px 0}.dd-st{font-size:12.5px;padding:2px 10px}
+.dd-back{font-size:14px}
+.dd-gov2{padding:clamp(12px,2vh,18px) 30px}.dd-gh{margin-bottom:clamp(8px,1.4vh,12px)}
+.dd-go{margin-top:clamp(10px,1.8vh,18px)}
 @media(prefers-reduced-motion:reduce){.dd-in{transition:none}}
 @media(max-width:900px){.dd-cards{grid-template-columns:1fr}.dd-gi3{grid-template-columns:1fr}.dd-gov2{padding:26px}}
 @media(max-width:900px){.md-row{gap:34px}.md-c+.md-c:before{left:50%;top:-32px;margin-left:-15px;transform:rotate(90deg)}.lab .flow{flex-wrap:wrap;gap:12px}.lab .flow span:not(:last-child):after{display:none}.lab .flow span:not(:last-child){flex:none;margin-right:14px}}
@@ -567,22 +579,19 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 <div class="dd-cards">
 <div class="dd-flip F" tabindex="0" role="button" aria-label="Data Follett owns. Flip to see the 8 data sources">
 <div class="dd-in">
-<div class="dd-f"><div class="dd-ic"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></div>
-<h3>Data Follett owns</h3><div class="dd-meta">Owned by Follett</div><p>Purchases and e-commerce, Access and course materials, email and web activity.</p>
+<div class="dd-f"><div class="dd-fh"><div class="dd-ic"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></div><h3>Data Follett owns</h3></div><div class="dd-meta">Owned by Follett</div><p>Purchases and e-commerce, Access and course materials, email and web activity.</p>
 <div class="dd-foot"><span class="dd-n"><b>8</b> data sources</span><span class="dd-hint">See the sources &#8635;</span></div></div>
 <div class="dd-b"><div class="dd-bh"><b>Follett owns</b><span>8 data sources</span></div><ul class="dd-list" data-g="F"></ul><div class="dd-hint dd-back">&#8635; Flip back</div></div>
 </div></div>
 <div class="dd-flip U" tabindex="0" role="button" aria-label="Data the university shares. Flip to see the 8 data sources">
 <div class="dd-in">
-<div class="dd-f"><div class="dd-ic"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v6"/></svg></div>
-<h3>Data the university shares</h3><div class="dd-meta">Owned by the university</div><p>Enrollment and schedule, aid and campus card tender, tutoring, athletics and clubs.</p>
+<div class="dd-f"><div class="dd-fh"><div class="dd-ic"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v6"/></svg></div><h3>Data the university shares</h3></div><div class="dd-meta">Owned by the university</div><p>Enrollment and schedule, aid and campus card tender, tutoring, athletics and clubs.</p>
 <div class="dd-foot"><span class="dd-n"><b>8</b> data sources</span><span class="dd-hint">See the sources &#8635;</span></div></div>
 <div class="dd-b"><div class="dd-bh"><b>University shares</b><span>8 data sources</span></div><ul class="dd-list" data-g="U"></ul><div class="dd-hint dd-back">&#8635; Flip back</div></div>
 </div></div>
 <div class="dd-flip N" tabindex="0" role="button" aria-label="Data created with student consent. Flip to see the 5 data sources">
 <div class="dd-in">
-<div class="dd-f"><div class="dd-ic"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M16 11.5l2 2 4-4"/></svg></div>
-<h3>Data created with student consent</h3><div class="dd-meta">Owned by the student</div><p>Community and Slack activity, preferences and assistant memory, venue location and alumni status.</p>
+<div class="dd-f"><div class="dd-fh"><div class="dd-ic"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M16 11.5l2 2 4-4"/></svg></div><h3>Data created with student consent</h3></div><div class="dd-meta">Owned by the student</div><p>Community and Slack activity, preferences and assistant memory, venue location and alumni status.</p>
 <div class="dd-foot"><span class="dd-n"><b>5</b> data sources</span><span class="dd-hint">See the sources &#8635;</span></div></div>
 <div class="dd-b"><div class="dd-bh"><b>Student consent</b><span>5 data sources</span></div><ul class="dd-list" data-g="N"></ul><div class="dd-hint dd-back">&#8635; Flip back</div></div>
 </div></div>
