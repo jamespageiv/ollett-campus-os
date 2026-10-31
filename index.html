@@ -391,22 +391,6 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 .md-app{display:flex;flex-direction:column;align-items:center;gap:6px}.md-app small{font-size:12px;font-weight:700;color:var(--mute)}
 .sms{display:flex;align-items:center;gap:10px;border:1.5px solid #c9d3dc;border-radius:99px;padding:6px 6px 6px 16px;background:#fff;font-size:13px;color:#8a95a1}
 .sms b{width:26px;height:26px;border-radius:50%;background:#0b84fe;color:#fff;display:grid;place-items:center;font-size:14px}
-.dem{padding-top:36px}.dem h2{font-size:clamp(28px,3vw,40px)}.dem .eyebrow{margin-bottom:8px}
-.dem .seg{margin-top:10px}.dem .ctl{margin:8px 0 10px}
-.dd{margin:18px 0 34px}.dd-t0{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:var(--gold2);margin-bottom:12px}
-.dd-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.dd-c{background:#161b29;border:1px solid #333b52;border-top:4px solid var(--g);border-radius:16px;padding:16px 18px}
-.dd-c.F{--g:#ff8d9c}.dd-c.U{--g:#6fb1ff}.dd-c.N{--g:#b7a3ff}
-.dd-h{display:flex;align-items:center;gap:9px;font:400 21px var(--serif);color:#fff}.dd-h i{width:11px;height:11px;border-radius:50%;background:var(--g);flex:none}
-.dd-o{font-size:12.5px;color:#aeb7cc;margin:4px 0 10px}
-.dd-c ul{list-style:none;display:grid;gap:5px}.dd-c li{font-size:14.5px;color:#e6e9f2;padding-left:14px;position:relative}.dd-c li:before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--g)}
-.dd-ar{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;height:28px}
-.dd-ar i{justify-self:center;width:2px;height:100%;background:#6b7490;position:relative}.dd-ar i:after{content:"";position:absolute;bottom:-1px;left:-5px;border:6px solid transparent;border-top:8px solid #6b7490;border-bottom:0}
-.dd-gov{display:flex;align-items:center;gap:22px;border:1.5px solid var(--gold);background:#1b2238;border-radius:14px;padding:14px 20px}
-.dd-gl{flex:none;font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--gold);max-width:150px}
-.dd-gov b{display:block;font-size:16px;color:#fff;font-weight:600}.dd-gov span{display:block;margin-top:4px;font-size:13px;color:#aeb7cc}.dd-gov a{color:var(--gold2);font-weight:700;text-decoration:none;white-space:nowrap}
-.dd-go{margin-top:20px;font:400 20px var(--serif);color:var(--gold2)}
-@media(max-width:900px){.dd-cards,.dd-ar{grid-template-columns:1fr}.dd-ar{display:none}.dd-cards{gap:12px}.dd-gov{flex-direction:column;align-items:flex-start;gap:8px;margin-top:12px}}
 
 /* partnership redesign: three equal cards, one logo zone, a numbered lab stepper */
 .md-row{grid-template-columns:repeat(3,1fr);gap:30px;margin-top:40px}
@@ -432,6 +416,23 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 .md-ct{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:28px;padding-top:22px;border-top:1px solid #e3edf3}
 .md-ct>span{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--mute)}
 .md-ct .chips{margin:0}.md-ct .chips span{font-size:13px;padding:7px 14px}
+.dem{padding-top:80px}.dem h2{font-size:clamp(32px,3.6vw,48px);margin-bottom:6px}.dem .eyebrow{margin-bottom:14px}
+.dd{margin:56px 0 88px}
+.dd-lead{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#8fa0bd;margin-bottom:30px}
+.dd-cols{display:grid;grid-template-columns:repeat(3,1fr)}
+.dd-col{padding:4px 44px 0}.dd-col:first-child{padding-left:0}.dd-col:last-child{padding-right:0}
+.dd-col+.dd-col{border-left:1px solid rgba(255,255,255,.12)}
+.dd-col h3{font:400 27px/1.25 var(--serif);color:var(--g);margin:0 0 10px;min-height:2.5em}
+.dd-col.F{--g:#ff9aa8}.dd-col.U{--g:#7db8ff}.dd-col.N{--g:#bfaeff}
+.dd-meta{font-size:13px;color:#8fa0bd;margin-bottom:18px}
+.dd-col p{font-size:17px;line-height:1.65;color:#dfe5f1;margin:0}
+.dd-base{margin-top:64px}
+.dd-rule{height:3px;border-radius:2px;background:linear-gradient(90deg,#ff9aa8 0 33.33%,#7db8ff 33.33% 66.66%,#bfaeff 66.66%);opacity:.85;margin-bottom:28px}
+.dd-gov{font:400 25px/1.4 var(--serif);color:#fff;margin:0}.dd-gov b{font-weight:400;color:var(--gold2)}
+.dd-mech{margin:14px 0 0;font-size:14.5px;color:#8fa0bd}.dd-mech a{color:var(--gold2);font-weight:700;text-decoration:none;white-space:nowrap}
+.dd-go{margin-top:64px;font:400 20px var(--serif);color:var(--gold2)}
+.dem .seg{margin-top:10px}
+@media(max-width:900px){.dd-cols{grid-template-columns:1fr;gap:34px}.dd-col,.dd-col:first-child,.dd-col:last-child{padding:0}.dd-col+.dd-col{border-left:0;border-top:1px solid rgba(255,255,255,.12);padding-top:30px}.dd-gov{font-size:22px}}
 @media(max-width:900px){.md-row{gap:34px}.md-c+.md-c:before{left:50%;top:-32px;margin-left:-15px;transform:rotate(90deg)}.lab .flow{flex-wrap:wrap;gap:12px}.lab .flow span:not(:last-child):after{display:none}.lab .flow span:not(:last-child){flex:none;margin-right:14px}}
 @media(max-width:900px){.md-row{grid-template-columns:1fr;gap:26px}.md-c+.md-c:before{left:50%;top:-24px;margin:0 0 0 -13px;transform:rotate(90deg)}.hl-logos{gap:14px;padding:10px 16px}}
 </style>
@@ -498,14 +499,15 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 <div class="eyebrow">Live demo · simulated</div>
 <h2>Solving for the Student, the University, and Follett</h2>
 <div class="dd">
-<div class="dd-t0">Built on three kinds of data</div>
-<div class="dd-cards">
-<div class="dd-c F"><div class="dd-h"><i></i>Data Follett owns</div><div class="dd-o">Owned by Follett &middot; 8 sources</div><ul><li>Purchases and e-commerce</li><li>Access and course materials</li><li>Email and web activity</li></ul></div>
-<div class="dd-c U"><div class="dd-h"><i></i>Data the university shares</div><div class="dd-o">Owned by the university &middot; 8 sources</div><ul><li>Enrollment and schedule</li><li>Aid and campus card tender</li><li>Tutoring, athletics and clubs</li></ul></div>
-<div class="dd-c N"><div class="dd-h"><i></i>Data created with student consent</div><div class="dd-o">Owned by the student &middot; 5 sources</div><ul><li>Community and Slack activity</li><li>Preferences and assistant memory</li><li>Venue location and alumni status</li></ul></div>
+<div class="dd-lead">Built on three kinds of data</div>
+<div class="dd-cols">
+<div class="dd-col F"><h3>Data Follett owns</h3><div class="dd-meta">Owned by Follett &middot; 8 sources</div><p>Purchases and e-commerce, Access and course materials, email and web activity.</p></div>
+<div class="dd-col U"><h3>Data the university shares</h3><div class="dd-meta">Owned by the university &middot; 8 sources</div><p>Enrollment and schedule, aid and campus card tender, tutoring, athletics and clubs.</p></div>
+<div class="dd-col N"><h3>Data created with student consent</h3><div class="dd-meta">Owned by the student &middot; 5 sources</div><p>Community and Slack activity, preferences and assistant memory, venue location and alumni status.</p></div>
 </div>
-<div class="dd-ar"><i></i><i></i><i></i></div>
-<div class="dd-gov"><div class="dd-gl">One governed layer</div><div><b>Governance, security and privacy sit under all three. Insight travels, records do not.</b><span>Shared definitions &middot; Consent registry &middot; Audit trail &middot; No model training on student data &middot; <a href="#data">Full source list &rarr;</a></span></div></div>
+<div class="dd-base"><div class="dd-rule"></div>
+<p class="dd-gov">Governance, security and privacy sit under all three. <b>Insight travels, records do not.</b></p>
+<p class="dd-mech">Shared definitions &middot; Consent registry &middot; Audit trail &middot; No model training on student data &middot; <a href="#data">Full source list &rarr;</a></p></div>
 <div class="dd-go">See it work for one student &darr;</div>
 </div>
 <div class="seg" id="seg"><button class="on" data-p="stud">The student</button><button data-p="cfo">The CFO</button><button data-p="teams">CFO in Teams</button><button data-p="group">Sales Command Center</button><button data-p="shelf">Idea Shelf</button></div>
