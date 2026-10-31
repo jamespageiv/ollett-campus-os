@@ -216,7 +216,8 @@ body.pm .talk{display:block}
 .rb-base{position:absolute;left:0;right:0;bottom:92px;height:2px;background:rgba(255,255,255,.9)}
 @media(max-width:900px){.rb-grid{grid-template-columns:1fr;gap:34px}.rb-v{justify-content:flex-start}.rb-stk.big{--w:250px}.rb-stk.sm{--w:92px}}
 @media(prefers-reduced-motion:reduce){.rb-ly{transition:none}}
-.wrap.wide{max-width:1380px}
+.wrap.wide{max-width:1620px}
+.vig:not(#v-stud) .win{max-width:1378px;margin-left:auto;margin-right:auto}
 .s3grid{display:grid;grid-template-columns:490px 1fr;gap:18px;align-items:start}
 .phonef{width:490px;height:960px;border:0;background:transparent;display:block;max-width:100%}
 .cfof{width:100%;height:830px;border:0;display:block;background:#fff}
@@ -1380,8 +1381,8 @@ function orbLayout(){
  const keys=Object.keys(SRC),H=o.clientHeight,capH=118,cx=W/2,cy=capH+(H-capH)/2,rx=W/2-104,ry=(H-capH)/2-46,ax=cx,ay=cy-42;
  const P={};
  ['U','F'].forEach(g=>{const ks=keys.filter(k=>SRC[k].g===g);
-  ks.forEach((k,i)=>{const t=(-58+i*116/(ks.length-1))*Math.PI/180;P[k]=[cx+(g==='F'?rx:-rx)*Math.cos(t),cy+ry*Math.sin(t)]})});
- const nk=keys.filter(k=>SRC[k].g==='N');nk.forEach((k,i)=>{P[k]=[cx+(i-(nk.length-1)/2)*152,cy+ry]});
+  ks.forEach((k,i)=>{const t=(-52+i*104/(ks.length-1))*Math.PI/180;P[k]=[cx+(g==='F'?rx:-rx)*Math.cos(t),cy+ry*Math.sin(t)]})});
+ const nk=keys.filter(k=>SRC[k].g==='N'),sp=Math.max(152,Math.min(210,(W-240)/(nk.length-1)));nk.forEach((k,i)=>{P[k]=[cx+(i-(nk.length-1)/2)*sp,cy+ry]});
  keys.forEach(k=>{const [x,y]=P[k],d=Math.hypot(x-ax,y-ay),r=62,ln=$('#ol-'+k);
   $('#on-'+k).style.left=x+'px';$('#on-'+k).style.top=y+'px';
   ln.setAttribute('x1',x);ln.setAttribute('y1',y);ln.setAttribute('x2',ax+(x-ax)*r/d);ln.setAttribute('y2',ay+(y-ay)*r/d)});
