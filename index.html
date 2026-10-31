@@ -860,6 +860,9 @@ body{display:block!important;overflow:hidden!important}
 .hd,.left,.pctl{display:none!important}
 .wrap{display:block!important;height:100%}
 .right{background:transparent!important;border:0!important;padding:0!important;height:100%;justify-content:center}
+.idle-dots{position:absolute;left:12px;display:flex;gap:5px;align-items:center;background:var(--gray);border-radius:20px;padding:13px 16px}
+.idle-dots i{width:8px;height:8px;border-radius:50%;background:#8e8e93;animation:b 1.1s infinite}
+.idle-dots i:nth-child(2){animation-delay:.18s}.idle-dots i:nth-child(3){animation-delay:.36s}
 .phone{zoom:1.15;height:calc((100vh - 16px)/1.15)!important;min-height:0!important}
 .bub{font-size:16.5px}.chip{font-size:15px}.ts,.read{font-size:12px}
 .card .ch b,.slot b,.ocard b{font-size:16px}.card .ch span,.slot span,.cal p,.maps span,.ocard span,.rg span{font-size:13px}
@@ -1132,7 +1135,7 @@ function paint(){
    &lt;div&gt;&lt;div class=&quot;t&quot;&gt;DATA CONNECTED&lt;/div&gt;&lt;b style=&quot;font-size:17px&quot;&gt;${all} of ${allT}&lt;/b&gt;&lt;div class=&quot;tb&quot;&gt;&lt;i style=&quot;width:${pctD}%;background:var(--maroon)&quot;&gt;&lt;/i&gt;&lt;/div&gt;&lt;/div&gt;
    &lt;div&gt;&lt;div class=&quot;t&quot;&gt;TIME WITH THE STUDENT&lt;/div&gt;&lt;b style=&quot;font-size:17px&quot;&gt;Day ${curDay}&lt;/b&gt;&lt;div class=&quot;tb&quot;&gt;&lt;i style=&quot;width:${pctT}%;background:var(--teal)&quot;&gt;&lt;/i&gt;&lt;/div&gt;&lt;/div&gt;`;
   const m=MOM[curKey];
-  $(&#x27;#now&#x27;).innerHTML=m?`&lt;div class=&quot;lb&quot;&gt;&lt;i&gt;&lt;/i&gt;NOW POWERING THE TEXT&lt;/div&gt;&lt;h2&gt;${m.t}&lt;/h2&gt;&lt;p&gt;${m.c}&lt;/p&gt;&lt;div class=&quot;chips&quot;&gt;${m.s.map(k=&gt;`&lt;span class=&quot;cp ${SRC[k].g}&quot;&gt;${SRC[k].n}&lt;/span&gt;`).join(&#x27;&#x27;)}&lt;/div&gt;`:`&lt;div class=&quot;lb&quot;&gt;&lt;i&gt;&lt;/i&gt;READY&lt;/div&gt;&lt;h2&gt;Scroll the phone to start the story&lt;/h2&gt;&lt;p&gt;Each message lights up the data it needs. Sources stay lit, so by the end you can see exactly what it takes, and who has to say yes.&lt;/p&gt;`;
+  $(&#x27;#now&#x27;).innerHTML=m?`&lt;div class=&quot;lb&quot;&gt;&lt;i&gt;&lt;/i&gt;NOW POWERING THE TEXT&lt;/div&gt;&lt;h2&gt;${m.t}&lt;/h2&gt;&lt;p&gt;${m.c}&lt;/p&gt;&lt;div class=&quot;chips&quot;&gt;${m.s.map(k=&gt;`&lt;span class=&quot;cp ${SRC[k].g}&quot;&gt;${SRC[k].n}&lt;/span&gt;`).join(&#x27;&#x27;)}&lt;/div&gt;`:`&lt;div class=&quot;lb&quot;&gt;&lt;i&gt;&lt;/i&gt;READY&lt;/div&gt;&lt;h2&gt;Tap the phone, scroll, or press Play to start the story&lt;/h2&gt;&lt;p&gt;Each message lights up the data it needs. Sources stay lit, so by the end you can see exactly what it takes, and who has to say yes.&lt;/p&gt;`;
 }
 function activate(k){
   const m=MOM[k];if(!m)return;
@@ -1153,8 +1156,11 @@ function build(){
   th.scrollTop=0;active.clear();nowSet=new Set();curKey=null;curDay=0;
   let day=0;th.querySelectorAll(&#x27;.ts,.row&#x27;).forEach(el=&gt;{if(el.classList.contains(&#x27;ts&#x27;))day=+el.dataset.day;else el.dataset.day=day});
   rows=[...th.querySelectorAll(&#x27;.row&#x27;)];moments=rows.filter(r=&gt;r.dataset.k);
-  setName($(&#x27;#nameIn&#x27;).value);buildLeft();paint();observe();scene();
+  setName($(&#x27;#nameIn&#x27;).value);buildLeft();paint();if(io)io.disconnect();showIdle();scene();
 }
+let idle=true;const idleEl=document.createElement(&#x27;div&#x27;);idleEl.className=&#x27;idle-dots&#x27;;idleEl.innerHTML=&#x27;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&#x27;;
+function showIdle(){idle=true;th.appendChild(idleEl);const r=rows[0];idleEl.style.top=(r?r.offsetTop:20)+&#x27;px&#x27;}
+function begin(){if(!idle)return;idle=false;idleEl.remove();observe()}
 function reveal(r){
   if(r.dataset.d)return;r.dataset.d=1;
   q=q.then(()=&gt;new Promise(res=&gt;{
@@ -1189,7 +1195,7 @@ $(&#x27;#nameIn&#x27;).addEventListener(&#x27;input&#x27;,e=&gt;setName(e.target
 $(&#x27;#swAll&#x27;).addEventListener(&#x27;click&#x27;,e=&gt;{revealAll=!revealAll;e.currentTarget.classList.toggle(&#x27;on&#x27;,revealAll);paint()});
 function toRow(r){th.scrollTo({top:Math.max(0,r.offsetTop-th.clientHeight+r.offsetHeight+110),behavior:&#x27;smooth&#x27;})}
 function step(d){
-  stop();const i=moments.findIndex(r=&gt;r.dataset.k===curKey);
+  begin();stop();const i=moments.findIndex(r=&gt;r.dataset.k===curKey);
   const t=moments[Math.min(moments.length-1,Math.max(0,i+d))];if(t)toRow(t);
 }
 $(&#x27;#next&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;step(1));$(&#x27;#prev&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;step(-1));
@@ -1205,8 +1211,9 @@ async function run(){
   }
   if(my===tok)stop();
 }
-play.addEventListener(&#x27;click&#x27;,()=&gt;playing?stop():run());
-[&#x27;wheel&#x27;,&#x27;touchstart&#x27;].forEach(ev=&gt;th.addEventListener(ev,()=&gt;{if(playing)stop()},{passive:true}));
+play.addEventListener(&#x27;click&#x27;,()=&gt;{begin();playing?stop():run()});
+document.querySelector(&#x27;.phone&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{if(idle){begin();run()}});
+[&#x27;wheel&#x27;,&#x27;touchstart&#x27;].forEach(ev=&gt;th.addEventListener(ev,()=&gt;{begin();if(playing)stop()},{passive:true}));
 $(&#x27;#restart&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{stop();q=Promise.resolve();build()});
 
 (function(){
@@ -1433,7 +1440,7 @@ function orbDraw(act,now,trust,b,started){
  ['U','F','N'].forEach(g=>{const ks=keys.filter(k=>SRC[k].g===g);$('#oc-'+g).textContent=ks.filter(k=>act.has(k)).length+' of '+ks.length});
  const ck=ps.key+'|'+ps.all;
  if(ck!==orbKey){orbKey=ck;
-  $('#orbcap').innerHTML=`<div class="lb"><i></i>${started?'NOW POWERING THE TEXT':'READY'}</div><h4>${m?m.t:'Scroll the phone to start'}</h4><p>${m?m.c:'Each message lights up the data it needs. Sources stay lit, so by the end you can see what it takes and who has to say yes.'}</p>`}
+  $('#orbcap').innerHTML=`<div class="lb"><i></i>${started?'NOW POWERING THE TEXT':'READY'}</div><h4>${m?m.t:'Tap the phone, scroll, or press Play to start'}</h4><p>${m?m.c:'Each message lights up the data it needs. Sources stay lit, so by the end you can see what it takes and who has to say yes.'}</p>`}
  $('#orbring').style.strokeDashoffset=RING*(1-trust/100);
  $('#orbtr').textContent=trust;$('#orbday').textContent='Day '+ps.day;
  $('#orbseg').textContent=started?SEGS[b]:'Not yet segmented';
