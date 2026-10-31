@@ -217,8 +217,8 @@ body.pm .talk{display:block}
 @media(max-width:900px){.rb-grid{grid-template-columns:1fr;gap:34px}.rb-v{justify-content:flex-start}.rb-stk.big{--w:250px}.rb-stk.sm{--w:92px}}
 @media(prefers-reduced-motion:reduce){.rb-ly{transition:none}}
 .wrap.wide{max-width:1380px}
-.s3grid{display:grid;grid-template-columns:420px 1fr;gap:18px;align-items:start}
-.phonef{width:420px;height:830px;border:0;background:transparent;display:block;max-width:100%}
+.s3grid{display:grid;grid-template-columns:530px 1fr;gap:18px;align-items:start}
+.phonef{width:530px;height:830px;border:0;background:transparent;display:block;max-width:100%}
 .cfof{width:100%;height:830px;border:0;display:block;background:#fff}
 .orb{position:relative;height:830px;border-radius:18px;overflow:hidden;color:#fff;background:radial-gradient(ellipse at 50% 54%,#245a78 0,#16384f 46%,#0d2433 100%);box-shadow:0 14px 40px rgba(14,36,51,.28)}
 .orb:before{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(255,255,255,.07) 1px,transparent 1.6px) 0 0/22px 22px;pointer-events:none}
@@ -530,6 +530,9 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 .dem .seg button{padding:12px 28px}
 .dem .ctl{margin:26px 0 30px;gap:14px}
 .dem .ctl .btn{padding:11px 24px;font-size:12.5px}
+.segrow{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin:26px 0 30px}
+.segrow .seg{margin:0}
+.segrow .ctl{display:flex;gap:14px;margin:0}
 @media(prefers-reduced-motion:reduce){.dd-in{transition:none}}
 @media(max-width:900px){.dd-cards{grid-template-columns:1fr}.dd-gi3{grid-template-columns:1fr}.dd-gov2{padding:26px}}
 @media(max-width:900px){.md-row{gap:34px}.md-c+.md-c:before{left:50%;top:-32px;margin-left:-15px;transform:rotate(90deg)}.lab .flow{flex-wrap:wrap;gap:12px}.lab .flow span:not(:last-child):after{display:none}.lab .flow span:not(:last-child){flex:none;margin-right:14px}}
@@ -624,10 +627,9 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 </div>
 <div class="dd-go">Insight travels, records do not.</div>
 </div>
-<div class="seg" id="seg"><button class="on" data-p="stud">The student</button><button data-p="cfo">The CFO</button><button data-p="teams">CFO in Teams</button><button data-p="group">Sales Command Center</button><button data-p="shelf">Idea Shelf</button></div>
+<div class="segrow"><div class="seg" id="seg"><button class="on" data-p="stud">The student</button><button data-p="cfo">The CFO</button><button data-p="teams">CFO in Teams</button><button data-p="group">Sales Command Center</button><button data-p="shelf">Idea Shelf</button></div><div class="ctl" id="s-ctl"><button class="btn w" id="s-play">Play</button><button class="btn o" id="s-reset">Restart</button></div></div>
 
 <div class="vig show" id="v-stud">
-<div class="ctl"><button class="btn w" id="s-play">Play</button><button class="btn o" id="s-reset">Restart</button><button class="btn o" id="s-all">Show full data map</button></div>
 <div class="s3grid">
 <iframe id="phoneFrame" class="phonef" title="Student text message prototype" srcdoc="&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
@@ -824,7 +826,12 @@ body{display:block!important;overflow:hidden!important}
 .hd,.left,.pctl{display:none!important}
 .wrap{display:block!important;height:100%}
 .right{background:transparent!important;border:0!important;padding:0!important;height:100%;justify-content:center}
-.phone{height:calc(100vh - 16px)!important;min-height:0!important}
+.phone{zoom:1.25;height:calc((100vh - 16px)/1.25)!important;min-height:0!important}
+.bub{font-size:16.5px}.chip{font-size:15px}.ts,.read{font-size:12px}
+.card .ch b,.slot b,.ocard b{font-size:16px}.card .ch span,.slot span,.cal p,.maps span,.ocard span,.rg span{font-size:13px}
+.sm p,.sm b,.shot{font-size:13.5px}.sm span{font-size:11.5px}.learn{font-size:13.5px}
+.pay .ln,.rcpt .ln{font-size:14.5px}.sv .bar{font-size:14px}.inputbar .f{font-size:16px}
+
 &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -1276,7 +1283,7 @@ function reloadPhone(){try{const f=$('#phoneFrame');ps={key:null,day:0,active:[]
 function checkBeats(){let b='';try{b=JSON.stringify((JSON.parse(localStorage.getItem('campusos.state.v1')||'{}').beatsOn)||[])}catch(e){}if(_bo!==null&&b!==_bo)reloadPhone();_bo=b}
 checkBeats();addEventListener('storage',e=>{if(e.key==='campusos.state.v1')checkBeats()});
 try{new BroadcastChannel('campusos').onmessage=()=>setTimeout(checkBeats,50)}catch(e){}
-function showPane(p){document.querySelectorAll('#seg button').forEach(x=>x.classList.toggle('on',x.dataset.p==p));['stud','cfo','teams','group','shelf'].forEach(k=>{const v=$('#v-'+k);if(v)v.classList.toggle('show',k==p)});const f=document.querySelector('#v-'+p+' iframe[data-src]');if(f&&!f.src){f.src=f.dataset.src}fitDemo()}
+function showPane(p){document.querySelectorAll('#seg button').forEach(x=>x.classList.toggle('on',x.dataset.p==p));['stud','cfo','teams','group','shelf'].forEach(k=>{const v=$('#v-'+k);if(v)v.classList.toggle('show',k==p)});const sc=$('#s-ctl');if(sc)sc.style.display=p=='stud'?'flex':'none';const f=document.querySelector('#v-'+p+' iframe[data-src]');if(f&&!f.src){f.src=f.dataset.src}fitDemo()}
 document.querySelectorAll('#seg button').forEach(b=>b.onclick=()=>showPane(b.dataset.p));
 addEventListener('message',e=>{const d=e.data;if(d&&d.campusosNav){showPane(d.campusosNav);if(d.campusosNav=='stud'||d.campusosNav=='student'){showPane('stud');if(d.beat==='receipt')cmd('beat',4)}}});
 
@@ -1410,7 +1417,6 @@ function sdraw(){
 }
 $('#s-play').onclick=()=>cmd('play');
 $('#s-reset').onclick=()=>{ps={key:null,day:0,active:[],beat:0,all:false};cmd('restart');sdraw()};
-$('#s-all').onclick=()=>cmd('all');
 orbBuild();
 sdraw();
 /* scale the demo as one unit so it fits the window height without browser zoom */
