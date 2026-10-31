@@ -536,6 +536,20 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 .segrow .ctl{display:flex;gap:14px;margin:0}
 .dd-fh .dd-ic.dd-img{width:58px;height:62px;margin:-6px 0 -2px;background:none;border:0;border-radius:0;flex:none}
 .dd-ic.dd-img img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+/* lighter, more see-through glass */
+.dd-f{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.45);backdrop-filter:blur(12px) saturate(1.3);-webkit-backdrop-filter:blur(12px) saturate(1.3)}
+.dd-b{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.45)}
+.dd-gov2{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.4)}
+.dd-st{background:rgba(8,20,38,.35)}
+.dem:before{opacity:.62}
+.dem:after{background:linear-gradient(180deg,rgba(13,40,66,.52) 0,rgba(13,40,66,.4) 45%,#0b101c 98%),linear-gradient(90deg,rgba(0,130,200,.3),transparent 60%)}
+.dd-gh{align-items:center}
+.dd-sec{height:54px;width:auto;flex:none;margin:-4px 0 -2px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+.dd-gh{justify-content:flex-start;gap:16px}
+.dem .eyebrow{color:#cfe3f7}
+.dd-gov2{padding-top:clamp(12px,2vh,18px);padding-bottom:clamp(12px,2vh,18px)}
+.dd-gh{margin-bottom:8px}
+.dd{margin-bottom:clamp(20px,3.6vh,40px)}
 @media(prefers-reduced-motion:reduce){.dd-in{transition:none}}
 @media(max-width:900px){.dd-cards{grid-template-columns:1fr}.dd-gi3{grid-template-columns:1fr}.dd-gov2{padding:26px}}
 @media(max-width:900px){.md-row{gap:34px}.md-c+.md-c:before{left:50%;top:-32px;margin-left:-15px;transform:rotate(90deg)}.lab .flow{flex-wrap:wrap;gap:12px}.lab .flow span:not(:last-child):after{display:none}.lab .flow span:not(:last-child){flex:none;margin-right:14px}}
@@ -621,7 +635,7 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 </div></div>
 </div>
 <div class="dd-gov2">
-<div class="dd-gh"><p class="dd-gt">Governance, security and privacy sit under all three.</p></div>
+<div class="dd-gh"><img class="dd-sec" src="icon-security.png" alt=""><p class="dd-gt">Governance, security and privacy sit under all three.</p></div>
 <div class="dd-gi3">
 <div class="dd-gi"><img src="icons/gov-governance.svg" alt=""><div><b>Governance</b><span>Shared definitions, audit trail, metered agents</span></div></div>
 <div class="dd-gi"><img src="icons/gov-security.svg" alt=""><div><b>Security</b><span>No model training on student data</span></div></div>
