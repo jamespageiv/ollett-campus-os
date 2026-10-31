@@ -457,6 +457,30 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 .dd-ins{margin:26px 0 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.16);font:400 22px var(--serif);color:var(--gold2)}
 .dd-ins a{font:700 14px var(--sans);color:#fff;text-decoration:none;margin-left:14px;white-space:nowrap}
 .dd-go{margin-top:64px;font:400 20px var(--serif);color:var(--gold2)}
+/* compact: the whole explainer fits one screen */
+.dem{padding-top:clamp(26px,4.5vh,48px)}
+.dem h2{font-size:clamp(28px,3.2vw,42px)}.dem .eyebrow{margin-bottom:10px}
+.dd{margin:clamp(14px,2.6vh,28px) 0 clamp(26px,5vh,52px)}
+.dd-top{margin-bottom:clamp(10px,2vh,18px)}
+.dd-cards{gap:20px}
+.dd-flip{height:clamp(292px,35vh,340px)}
+.dd-f,.dd-b{padding:22px 24px 18px;border-radius:20px}
+.dd-f:before{border-radius:20px 20px 0 0;height:110px}
+.dd-ic{width:48px;height:48px;border-radius:14px;margin-bottom:14px}.dd-ic svg{width:26px;height:26px}
+.dd-f h3{font-size:24px;margin-bottom:6px}
+.dd-meta{font-size:12px;margin-bottom:10px}
+.dd-f p{font-size:14.5px;line-height:1.5}
+.dd-foot{padding-top:12px}.dd-n b{font-size:30px}.dd-n{font-size:13px}.dd-hint{font-size:12px}
+.dd-b{padding:18px 22px 12px}
+.dd-bh{padding-bottom:8px;margin-bottom:4px}.dd-bh b{font-size:18px}
+.dd-list li{font-size:13px;padding:1px 0}.dd-st{font-size:9.5px;padding:2px 8px}
+.dd-back{margin-top:4px}
+.dd-gov2{margin-top:clamp(14px,2.6vh,26px);padding:clamp(16px,2.6vh,24px) 30px;border-radius:20px}
+.dd-gh{display:flex;align-items:baseline;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:clamp(12px,2vh,18px)}
+.dd-gt{font-size:21px;margin:0}
+.dd-gi3{gap:24px}.dd-gi img{width:36px;height:36px}.dd-gi b{font-size:15px;margin-bottom:2px}.dd-gi span{font-size:13px;line-height:1.45}
+.dd-ins{margin:0;padding:0;border:0;font-size:19px}.dd-ins a{font-size:13px;margin-left:12px}
+.dd-go{margin-top:clamp(14px,2.6vh,26px);font-size:17px}
 @media(prefers-reduced-motion:reduce){.dd-in{transition:none}}
 @media(max-width:900px){.dd-cards{grid-template-columns:1fr}.dd-gi3{grid-template-columns:1fr}.dd-gov2{padding:26px}}
 @media(max-width:900px){.md-row{gap:34px}.md-c+.md-c:before{left:50%;top:-32px;margin-left:-15px;transform:rotate(90deg)}.lab .flow{flex-wrap:wrap;gap:12px}.lab .flow span:not(:last-child):after{display:none}.lab .flow span:not(:last-child){flex:none;margin-right:14px}}
@@ -532,31 +556,30 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 <div class="dd-f"><div class="dd-ic"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></div>
 <h3>Data Follett owns</h3><div class="dd-meta">Owned by Follett</div><p>Purchases and e-commerce, Access and course materials, email and web activity.</p>
 <div class="dd-foot"><span class="dd-n"><b>8</b> data sources</span><span class="dd-hint">See the sources &#8635;</span></div></div>
-<div class="dd-b"><div class="dd-bh"><b>Data Follett owns</b><span>8 data sources</span></div><ul class="dd-list" data-g="F"></ul><div class="dd-hint dd-back">&#8635; Flip back</div></div>
+<div class="dd-b"><div class="dd-bh"><b>Follett owns</b><span>8 data sources</span></div><ul class="dd-list" data-g="F"></ul><div class="dd-hint dd-back">&#8635; Flip back</div></div>
 </div></div>
 <div class="dd-flip U" tabindex="0" role="button" aria-label="Data the university shares. Flip to see the 8 data sources">
 <div class="dd-in">
 <div class="dd-f"><div class="dd-ic"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v6"/></svg></div>
 <h3>Data the university shares</h3><div class="dd-meta">Owned by the university</div><p>Enrollment and schedule, aid and campus card tender, tutoring, athletics and clubs.</p>
 <div class="dd-foot"><span class="dd-n"><b>8</b> data sources</span><span class="dd-hint">See the sources &#8635;</span></div></div>
-<div class="dd-b"><div class="dd-bh"><b>Data the university shares</b><span>8 data sources</span></div><ul class="dd-list" data-g="U"></ul><div class="dd-hint dd-back">&#8635; Flip back</div></div>
+<div class="dd-b"><div class="dd-bh"><b>University shares</b><span>8 data sources</span></div><ul class="dd-list" data-g="U"></ul><div class="dd-hint dd-back">&#8635; Flip back</div></div>
 </div></div>
 <div class="dd-flip N" tabindex="0" role="button" aria-label="Data created with student consent. Flip to see the 5 data sources">
 <div class="dd-in">
 <div class="dd-f"><div class="dd-ic"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M16 11.5l2 2 4-4"/></svg></div>
 <h3>Data created with student consent</h3><div class="dd-meta">Owned by the student</div><p>Community and Slack activity, preferences and assistant memory, venue location and alumni status.</p>
 <div class="dd-foot"><span class="dd-n"><b>5</b> data sources</span><span class="dd-hint">See the sources &#8635;</span></div></div>
-<div class="dd-b"><div class="dd-bh"><b>Data created with student consent</b><span>5 data sources</span></div><ul class="dd-list" data-g="N"></ul><div class="dd-hint dd-back">&#8635; Flip back</div></div>
+<div class="dd-b"><div class="dd-bh"><b>Student consent</b><span>5 data sources</span></div><ul class="dd-list" data-g="N"></ul><div class="dd-hint dd-back">&#8635; Flip back</div></div>
 </div></div>
 </div>
 <div class="dd-gov2">
-<p class="dd-gt">Governance, security and privacy sit under all three.</p>
+<div class="dd-gh"><p class="dd-gt">Governance, security and privacy sit under all three.</p><p class="dd-ins">Insight travels, records do not. <a href="#data">Full source list &rarr;</a></p></div>
 <div class="dd-gi3">
-<div class="dd-gi"><img src="icons/gov-governance.svg" alt=""><div><b>Governance</b><span>Shared definitions, audit trail, agents registered and metered</span></div></div>
+<div class="dd-gi"><img src="icons/gov-governance.svg" alt=""><div><b>Governance</b><span>Shared definitions, audit trail, metered agents</span></div></div>
 <div class="dd-gi"><img src="icons/gov-security.svg" alt=""><div><b>Security</b><span>No model training on student data</span></div></div>
 <div class="dd-gi"><img src="icons/gov-privacy.svg" alt=""><div><b>Privacy</b><span>Consent registry, student-controlled</span></div></div>
 </div>
-<p class="dd-ins">Insight travels, records do not. <a href="#data">Full source list &rarr;</a></p>
 </div>
 <div class="dd-go">See it work for one student &darr;</div>
 </div>
