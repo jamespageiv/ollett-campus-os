@@ -416,23 +416,49 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 .md-ct{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:28px;padding-top:22px;border-top:1px solid #e3edf3}
 .md-ct>span{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--mute)}
 .md-ct .chips{margin:0}.md-ct .chips span{font-size:13px;padding:7px 14px}
-.dem{padding-top:80px}.dem h2{font-size:clamp(32px,3.6vw,48px);margin-bottom:6px}.dem .eyebrow{margin-bottom:14px}
-.dd{margin:56px 0 88px}
-.dd-lead{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#8fa0bd;margin-bottom:30px}
-.dd-cols{display:grid;grid-template-columns:repeat(3,1fr)}
-.dd-col{padding:4px 44px 0}.dd-col:first-child{padding-left:0}.dd-col:last-child{padding-right:0}
-.dd-col+.dd-col{border-left:1px solid rgba(255,255,255,.12)}
-.dd-col h3{font:400 27px/1.25 var(--serif);color:var(--g);margin:0 0 10px;min-height:2.5em}
-.dd-col.F{--g:#ff9aa8}.dd-col.U{--g:#7db8ff}.dd-col.N{--g:#bfaeff}
-.dd-meta{font-size:13px;color:#8fa0bd;margin-bottom:18px}
-.dd-col p{font-size:17px;line-height:1.65;color:#dfe5f1;margin:0}
-.dd-base{margin-top:64px}
-.dd-rule{height:3px;border-radius:2px;background:linear-gradient(90deg,#ff9aa8 0 33.33%,#7db8ff 33.33% 66.66%,#bfaeff 66.66%);opacity:.85;margin-bottom:28px}
-.dd-gov{font:400 25px/1.4 var(--serif);color:#fff;margin:0}.dd-gov b{font-weight:400;color:var(--gold2)}
-.dd-mech{margin:14px 0 0;font-size:14.5px;color:#8fa0bd}.dd-mech a{color:var(--gold2);font-weight:700;text-decoration:none;white-space:nowrap}
+.dem{position:relative;isolation:isolate;padding-top:80px}
+.dem:before{content:"";position:absolute;left:0;right:0;top:0;height:1180px;z-index:-2;background:url(ucla-data.jpg) center 30%/cover no-repeat;mix-blend-mode:luminosity;opacity:.5}
+.dem:after{content:"";position:absolute;left:0;right:0;top:0;height:1180px;z-index:-1;background:linear-gradient(180deg,rgba(13,30,46,.78) 0,rgba(13,30,46,.62) 45%,#0b101c 98%),linear-gradient(90deg,rgba(0,110,170,.28),transparent 60%)}
+.dem h2{font-size:clamp(32px,3.6vw,48px);margin-bottom:6px}.dem .eyebrow{margin-bottom:14px}
+.dd{margin:52px 0 84px}
+.dd-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}
+.dd-lead{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#bcd0e8}
+.dd-all{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.28);color:#fff;border-radius:99px;padding:8px 18px;font:700 13px var(--sans);cursor:pointer}
+.dd-all:hover{background:rgba(255,255,255,.16)}
+.dd-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.dd-flip{perspective:1500px;height:392px;outline:none;cursor:pointer;--g:#ff9aa8}
+.dd-flip.U{--g:#7db8ff}.dd-flip.N{--g:#bfaeff}
+.dd-in{position:relative;width:100%;height:100%;transition:transform .75s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.dd-flip.on .dd-in{transform:rotateY(180deg)}
+.dd-f,.dd-b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:24px;padding:32px 32px 26px;background:rgba(10,20,36,.62);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.2);box-shadow:0 24px 60px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.12);display:flex;flex-direction:column}
+.dd-f:before{content:"";position:absolute;left:0;top:0;width:100%;height:150px;border-radius:24px 24px 0 0;background:radial-gradient(260px 120px at 22% 0,color-mix(in srgb,var(--g) 38%,transparent),transparent 70%);pointer-events:none}
+.dd-b{transform:rotateY(180deg);background:rgba(8,16,30,.82);padding:26px 28px 20px}
+.dd-flip:hover .dd-f,.dd-flip:focus-visible .dd-f{border-color:color-mix(in srgb,var(--g) 70%,#fff 10%)}
+.dd-ic{position:relative;width:62px;height:62px;border-radius:18px;display:grid;place-items:center;color:var(--g);background:color-mix(in srgb,var(--g) 16%,transparent);border:1px solid color-mix(in srgb,var(--g) 45%,transparent);margin-bottom:22px}
+.dd-f h3{position:relative;font:400 27px/1.2 var(--serif);color:#fff;margin:0 0 8px}
+.dd-meta{font-size:13px;letter-spacing:.04em;color:var(--g);font-weight:700;margin-bottom:16px}
+.dd-f p{font-size:15.5px;line-height:1.55;color:#dbe4f2;margin:0}
+.dd-foot{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;padding-top:18px;border-top:1px solid rgba(255,255,255,.14)}
+.dd-n{font-size:14px;color:#bcd0e8}.dd-n b{font:400 36px var(--serif);color:#fff;margin-right:6px}
+.dd-hint{font-size:12.5px;font-weight:700;color:#bcd0e8;letter-spacing:.04em}
+.dd-flip:hover .dd-hint{color:#fff}
+.dd-bh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.16);margin-bottom:8px}
+.dd-bh b{font:400 20px var(--serif);color:var(--g)}.dd-bh span{font-size:12px;color:#bcd0e8;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.dd-list{list-style:none;margin:0;padding:0;flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.dd-list li{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14px;color:#eef3fb;padding:3px 0}
+.dd-st{flex:none;font-size:10.5px;font-weight:800;letter-spacing:.04em;padding:3px 9px;border-radius:99px;border:1px solid currentColor;white-space:nowrap}
+.dd-st.have{color:#6fe0a8}.dd-st.upgrade{color:#f4c862}.dd-st.uni{color:#7db8ff}.dd-st.new{color:#bfaeff}.dd-st.optin{color:#ff9aa8}
+.dd-back{text-align:right;margin-top:8px}
+.dd-gov2{margin-top:64px;padding:34px 38px;border-radius:24px;background:rgba(10,20,36,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.2)}
+.dd-gt{font:400 25px/1.35 var(--serif);color:#fff;margin:0 0 24px}
+.dd-gi3{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.dd-gi{display:flex;gap:16px;align-items:flex-start}.dd-gi img{width:46px;height:46px;flex:none}
+.dd-gi b{display:block;font-size:16px;color:#fff;margin-bottom:4px}.dd-gi span{font-size:14px;line-height:1.5;color:#bcd0e8}
+.dd-ins{margin:26px 0 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.16);font:400 22px var(--serif);color:var(--gold2)}
+.dd-ins a{font:700 14px var(--sans);color:#fff;text-decoration:none;margin-left:14px;white-space:nowrap}
 .dd-go{margin-top:64px;font:400 20px var(--serif);color:var(--gold2)}
-.dem .seg{margin-top:10px}
-@media(max-width:900px){.dd-cols{grid-template-columns:1fr;gap:34px}.dd-col,.dd-col:first-child,.dd-col:last-child{padding:0}.dd-col+.dd-col{border-left:0;border-top:1px solid rgba(255,255,255,.12);padding-top:30px}.dd-gov{font-size:22px}}
+@media(prefers-reduced-motion:reduce){.dd-in{transition:none}}
+@media(max-width:900px){.dd-cards{grid-template-columns:1fr}.dd-gi3{grid-template-columns:1fr}.dd-gov2{padding:26px}}
 @media(max-width:900px){.md-row{gap:34px}.md-c+.md-c:before{left:50%;top:-32px;margin-left:-15px;transform:rotate(90deg)}.lab .flow{flex-wrap:wrap;gap:12px}.lab .flow span:not(:last-child):after{display:none}.lab .flow span:not(:last-child){flex:none;margin-right:14px}}
 @media(max-width:900px){.md-row{grid-template-columns:1fr;gap:26px}.md-c+.md-c:before{left:50%;top:-24px;margin:0 0 0 -13px;transform:rotate(90deg)}.hl-logos{gap:14px;padding:10px 16px}}
 </style>
@@ -499,15 +525,39 @@ footer{padding:30px 0;font-size:12px;color:var(--mute)}
 <div class="eyebrow">Live demo · simulated</div>
 <h2>Solving for the Student, the University, and Follett</h2>
 <div class="dd">
-<div class="dd-lead">Built on three kinds of data</div>
-<div class="dd-cols">
-<div class="dd-col F"><h3>Data Follett owns</h3><div class="dd-meta">Owned by Follett &middot; 8 sources</div><p>Purchases and e-commerce, Access and course materials, email and web activity.</p></div>
-<div class="dd-col U"><h3>Data the university shares</h3><div class="dd-meta">Owned by the university &middot; 8 sources</div><p>Enrollment and schedule, aid and campus card tender, tutoring, athletics and clubs.</p></div>
-<div class="dd-col N"><h3>Data created with student consent</h3><div class="dd-meta">Owned by the student &middot; 5 sources</div><p>Community and Slack activity, preferences and assistant memory, venue location and alumni status.</p></div>
+<div class="dd-top"><div class="dd-lead">Built on three kinds of data</div><button class="dd-all" id="ddAll" type="button">Flip all cards</button></div>
+<div class="dd-cards">
+<div class="dd-flip F" tabindex="0" role="button" aria-label="Data Follett owns. Flip to see the 8 data sources">
+<div class="dd-in">
+<div class="dd-f"><div class="dd-ic"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></div>
+<h3>Data Follett owns</h3><div class="dd-meta">Owned by Follett</div><p>Purchases and e-commerce, Access and course materials, email and web activity.</p>
+<div class="dd-foot"><span class="dd-n"><b>8</b> data sources</span><span class="dd-hint">See the sources &#8635;</span></div></div>
+<div class="dd-b"><div class="dd-bh"><b>Data Follett owns</b><span>8 data sources</span></div><ul class="dd-list" data-g="F"></ul><div class="dd-hint dd-back">&#8635; Flip back</div></div>
+</div></div>
+<div class="dd-flip U" tabindex="0" role="button" aria-label="Data the university shares. Flip to see the 8 data sources">
+<div class="dd-in">
+<div class="dd-f"><div class="dd-ic"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v6"/></svg></div>
+<h3>Data the university shares</h3><div class="dd-meta">Owned by the university</div><p>Enrollment and schedule, aid and campus card tender, tutoring, athletics and clubs.</p>
+<div class="dd-foot"><span class="dd-n"><b>8</b> data sources</span><span class="dd-hint">See the sources &#8635;</span></div></div>
+<div class="dd-b"><div class="dd-bh"><b>Data the university shares</b><span>8 data sources</span></div><ul class="dd-list" data-g="U"></ul><div class="dd-hint dd-back">&#8635; Flip back</div></div>
+</div></div>
+<div class="dd-flip N" tabindex="0" role="button" aria-label="Data created with student consent. Flip to see the 5 data sources">
+<div class="dd-in">
+<div class="dd-f"><div class="dd-ic"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M16 11.5l2 2 4-4"/></svg></div>
+<h3>Data created with student consent</h3><div class="dd-meta">Owned by the student</div><p>Community and Slack activity, preferences and assistant memory, venue location and alumni status.</p>
+<div class="dd-foot"><span class="dd-n"><b>5</b> data sources</span><span class="dd-hint">See the sources &#8635;</span></div></div>
+<div class="dd-b"><div class="dd-bh"><b>Data created with student consent</b><span>5 data sources</span></div><ul class="dd-list" data-g="N"></ul><div class="dd-hint dd-back">&#8635; Flip back</div></div>
+</div></div>
 </div>
-<div class="dd-base"><div class="dd-rule"></div>
-<p class="dd-gov">Governance, security and privacy sit under all three. <b>Insight travels, records do not.</b></p>
-<p class="dd-mech">Shared definitions &middot; Consent registry &middot; Audit trail &middot; No model training on student data &middot; <a href="#data">Full source list &rarr;</a></p></div>
+<div class="dd-gov2">
+<p class="dd-gt">Governance, security and privacy sit under all three.</p>
+<div class="dd-gi3">
+<div class="dd-gi"><img src="icons/gov-governance.svg" alt=""><div><b>Governance</b><span>Shared definitions, audit trail, agents registered and metered</span></div></div>
+<div class="dd-gi"><img src="icons/gov-security.svg" alt=""><div><b>Security</b><span>No model training on student data</span></div></div>
+<div class="dd-gi"><img src="icons/gov-privacy.svg" alt=""><div><b>Privacy</b><span>Consent registry, student-controlled</span></div></div>
+</div>
+<p class="dd-ins">Insight travels, records do not. <a href="#data">Full source list &rarr;</a></p>
+</div>
 <div class="dd-go">See it work for one student &darr;</div>
 </div>
 <div class="seg" id="seg"><button class="on" data-p="stud">The student</button><button data-p="cfo">The CFO</button><button data-p="teams">CFO in Teams</button><button data-p="group">Sales Command Center</button><button data-p="shelf">Idea Shelf</button></div>
@@ -1305,6 +1355,14 @@ function fitDemo(){
  document.querySelectorAll('.s3grid,.vig:not(#v-stud) .win').forEach(el=>{el.style.zoom=s<1?s:'';el.style.maxWidth=s<1?(el.classList.contains('s3grid')?'1590px':'1378px'):'';el.style.margin=s<1?'0 auto':''});
 }
 addEventListener('resize',fitDemo);fitDemo();
+function ddRender(){
+ document.querySelectorAll('.dd-list').forEach(ul=>{const g=ul.dataset.g;ul.innerHTML=Object.keys(SRC).filter(k=>SRC[k].g===g).map(k=>`<li><span>${SRC[k].n}</span><span class="dd-st ${SRC[k].c}">${STATUSL[SRC[k].c]}</span></li>`).join('')});
+ const cards=[...document.querySelectorAll('.dd-flip')];
+ cards.forEach(c=>{c.onclick=()=>c.classList.toggle('on');c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();c.classList.toggle('on')}}});
+ const all=$('#ddAll');if(all)all.onclick=()=>{const on=!cards.every(c=>c.classList.contains('on'));cards.forEach(c=>c.classList.toggle('on',on));all.textContent=on?'Flip all back':'Flip all cards'};
+}
+ddRender();
+
 
 /* ===== HOW IT WORKS ===== */
 const HW={
